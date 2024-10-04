@@ -71,4 +71,4 @@ def detect_cars(video_path, cascade_path):
     cv2.destroyAllWindows()
 
 # Llamar a la función con el video y el clasificador de autos
-detect_cars("../resources/video2.mp4", "../classifier/cascade.xml")
+detect_cars("../resources/video1.mp4", "../classifier/cascade.xml")
