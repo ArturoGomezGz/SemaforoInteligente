@@ -1,5 +1,7 @@
 import cv2
 import time
+import json
+
 
 def detect_cars_from_camera(cascade_path):
     car_cascade = cv2.CascadeClassifier(cascade_path)
