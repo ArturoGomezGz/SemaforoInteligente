@@ -90,5 +90,15 @@ def detect_cars(video_path, cascade_path, exit_line_y):
     cap.release()
     cv2.destroyAllWindows()
 
+    with open('../outputs/car_count.json', 'r') as file:  # Abre el archivo en modo lectura
+        conteo_carros = json.load(file)  # Carga el contenido del archivo en un diccionario
+
+    conteo_carros["id_video"] = conteo_carros["id_video"]+1
+    conteo_carros["no_carros"] = total_cars_detected
+
+    # Escribir los datos en un archivo JSON
+    with open('../outputs/car_count.json', 'w') as file:  # Abre el archivo en modo escritura
+        json.dump(conteo_carros, file, indent=4)  # Escribe el diccionario en el archivo JSON con un formato legible
+
 # Llamar a la función con el video y el clasificador de autos
 detect_cars("../resources/video2.mp4", "../classifier/cascade.xml", 200)
