@@ -1,24 +1,26 @@
 import cv2
 import json
+import os
 
 class Semaforo:
-    def __init__(self, tiempo, no_carros, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200):
-        self.tiempo = tiempo
-        self.no_carros = no_carros
-        self.ruta_video = ruta_video
-        self.ruta_cascade = ruta_cascade
-        self.salida_y = salida_y
-    
-    def __init__(self):
-        self.tiempo = 0
-        self.no_carros = 0
-        self.ruta_video = ""
-        self.ruta_cascade = "classifier/cascade.xml"
-        self.salida_y = 200
-    
+    def __init__(self, idSemaforo = 0, tVerde = 0, tRojo = 0, no_carros = 0, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200, scaleFactor = 4, minNeighbors = 50, minSize = 50, maxSize = 100):
+        self.idSemaforo = idSemaforo
+        self.tVerde = tVerde # Tiempo (en segundos) en verde (ulitmos 5 segundo son amarillo)
+        self.tRojo = tRojo # Tiempo en rojo (en segundos)
+        self.no_carros = no_carros # Numero de carros acumilado en el ultimo rojo
+        self.ruta_video = ruta_video # Ruta del video para el conteo de carros
+        self.ruta_cascade = ruta_cascade # Ruta del archivo cascade (modelo de vision artificial)
+
+        self.salida_y = salida_y # Numero de pixeles desde arriba (en y) para contar carros
+        self.scaleFactor = scaleFactor  # Reduce la imagen en un 10% en cada escala; ajustar para más o menos detecciones
+        self.minNeighbors = minNeighbors   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
+        self.minSize = minSize  # Tamaño mínimo de los objetos a detectar; ajustar según el tamaño esperado de los coches
+        self.maxSize = maxSize  # Tamaño máximo de los objetos a detectar; establecer si quieres limitar el tamaño máximo
+
     def imprime(self):
         print(f"Numero de carros: {self.no_carros}")
-        print(f"Tiempo en alto: {self.tiempo}")
+        print(f"Tiempo en verde: {self.tVerde}")
+        print(f"Tiempo en alto: {self.tRojo}")
 
     def detecta_carros(self):
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
@@ -36,13 +38,13 @@ class Semaforo:
 
             # Detección de autos en el frame actual
             cars = car_cascade.detectMultiScale(
-                gray,  # Imagen en escala de grises donde se realizará la detección
-                scaleFactor=4,  # Reduce la imagen en un 10% en cada escala; ajustar para más o menos detecciones
-                minNeighbors=50,   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
-                minSize=(50, 50),  # Tamaño mínimo de los objetos a detectar; ajustar según el tamaño esperado de los coches
-                maxSize=(100, 100),  # Tamaño máximo de los objetos a detectar; establecer si quieres limitar el tamaño máximo
-                # flags=cv2.CASCADE_SCALE_IMAGE  # Opcional: Usar esta bandera para escalar la imagen en cada escala
+                gray, 
+                scaleFactor=self.scaleFactor, 
+                minNeighbors=self.minNeighbors,   
+                minSize=(self.minSize, self.minSize),  
+                maxSize=(self.maxSize, self.maxSize)
             )
+
 
             current_frame_positions = []  # Lista para almacenar posiciones en el frame actual
 
@@ -102,10 +104,23 @@ class Semaforo:
 
     def toDict(self):
         return {
-            'tiempo': self.tiempo,
+            'tiempo_verde': self.tVerde,
+            'tiempo_rojo': self.tRojo,
             'no_carros': self.no_carros,
         }
 
     def exportaJson(self):
-        with open('outputs/car_count.json', 'w') as file:
-            json.dump(self.toDict(), file, indent=4) 
+
+        file_path = f'outputs/semaforo{self.idSemaforo}.json'
+    
+        # Check if the directory exists; if not, create it
+        directory_path = os.path.dirname(file_path)
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+        
+        # Create or overwrite the file
+        data = {"message": "Archivo creado o sobrescrito"}  # Example content
+        with open(file_path, 'w') as file:
+            json.dump(self.toDict(), file, indent=4)  # Write JSON content to the file
+    
+    
