@@ -2,6 +2,7 @@ import cv2
 import json
 
 
+
 # --video_path-- Ruta del video a detectar
 # --cascade_path-- Ruta del archivo, cascade.xml (el cerebro del programa)
 # --exit_line_y-- Linea en la cual al cruzar se aumenta el numero de carros (pixeles desde arriba)
