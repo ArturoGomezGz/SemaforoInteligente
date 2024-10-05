@@ -2,7 +2,7 @@ import cv2
 import json
 
 class Semaforo:
-    def __init__(self, tiempo, no_carros, ruta_video = "", ruta_cascade = "../classifier/cascade.xml", salida_y = 200):
+    def __init__(self, tiempo, no_carros, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200):
         self.tiempo = tiempo
         self.no_carros = no_carros
         self.ruta_video = ruta_video
@@ -13,7 +13,7 @@ class Semaforo:
         self.tiempo = 0
         self.no_carros = 0
         self.ruta_video = ""
-        self.ruta_cascade = "../classifier/cascade.xml"
+        self.ruta_cascade = "classifier/cascade.xml"
         self.salida_y = 200
     
     def imprime(self):
@@ -107,5 +107,5 @@ class Semaforo:
         }
 
     def exportaJson(self):
-        with open('../outputs/car_count.json', 'w') as file:
-            json.dump(self.toDict(), file, indent=4)  # Cambiar a json.dump()
+        with open('outputs/car_count.json', 'w') as file:
+            json.dump(self.toDict(), file, indent=4) 
