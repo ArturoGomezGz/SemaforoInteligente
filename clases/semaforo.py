@@ -16,7 +16,7 @@ class Semaforo:
         self.minNeighbors = minNeighbors   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
         self.minSize = minSize  # Tamaño mínimo de los objetos a detectar; ajustar según el tamaño esperado de los coches
         self.maxSize = maxSize  # Tamaño máximo de los objetos a detectar; establecer si quieres limitar el tamaño máximo
-
+    
     def imprime(self):
         print(f"Numero de carros: {self.no_carros}")
         print(f"Tiempo en verde: {self.tVerde}")
@@ -123,4 +123,7 @@ class Semaforo:
         with open(file_path, 'w') as file:
             json.dump(self.toDict(), file, indent=4)  # Write JSON content to the file
     
-    
+    def ajustarTimpo(self, tVerde, tRojo):
+        self.tVerde = tVerde
+        self.tRojo = tRojo
+        return tVerde+tRojo
