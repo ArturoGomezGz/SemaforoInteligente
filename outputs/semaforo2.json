@@ -1,5 +1,5 @@
 {
     "tiempo_verde": 0,
-    "tiempo_rojo": 0,
-    "no_carros": 95
+    "tiempo_rojo": 120,
+    "no_carros": 0
 }

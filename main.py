@@ -1,10 +1,11 @@
+from clases.interseccion import Interseccion
 from clases.semaforo import Semaforo
 
 semaforo1 = Semaforo(idSemaforo = 1, ruta_video = "resources/video1.mp4")
 semaforo2 = Semaforo(idSemaforo = 2, ruta_video = "resources/video2.mp4")
 
-semaforo1.detecta_carros()
-semaforo2.detecta_carros()
+interseccion1 = Interseccion([semaforo1, semaforo2])
 
-semaforo1.exportaJson()
-semaforo2.exportaJson()
+interseccion1.procesar()
+interseccion1.ajustarTiempo()
+
