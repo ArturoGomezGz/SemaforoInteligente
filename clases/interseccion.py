@@ -24,8 +24,8 @@ class Interseccion:
 
         # Verificar si hay carros acumulados
         if total_carros == 0:
-            tiempo_verde = 60
-            tiempo_rojo = 60
+            tiempo_verde = self.tCiclo/self.no_semaforos
+            tiempo_rojo = self.tCiclo/self.no_semaforos
         else:
             
             proporcion =  carros_acum_s1["no_carros"] / total_carros
