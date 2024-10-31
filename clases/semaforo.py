@@ -10,7 +10,6 @@ class Semaforo:
         self.no_carros = no_carros # Numero de carros acumilado en el ultimo rojo
         self.ruta_video = ruta_video # Ruta del video para el conteo de carros
         self.ruta_cascade = ruta_cascade # Ruta del archivo cascade (modelo de vision artificial)
-
         self.salida_y = salida_y # Numero de pixeles desde arriba (en y) para contar carros
         self.scaleFactor = scaleFactor  # Reduce la imagen en un 10% en cada escala; ajustar para más o menos detecciones
         self.minNeighbors = minNeighbors   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
