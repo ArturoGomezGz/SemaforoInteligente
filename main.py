@@ -8,8 +8,8 @@ database = "SemaforoInteligente"  # Cambia esto a tu base de datos
 conection = Conexion(server = server, database = database)
 conection.establecerConexion()
 
-datosS1 = conection.leer("Semaforo", "WHERE id = 1")[0]
-datosS2 = conection.leer("Semaforo", "WHERE id = 2")[0]
+datosS1 = conection.leer("Semaforo", "WHERE id = 1")
+datosS2 = conection.leer("Semaforo", "WHERE id = 2")
 
 conection.cerrarConexion()
 

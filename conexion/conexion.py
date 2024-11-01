@@ -40,7 +40,15 @@ class Conexion:
         query = f"SELECT * FROM {tabla} {condiciones}"
         self.cursor.execute(query)
         resultados = self.cursor.fetchall()
-        return resultados
+        return resultados[0] #Devielve uicamente el plrimer dato
+
+    def leerAll(self, tabla):
+        """Lee datos de una tabla con condiciones opcionales."""
+        self.establecerConexion()
+        query = f"SELECT * FROM {tabla}"
+        self.cursor.execute(query)
+        resultados = self.cursor.fetchall()
+        return resultados #Devielve todos los datos
 
     def actualizar(self, tabla, datos, condiciones):
         """Actualiza datos en una tabla especificada con condiciones."""

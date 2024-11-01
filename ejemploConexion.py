@@ -14,7 +14,7 @@ conexion.establecerConexion()
 conexion.actualizar("Semaforo", {"tVerde": 60, "tRojo": 15}, "id = 1")
 
 # Leer registros después de la actualización
-resultados = conexion.leer("Semaforo")[0]
+resultados = conexion.leer("Semaforo")
 print(resultados)
 
 # Cerrar la conexión
