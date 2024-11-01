@@ -1,7 +1,7 @@
 import json
 
 class Interseccion:
-    def __init__(self, semaforos = None, tCiclo = 120):
+    def __init__(self, semaforos = None, tCiclo = 120,):
         if semaforos is None:
             semaforos = []
         self.semaforos = semaforos

@@ -1,9 +1,17 @@
 import cv2
 import json
 import os
+from conexion.conexion import Conexion
 
 class Semaforo:
-    def __init__(self, idSemaforo = 0, tVerde = 0, tRojo = 0, no_carros = 0, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200, scaleFactor = 4, minNeighbors = 50, minSize = 50, maxSize = 100):
+    def __init__(self, idSemaforo = 0, tVerde = 0, tRojo = 0, no_carros = 0, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200, scaleFactor = 4, minNeighbors = 50, minSize = 50, maxSize = 100, dbDriver = "SQL Server", dbServer = "", dbDatabase = "", dbUsuario = "", dbContrasena = "" ):
+        # Datos necesarios para la conexion a la db
+        self.dbDriver = dbDriver
+        self.dbServer = dbServer
+        self.dbDatabase = dbDatabase
+        self.dbUsuario = dbUsuario
+        self.dbContrasena = dbContrasena
+
         self.idSemaforo = idSemaforo
         self.tVerde = tVerde # Tiempo (en segundos) en verde (ulitmos 5 segundo son amarillo)
         self.tRojo = tRojo # Tiempo en rojo (en segundos)
@@ -125,4 +133,10 @@ class Semaforo:
     def ajustarTimpo(self, tVerde, tRojo):
         self.tVerde = tVerde
         self.tRojo = tRojo
+
+        conexion = Conexion(driver=self.dbDriver, server=self.dbServer, database=self.dbDatabase)
+        conexion.establecerConexion()
+        conexion.actualizar("Semaforo", {"tVerde": self.tVerde, "tRojo": self.tRojo}, "id = " + str(self.idSemaforo))
+        conexion.cerrarConexion()
+
         return tVerde+tRojo
