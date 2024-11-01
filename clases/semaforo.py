@@ -29,7 +29,7 @@ class Semaforo:
         print(f"Tiempo en verde: {self.tVerde}")
         print(f"Tiempo en alto: {self.tRojo}")
 
-    def detecta_carros(self):
+    def detecta_carros(self, idCiclo):
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
         cap = cv2.VideoCapture(self.ruta_video)
 
@@ -107,6 +107,17 @@ class Semaforo:
 
         cap.release()
         cv2.destroyAllWindows()
+
+        conection = Conexion(driver = self.dbDriver, database = self.dbDatabase)
+        conection.establecerConexion()
+        datos = {
+            'idCiclo': idCiclo,
+            'idSemaforo': self.idSemaforo,
+            'noCarros': self.no_carros
+        }
+        conection.crear("dCiclo",datos)
+        conection.cerrarConexion()
+
         return 0
 
     def toDict(self):

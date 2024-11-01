@@ -1,7 +1,17 @@
 import json
+from conexion.conexion import Conexion
+from datetime import datetime, date, time
 
 class Interseccion:
-    def __init__(self, semaforos = None, tCiclo = 120,):
+    def __init__(self, idInterseccion , semaforos = None, tCiclo = 120, dbDriver = "SQL Server", dbServer = "", dbDatabase = "", dbUsuario = "", dbContrasena = "" ):
+        # Datos necesarios para la conexion a la db
+        self.dbDriver = dbDriver
+        self.dbServer = dbServer
+        self.dbDatabase = dbDatabase
+        self.dbUsuario = dbUsuario
+        self.dbContrasena = dbContrasena
+
+        self.idInterseccion = idInterseccion
         if semaforos is None:
             semaforos = []
         self.semaforos = semaforos
@@ -9,8 +19,17 @@ class Interseccion:
         self.tCiclo = tCiclo
 
     def procesar(self):
+        conection = Conexion(server = self.dbServer, database = self.dbDatabase)
+        datos = {
+            'idInterseccion': self.idInterseccion,
+            'dia': str(date.today()),
+            'hora': str(datetime.now().time())
+        }
+        conection.crear("mCiclo", datos)
+        noCiclo = conection.leerAll('mCiclo')[-1][0]
+        conection.cerrarConexion()
         for i in self.semaforos:
-            i.detecta_carros()
+            i.detecta_carros(idCiclo = noCiclo)
             i.exportaJson()
 
     def ajustarTiempo(self):
