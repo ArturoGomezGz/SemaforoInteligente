@@ -38,3 +38,4 @@ class Interseccion:
         self.semaforos[0].exportaJson()
         self.semaforos[1].exportaJson()
 
+        print("Datos guardados en la base de datos")
