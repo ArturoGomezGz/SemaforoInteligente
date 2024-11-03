@@ -4,32 +4,35 @@ import os
 from conexion.conexion import Conexion
 
 class Semaforo:
-    def __init__(self, idSemaforo = 0, tVerde = 0, tRojo = 0, no_carros = 0, ruta_video = "", ruta_cascade = "classifier/cascade.xml", salida_y = 200, scaleFactor = 4, minNeighbors = 50, minSize = 50, maxSize = 100, dbDriver = "SQL Server", dbServer = "", dbDatabase = "", dbUsuario = "", dbContrasena = "" ):
+    def __init__(self, jsonSemaforo, jsonBaseDeDatos ):
         # Datos necesarios para la conexion a la db
-        self.dbDriver = dbDriver
-        self.dbServer = dbServer
-        self.dbDatabase = dbDatabase
-        self.dbUsuario = dbUsuario
-        self.dbContrasena = dbContrasena
+        self.baseDeDatos = jsonBaseDeDatos
+        self.dbDriver = jsonBaseDeDatos["driver"]
+        self.dbServer = jsonBaseDeDatos["server"]
+        self.dbDatabase = jsonBaseDeDatos["database"]
+        self.dbUsuario = jsonBaseDeDatos["usuario"]
+        self.dbContrasena = jsonBaseDeDatos["contrasena"]
 
-        self.idSemaforo = idSemaforo
-        self.tVerde = tVerde # Tiempo (en segundos) en verde (ulitmos 5 segundo son amarillo)
-        self.tRojo = tRojo # Tiempo en rojo (en segundos)
-        self.no_carros = no_carros # Numero de carros acumilado en el ultimo rojo
-        self.ruta_video = ruta_video # Ruta del video para el conteo de carros
-        self.ruta_cascade = ruta_cascade # Ruta del archivo cascade (modelo de vision artificial)
-        self.salida_y = salida_y # Numero de pixeles desde arriba (en y) para contar carros
-        self.scaleFactor = scaleFactor  # Reduce la imagen en un 10% en cada escala; ajustar para más o menos detecciones
-        self.minNeighbors = minNeighbors   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
-        self.minSize = minSize  # Tamaño mínimo de los objetos a detectar; ajustar según el tamaño esperado de los coches
-        self.maxSize = maxSize  # Tamaño máximo de los objetos a detectar; establecer si quieres limitar el tamaño máximo
+        self.idSemaforo = jsonSemaforo["id"]
+        self.tVerde = jsonSemaforo["tVerde"] # Tiempo (en segundos) en verde (ulitmos 5 segundo son amarillo)
+        self.tRojo = jsonSemaforo["tRojo"] # Tiempo en rojo (en segundos)
+        self.ruta_video = jsonSemaforo["rutaVideo"] # Ruta del video para el conteo de carros
+        self.ruta_cascade = jsonSemaforo["rutaCascade"] # Ruta del archivo cascade (modelo de vision artificial)
+        self.salida_y = jsonSemaforo["salidaY"] # Numero de pixeles desde arriba (en y) para contar carros
+        self.scaleFactor = jsonSemaforo["scaleFactor"]  # Reduce la imagen en un 10% en cada escala; ajustar para más o menos detecciones
+        self.minNeighbors = jsonSemaforo["minNeighbors"]   # Número mínimo de vecinos para considerar una detección válida; ajustar según la precisión deseada
+        self.minSize = jsonSemaforo["minSize"]  # Tamaño mínimo de los objetos a detectar; ajustar según el tamaño esperado de los coches
+        self.maxSize = jsonSemaforo["maxSize"]  # Tamaño máximo de los objetos a detectar; establecer si quieres limitar el tamaño máximo
     
+    def cargarPorSql():
+        return 1
+
     def imprime(self):
-        print(f"Numero de carros: {self.no_carros}")
         print(f"Tiempo en verde: {self.tVerde}")
         print(f"Tiempo en alto: {self.tRojo}")
 
     def detecta_carros(self, idCiclo):
+        noCarros = 0
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
         cap = cv2.VideoCapture(self.ruta_video)
 
@@ -85,7 +88,7 @@ class Semaforo:
                     # Si el auto ha cruzado la línea de salida
                     if prev_position[1] > self.salida_y:
                         # Incrementar el contador de autos salientes
-                        self.no_carros += 1  
+                        noCarros += 1  
 
             # Agregar los autos nuevos a la lista de rastreados
             for position in current_frame_positions:
@@ -97,7 +100,7 @@ class Semaforo:
             cv2.line(frame, (0, self.salida_y), (frame.shape[1], self.salida_y), (0, 0, 255), 2)
 
             # Mostrar el contador de autos detectados que salieron en la ventana
-            cv2.putText(frame, f'Cars Exited: {self.no_carros}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.putText(frame, f'Cars Exited: {noCarros}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
             cv2.imshow('Car Detection', frame)
 
@@ -108,44 +111,23 @@ class Semaforo:
         cap.release()
         cv2.destroyAllWindows()
 
-        conection = Conexion(driver = self.dbDriver, database = self.dbDatabase)
+        conection = Conexion(self.baseDeDatos)
         conection.establecerConexion()
         datos = {
             'idCiclo': idCiclo,
             'idSemaforo': self.idSemaforo,
-            'noCarros': self.no_carros
+            'noCarros': noCarros
         }
         conection.crear("dCiclo",datos)
         conection.cerrarConexion()
 
         return 0
 
-    def toDict(self):
-        return {
-            'tiempo_verde': self.tVerde,
-            'tiempo_rojo': self.tRojo,
-            'no_carros': self.no_carros,
-        }
-
-    def exportaJson(self):
-
-        file_path = f'outputs/semaforo{self.idSemaforo}.json'
-    
-        # Check if the directory exists; if not, create it
-        directory_path = os.path.dirname(file_path)
-        if not os.path.exists(directory_path):
-            os.makedirs(directory_path)
-        
-        # Create or overwrite the file
-        data = {"message": "Archivo creado o sobrescrito"}  # Example content
-        with open(file_path, 'w') as file:
-            json.dump(self.toDict(), file, indent=4)  # Write JSON content to the file
-    
     def ajustarTimpo(self, tVerde, tRojo):
         self.tVerde = tVerde
         self.tRojo = tRojo
 
-        conexion = Conexion(driver=self.dbDriver, server=self.dbServer, database=self.dbDatabase)
+        conexion = Conexion(self.baseDeDatos)
         conexion.establecerConexion()
         conexion.actualizar("Semaforo", {"tVerde": self.tVerde, "tRojo": self.tRojo}, "id = " + str(self.idSemaforo))
         conexion.cerrarConexion()

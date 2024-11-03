@@ -1,13 +1,15 @@
 import pyodbc
+import pandas as pd
+import json
 
 class Conexion:
-    def __init__(self, driver="SQL Server", server="", database="", usuario="", contrasena=""):
-        self.driver = driver
-        self.server = server
-        self.database = database
-        self.user = usuario
-        self.password = contrasena
-        self.stringConexion = f'DRIVER={{{self.driver}}};SERVER={self.server};DATABASE={self.database};Trusted_Connection=yes;'
+    def __init__(self, jsonBaseDeDatos):
+        self.dbDriver = jsonBaseDeDatos["driver"]
+        self.dbServer = jsonBaseDeDatos["server"]
+        self.dbDatabase = jsonBaseDeDatos["database"]
+        self.dbUsuario = jsonBaseDeDatos["usuario"]
+        self.dbContrasena = jsonBaseDeDatos["contrasena"]
+        self.stringConexion = f'DRIVER={{{self.dbDriver}}};SERVER={self.dbServer};DATABASE={self.dbDatabase};Trusted_Connection=yes;'
         self.conexion = None
         self.cursor = None
 
@@ -34,13 +36,34 @@ class Conexion:
         self.conexion.commit()
         print("Datos insertados exitosamente.")
 
+    def leerSpecialQuery(self, query):
+        self.cursor.execute(query)
+        resultados = self.cursor.fetchall()
+        
+        # Asegurarse de que haya al menos un resultado
+        if resultados:
+            return self.sqlToDict(self.cursor, resultados[0])
+        else:
+            return {}  # Devuelve un diccionario vacío si no hay resultados
+
     def leer(self, tabla, condiciones=""):
-        """Lee datos de una tabla con condiciones opcionales."""
         self.establecerConexion()
         query = f"SELECT * FROM {tabla} {condiciones}"
         self.cursor.execute(query)
         resultados = self.cursor.fetchall()
-        return resultados[0] #Devielve uicamente el plrimer dato
+        
+        # Asegurarse de que haya al menos un resultado
+        if resultados:
+            return self.sqlToDict(self.cursor, resultados[0])
+        else:
+            return {}  # Devuelve un diccionario vacío si no hay resultados
+
+    def sqlToDict(self, cursor, data_row):
+        # Obtener solo los nombres de las columnas desde cursor.description
+        columns = [column[0] for column in cursor.description]
+        # Combinar columnas y datos de la fila en un diccionario
+        row_dict = dict(zip(columns, data_row))
+        return row_dict
 
     def leerAll(self, tabla):
         """Lee datos de una tabla con condiciones opcionales."""

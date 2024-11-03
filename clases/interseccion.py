@@ -3,23 +3,25 @@ from conexion.conexion import Conexion
 from datetime import datetime, date, time
 
 class Interseccion:
-    def __init__(self, idInterseccion , semaforos = None, tCiclo = 120, dbDriver = "SQL Server", dbServer = "", dbDatabase = "", dbUsuario = "", dbContrasena = "" ):
+    def __init__(self, jsonInterseccion, semaforos = None, jsonBaseDeDatos = {}):
         # Datos necesarios para la conexion a la db
-        self.dbDriver = dbDriver
-        self.dbServer = dbServer
-        self.dbDatabase = dbDatabase
-        self.dbUsuario = dbUsuario
-        self.dbContrasena = dbContrasena
+        self.baseDeDatos = jsonBaseDeDatos
+        self.dbDriver = jsonBaseDeDatos["driver"]
+        self.dbServer = jsonBaseDeDatos["server"]
+        self.dbDatabase = jsonBaseDeDatos["database"]
+        self.dbUsuario = jsonBaseDeDatos["usuario"]
+        self.dbContrasena = jsonBaseDeDatos["contrasena"]
 
-        self.idInterseccion = idInterseccion
         if semaforos is None:
             semaforos = []
         self.semaforos = semaforos
-        self.no_semaforos = len(semaforos)
-        self.tCiclo = tCiclo
+
+        self.idInterseccion = jsonInterseccion["id"]
+        self.no_semaforos = jsonInterseccion["noSemaforos"]
+        self.tCiclo = jsonInterseccion["tCiclo"]
 
     def procesar(self):
-        conection = Conexion(server = self.dbServer, database = self.dbDatabase)
+        conection = Conexion(self.baseDeDatos)
         datos = {
             'idInterseccion': self.idInterseccion,
             'dia': str(date.today()),
@@ -30,31 +32,27 @@ class Interseccion:
         conection.cerrarConexion()
         for i in self.semaforos:
             i.detecta_carros(idCiclo = noCiclo)
-            i.exportaJson()
 
     def ajustarTiempo(self):
-        # Cargar la cantidad de carros acumulados desde los archivos JSON
-        carros_acum_s1 = json.load(open('./outputs/semaforo1.json', 'r'))
-        carros_acum_s2 = json.load(open('./outputs/semaforo2.json', 'r'))
-
-        # Calcular el total de carros acumulados
-        total_carros = carros_acum_s1["no_carros"] + carros_acum_s2["no_carros"]
+        conection = Conexion(self.baseDeDatos)
+        conection.establecerConexion()
+        carros_acum_s1 = conection.leerSpecialQuery("SELECT TOP 2 * FROM dCiclo ORDER BY idCiclo DESC")["noCarros"]
+        carros_acum_s2 = conection.leerSpecialQuery("SELECT TOP 2 * FROM dCiclo ORDER BY idCiclo DESC")["noCarros"]
+        conection.cerrarConexion()
+        total_carros = carros_acum_s1 + carros_acum_s2
         
-
         # Verificar si hay carros acumulados
         if total_carros == 0:
             tiempo_verde = self.tCiclo/self.no_semaforos
             tiempo_rojo = self.tCiclo/self.no_semaforos
         else:
             
-            proporcion =  carros_acum_s1["no_carros"] / total_carros
+            proporcion =  carros_acum_s1 / total_carros
 
             tiempo_verde = round(proporcion * self.tCiclo)
             tiempo_rojo = self.tCiclo - tiempo_verde
 
         self.semaforos[0].ajustarTimpo(tiempo_verde, tiempo_rojo)
         self.semaforos[1].ajustarTimpo(tiempo_rojo, tiempo_verde)
-        self.semaforos[0].exportaJson()
-        self.semaforos[1].exportaJson()
 
         print("Datos guardados en la base de datos")
