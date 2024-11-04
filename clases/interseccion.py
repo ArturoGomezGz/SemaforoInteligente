@@ -36,13 +36,14 @@ class Interseccion:
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
         conection.establecerConexion()
-        carros_acum_s1 = conection.leerSpecialQuery("SELECT TOP 2 * FROM dCiclo ORDER BY idCiclo DESC")["noCarros"]
-        carros_acum_s2 = conection.leerSpecialQuery("SELECT TOP 2 * FROM dCiclo ORDER BY idCiclo DESC")["noCarros"]
+        carros_acum_s1 = conection.leerSpecialQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 1 ORDER BY idCiclo DESC")["noCarros"]
+        carros_acum_s2 = conection.leerSpecialQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 2 ORDER BY idCiclo DESC")["noCarros"]
         conection.cerrarConexion()
         total_carros = carros_acum_s1 + carros_acum_s2
         
         # Verificar si hay carros acumulados
         if total_carros == 0:
+            print("carros = 0")
             tiempo_verde = self.tCiclo/self.no_semaforos
             tiempo_rojo = self.tCiclo/self.no_semaforos
         else:
@@ -52,6 +53,7 @@ class Interseccion:
             tiempo_verde = round(proporcion * self.tCiclo)
             tiempo_rojo = self.tCiclo - tiempo_verde
 
+        
         self.semaforos[0].ajustarTimpo(tiempo_verde, tiempo_rojo)
         self.semaforos[1].ajustarTimpo(tiempo_rojo, tiempo_verde)
 

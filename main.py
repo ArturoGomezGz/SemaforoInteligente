@@ -30,8 +30,9 @@ interseccion1 = Interseccion(
 
 conection.cerrarConexion()
 
-interseccion1.procesar()
-interseccion1.ajustarTiempo()
+for i in range(0,2):
+    interseccion1.procesar()
+    interseccion1.ajustarTiempo()
 
 
 
