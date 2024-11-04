@@ -4,10 +4,10 @@ from conexion.conexion import Conexion
 
 baseDeDatos = {
     "driver" : "SQL Server",
-    "server" : "DESKTOP-GI8HMHT",  # Cambia esto a tu servidor SQL
-    "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
-    "usuario" : "",
-    "contrasena" : "",
+    "server" : "localhost",  # Cambia esto a tu servidor SQL
+    "database" : "IoT",  # Cambia esto a tu base de datos
+    "usuario" : "root",
+    "contrasena" : "password",
 }
 
 conection = Conexion(baseDeDatos)

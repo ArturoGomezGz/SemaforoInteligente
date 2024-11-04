@@ -1,4 +1,4 @@
-import pyodbc
+import mysql.connector
 import pandas as pd
 import json
 
@@ -9,15 +9,19 @@ class Conexion:
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
         self.dbContrasena = jsonBaseDeDatos["contrasena"]
-        self.stringConexion = f'DRIVER={{{self.dbDriver}}};SERVER={self.dbServer};DATABASE={self.dbDatabase};Trusted_Connection=yes;'
         self.conexion = None
         self.cursor = None
 
     def establecerConexion(self):
         """Establece la conexión y el cursor si no están definidos."""
         if self.conexion is None or self.cursor is None:
-            self.conexion = pyodbc.connect(self.stringConexion)
-            self.cursor = self.conexion.cursor()
+            conexion = mysql.connector.connect(
+                host=self.dbServer,
+                user=self.dbUsuario,
+                passwd=self.dbContrasena,
+                database=self.dbDatabase
+            )
+            self.cursor = conexion.cursor()
 
     def cerrarConexion(self):
         """Cierra la conexión y el cursor."""
