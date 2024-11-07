@@ -21,8 +21,10 @@ class Interseccion:
 
     def procesar(self):
         conection = Conexion(self.baseDeDatos)
-        dia = str(date.today()),
+        # Define `dia` y `hora` sin la coma al final
+        dia = str(date.today())
         hora = str(datetime.now().time())
+        # Llama a la función con los valores corregidos
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
         noCiclo = conection.getMCiclos()[-1][0]
         conection.cerrarConexion()
