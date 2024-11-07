@@ -75,7 +75,10 @@ class Conexion:
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
-        self.sQuery(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},'{dia}','{hora}')")
+        query = "INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES (%s, %s, %s)"
+        values = (idInterseccion, dia, hora)
+        self.sQuery(query, values)
+
 
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
