@@ -21,7 +21,7 @@ class Interseccion:
 
     def procesar(self):
         conection = Conexion(self.baseDeDatos)
-        dia = str(date.today()),
+        dia = str(date.today())
         hora = str(datetime.now().time())
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
         noCiclo = conection.getMCiclos()[-1][0]
