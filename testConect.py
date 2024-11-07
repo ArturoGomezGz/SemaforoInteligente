@@ -10,7 +10,7 @@ baseDeDatos = {
 
 conection = Conexion(baseDeDatos)
 
-json_data = conection.getMCiclo()
+json_data = conection.getMCiclos()
 data = json.loads(json_data)
 print(data)
 
