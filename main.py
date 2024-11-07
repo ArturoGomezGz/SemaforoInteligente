@@ -1,29 +1,29 @@
 from clases.interseccion import Interseccion
 from clases.semaforo import Semaforo
 from conexion.conexion import Conexion
+import json
 
 baseDeDatos = {
-    "driver" : "SQL Server",
     "server" : "localhost",  # Cambia esto a tu servidor SQL
-    "database" : "IoT",  # Cambia esto a tu base de datos
-    "usuario" : "root",
-    "contrasena" : "password",
+    "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
+    "usuario" : "arturo",
+    "contrasena" : "Pword1",
 }
 
 conection = Conexion(baseDeDatos)
 
 semaforo1 = Semaforo(
-    conection.leer("Semaforo", "WHERE id = 1"),
+    json.loads(conection.getSemaforo(1))[0],
     baseDeDatos
     )
 
 semaforo2 = Semaforo(
-    conection.leer("Semaforo", "WHERE id = 2"),
+    json.loads(conection.getSemaforo(2))[0],
     baseDeDatos
     )
 
 interseccion1 = Interseccion(
-    conection.leer("Interseccion", "WHERE id = 1"),
+    json.loads(conection.getInterseccion(1))[0],
     [semaforo1, semaforo2], 
     baseDeDatos
     )

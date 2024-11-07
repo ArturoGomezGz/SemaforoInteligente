@@ -4,24 +4,16 @@ import json
 
 class Conexion:
     def __init__(self, jsonBaseDeDatos):
-        self.dbDriver = jsonBaseDeDatos["driver"]
         self.dbServer = jsonBaseDeDatos["server"]
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
         self.dbContrasena = jsonBaseDeDatos["contrasena"]
-        self.conexion = None
-        self.cursor = None
-
-    def establecerConexion(self):
-        """Establece la conexión y el cursor si no están definidos."""
-        if self.conexion is None or self.cursor is None:
-            conexion = mysql.connector.connect(
-                host=self.dbServer,
-                user=self.dbUsuario,
-                passwd=self.dbContrasena,
-                database=self.dbDatabase
-            )
-            self.cursor = conexion.cursor()
+        self.conexion = mysql.connector.connect(
+            host=self.dbServer,
+            user=self.dbUsuario,
+            passwd=self.dbContrasena,
+            database=self.dbDatabase
+        )
 
     def cerrarConexion(self):
         """Cierra la conexión y el cursor."""
@@ -30,66 +22,53 @@ class Conexion:
             self.cursor = None
             print("Conexión cerrada exitosamente.")
 
-    def crear(self, tabla, datos):
-        """Inserta datos en una tabla especificada."""
-        self.establecerConexion()
-        columnas = ', '.join(datos.keys())
-        valores = ', '.join(['?'] * len(datos))
-        query = f"INSERT INTO {tabla} ({columnas}) VALUES ({valores})"
-        self.cursor.execute(query, list(datos.values()))
-        self.conexion.commit()
-        print("Datos insertados exitosamente.")
-
-    def leerSpecialQuery(self, query):
-        self.cursor.execute(query)
-        resultados = self.cursor.fetchall()
+    def query_results_to_json(self, resultados, columnas):
+        # Convierte cada fila en un diccionario usando las columnas proporcionadas
+        rows = [dict(zip(columnas, row)) for row in resultados]
         
-        # Asegurarse de que haya al menos un resultado
-        if resultados:
-            return self.sqlToDict(self.cursor, resultados[0])
-        else:
-            return {}  # Devuelve un diccionario vacío si no hay resultados
-
-    def leer(self, tabla, condiciones=""):
-        self.establecerConexion()
-        query = f"SELECT * FROM {tabla} {condiciones}"
-        self.cursor.execute(query)
-        resultados = self.cursor.fetchall()
+        # Convierte la lista de diccionarios a JSON
+        json_result = json.dumps(rows, indent=4)
         
-        # Asegurarse de que haya al menos un resultado
-        if resultados:
-            return self.sqlToDict(self.cursor, resultados[0])
-        else:
-            return {}  # Devuelve un diccionario vacío si no hay resultados
+        return json_result
 
-    def sqlToDict(self, cursor, data_row):
-        # Obtener solo los nombres de las columnas desde cursor.description
-        columns = [column[0] for column in cursor.description]
-        # Combinar columnas y datos de la fila en un diccionario
-        row_dict = dict(zip(columns, data_row))
-        return row_dict
+    def sQuery(self, query):
+        cursor = self.conexion.cursor()
+        cursor.execute(query)
+        
+        # Obtener resultados y nombres de columnas
+        resultados = cursor.fetchall()
+        columnas = [column[0] for column in cursor.description]
+        
+        # Llama a la función de transformación a JSON
+        json_result = self.query_results_to_json(resultados, columnas)
+        
+        return json_result
 
-    def leerAll(self, tabla):
-        """Lee datos de una tabla con condiciones opcionales."""
-        self.establecerConexion()
-        query = f"SELECT * FROM {tabla}"
-        self.cursor.execute(query)
-        resultados = self.cursor.fetchall()
-        return resultados #Devielve todos los datos
+    # GET
+    def getSemaforos(self):
+        return self.sQuery("SELECT * FROM Semaforo")
+    
+    def getSemaforo(self, semaforoId):
+        return self.sQuery(f"SELECT * FROM Semaforo WHERE id = {semaforoId}")
+    
+    def getIntersecciones(self):
+        return self.sQuery("SELECT * FROM Interseccion")
+    
+    def getInterseccion(self, interseccionId):
+        return self.sQuery(f"SELECT * FROM Interseccion WHERE id = {interseccionId}")
 
-    def actualizar(self, tabla, datos, condiciones):
-        """Actualiza datos en una tabla especificada con condiciones."""
-        self.establecerConexion()
-        set_clause = ', '.join([f"{col} = ?" for col in datos.keys()])
-        query = f"UPDATE {tabla} SET {set_clause} WHERE {condiciones}"
-        self.cursor.execute(query, list(datos.values()))
-        self.conexion.commit()
-        print("Datos actualizados exitosamente.")
-
-    def eliminar(self, tabla, condiciones):
-        """Elimina datos de una tabla con las condiciones especificadas."""
-        self.establecerConexion()
-        query = f"DELETE FROM {tabla} WHERE {condiciones}"
-        self.cursor.execute(query)
-        self.conexion.commit()
-        print("Datos eliminados exitosamente.")
+    def getMCiclos(self):
+        return self.sQuery("SELECT * FROM mCiclo")
+    
+    def getMCiclo(self, mCicloId):
+        return self.sQuery(f"SELECT * FROM mCiclo WHERE id = {mCicloId}")
+    
+    def getDCiclos(self):
+        return self.sQuery("SELECT * FROM dCiclo")
+    
+    def getDCiclo(self, dCicloId):
+        return self.sQuery(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
+    
+    #POST
+    def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
+        return self.sQuery(f"UPDATE Semaforo ")

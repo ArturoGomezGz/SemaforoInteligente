@@ -129,7 +129,7 @@ class Semaforo:
 
         conexion = Conexion(self.baseDeDatos)
         conexion.establecerConexion()
-        conexion.actualizar("Semaforo", {"tVerde": self.tVerde, "tRojo": self.tRojo}, "id = " + str(self.idSemaforo))
+        conexion.ajustarTiempoSemaforo("Semaforo", {"tVerde": self.tVerde, "tRojo": self.tRojo}, "id = " + str(self.idSemaforo))
         conexion.cerrarConexion()
 
         return tVerde+tRojo
