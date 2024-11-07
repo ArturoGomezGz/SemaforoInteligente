@@ -35,19 +35,14 @@ class Conexion:
         cursor = self.conexion.cursor()
         cursor.execute(query)
         
-        try:
-            # Obtener resultados y nombres de columnas
-            resultados = cursor.fetchall()
-            columnas = [column[0] for column in cursor.description]
-            
-            # Llama a la función de transformación a JSON
-            json_result = self.query_results_to_json(resultados, columnas)
-            
-            return json_result
-        except:
-            print("ERROR al ejecutar consulta")
-        finally:
-            print("Query ejecutada")
+        # Obtener resultados y nombres de columnas
+        resultados = cursor.fetchall()
+        columnas = [column[0] for column in cursor.description]
+        
+        # Llama a la función de transformación a JSON
+        json_result = self.query_results_to_json(resultados, columnas)
+        
+        return json_result
 
     def sQueryPOST(self, query):
         cursor = self.conexion.cursor()
