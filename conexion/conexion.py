@@ -35,14 +35,19 @@ class Conexion:
         cursor = self.conexion.cursor()
         cursor.execute(query)
         
-        # Obtener resultados y nombres de columnas
-        resultados = cursor.fetchall()
-        columnas = [column[0] for column in cursor.description]
-        
-        # Llama a la función de transformación a JSON
-        json_result = self.query_results_to_json(resultados, columnas)
-        
-        return json_result
+        try:
+            # Obtener resultados y nombres de columnas
+            resultados = cursor.fetchall()
+            columnas = [column[0] for column in cursor.description]
+            
+            # Llama a la función de transformación a JSON
+            json_result = self.query_results_to_json(resultados, columnas)
+            
+            return json_result
+        except:
+            print("")
+        finally:
+            print("Query ejecutada")
 
     # GET
     def getSemaforos(self):
@@ -75,13 +80,8 @@ class Conexion:
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
-        # Convierte los valores en tipos adecuados y asegúrate de que no haya errores de sintaxis
         query = f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion}, '{dia}', '{hora}')"
-        print(query)  # Utiliza esto para ver la consulta generada antes de ejecutarla
         self.sQuery(query)
-
-
-
 
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
