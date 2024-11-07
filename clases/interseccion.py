@@ -26,8 +26,12 @@ class Interseccion:
         hora = str(datetime.now().time())
         # Llama a la función con los valores corregidos
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
-        print(json.load(conection.getMCiclos()))
-        noCiclo = conection.getMCiclos()[-1][0]
+
+        json_data = conection.getMCiclo()
+        data = json.loads(json_data)
+        print(data)
+
+        noCiclo = conection.getMCiclos()
         conection.cerrarConexion()
         for i in self.semaforos:
             i.detecta_carros(idCiclo = noCiclo)
