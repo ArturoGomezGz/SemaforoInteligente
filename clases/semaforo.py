@@ -49,10 +49,10 @@ class Semaforo:
             # Detección de autos en el frame actual
             cars = car_cascade.detectMultiScale(
                 gray, 
-                scaleFactor=self.scaleFactor, 
-                minNeighbors=self.minNeighbors,   
-                minSize=(self.minSize, self.minSize),  
-                maxSize=(self.maxSize, self.maxSize)
+                scaleFactor=float(self.scaleFactor), 
+                minNeighbors=float(self.minNeighbors),   
+                minSize=(float(self.minSize), float(self.minSize)),  
+                maxSize=(float(self.maxSize), float(self.maxSize))
             )
 
 
