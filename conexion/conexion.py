@@ -34,6 +34,10 @@ class Conexion:
     def sQuery(self, query):
         cursor = self.conexion.cursor()
         cursor.execute(query)
+
+    def sQueryGET(self, query):
+        cursor = self.conexion.cursor()
+        cursor.execute(query)
         
         # Obtener resultados y nombres de columnas
         resultados = cursor.fetchall()
@@ -46,28 +50,28 @@ class Conexion:
 
     # GET
     def getSemaforos(self):
-        return self.sQuery("SELECT * FROM Semaforo")
+        return self.sQueryGET("SELECT * FROM Semaforo")
     
     def getSemaforo(self, semaforoId):
-        return self.sQuery(f"SELECT * FROM Semaforo WHERE id = {semaforoId}")
+        return self.sQueryGET(f"SELECT * FROM Semaforo WHERE id = {semaforoId}")
     
     def getIntersecciones(self):
-        return self.sQuery("SELECT * FROM Interseccion")
+        return self.sQueryGET("SELECT * FROM Interseccion")
     
     def getInterseccion(self, interseccionId):
-        return self.sQuery(f"SELECT * FROM Interseccion WHERE id = {interseccionId}")
+        return self.sQueryGET(f"SELECT * FROM Interseccion WHERE id = {interseccionId}")
 
     def getMCiclos(self):
-        return self.sQuery("SELECT * FROM mCiclo")
+        return self.sQueryGET("SELECT * FROM mCiclo")
     
     def getMCiclo(self, mCicloId):
-        return self.sQuery(f"SELECT * FROM mCiclo WHERE id = {mCicloId}")
+        return self.sQueryGET(f"SELECT * FROM mCiclo WHERE id = {mCicloId}")
     
     def getDCiclos(self):
-        return self.sQuery("SELECT * FROM dCiclo")
+        return self.sQueryGET("SELECT * FROM dCiclo")
     
     def getDCiclo(self, dCicloId):
-        return self.sQuery(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
+        return self.sQueryGET(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
     
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
@@ -75,7 +79,6 @@ class Conexion:
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
-        print(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},{dia},{hora})")
         self.sQuery(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},'{dia}','{hora}')")
         
 
