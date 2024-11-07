@@ -1,7 +1,6 @@
 import mysql.connector
 import pandas as pd
 import json
-from datetime import date
 
 class Conexion:
     def __init__(self, jsonBaseDeDatos):
@@ -25,19 +24,12 @@ class Conexion:
 
     def query_results_to_json(self, resultados, columnas):
         # Convierte cada fila en un diccionario usando las columnas proporcionadas
-        rows = [dict(zip(columnas, row)) for row in resultados]
+        rows = [dict(zip(columnas, map(str, row))) for row in resultados]
 
-        # Función para convertir tipos no serializables (como date) a algo que JSON pueda manejar
-        def default_converter(o):
-            if isinstance(o, date):
-                return o.isoformat()  # Convierte el objeto date a una cadena en formato ISO
-            raise TypeError(f"Object of type {o.__class__.__name__} is not JSON serializable")
-        
-        # Convierte la lista de diccionarios a JSON, usando el convertidor personalizado
-        json_result = json.dumps(rows, indent=4, default=default_converter)
+        # Convierte la lista de diccionarios a JSON
+        json_result = json.dumps(rows, indent=4)
         
         return json_result
-
 
     def sQueryGET(self, query):
         cursor = self.conexion.cursor()
