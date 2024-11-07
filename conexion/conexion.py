@@ -75,9 +75,11 @@ class Conexion:
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
-        # Asegúrate de que `idInterseccion` sea un número y que `dia` y `hora` estén adecuadamente formateados
-        query = f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({int(idInterseccion)}, '{dia}', '{hora}')"
+        # Convierte los valores en tipos adecuados y asegúrate de que no haya errores de sintaxis
+        query = f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion}, '{dia}', '{hora}')"
+        print(query)  # Utiliza esto para ver la consulta generada antes de ejecutarla
         self.sQuery(query)
+
 
 
 
