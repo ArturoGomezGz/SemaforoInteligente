@@ -31,7 +31,7 @@ class Conexion:
         
         return json_result
 
-    def sQuery(self, query):
+    def sQueryGET(self, query):
         cursor = self.conexion.cursor()
         cursor.execute(query)
         
@@ -45,43 +45,47 @@ class Conexion:
             
             return json_result
         except:
-            print("")
+            print("ERROR al ejecutar consulta")
         finally:
             print("Query ejecutada")
 
+    def sQueryPOST(self, query):
+        cursor = self.conexion.cursor()
+        cursor.execute(query)
+    
     # GET
     def getSemaforos(self):
-        return self.sQuery("SELECT * FROM Semaforo")
+        return self.sQueryGET("SELECT * FROM Semaforo")
     
     def getSemaforo(self, semaforoId):
-        return self.sQuery(f"SELECT * FROM Semaforo WHERE id = {semaforoId}")
+        return self.sQueryGET(f"SELECT * FROM Semaforo WHERE id = {semaforoId}")
     
     def getIntersecciones(self):
-        return self.sQuery("SELECT * FROM Interseccion")
+        return self.sQueryGET("SELECT * FROM Interseccion")
     
     def getInterseccion(self, interseccionId):
-        return self.sQuery(f"SELECT * FROM Interseccion WHERE id = {interseccionId}")
+        return self.sQueryGET(f"SELECT * FROM Interseccion WHERE id = {interseccionId}")
 
     def getMCiclos(self):
-        return self.sQuery("SELECT * FROM mCiclo")
+        return self.sQueryGET("SELECT * FROM mCiclo")
     
     def getMCiclo(self, mCicloId):
-        return self.sQuery(f"SELECT * FROM mCiclo WHERE id = {mCicloId}")
+        return self.sQueryGET(f"SELECT * FROM mCiclo WHERE id = {mCicloId}")
     
     def getDCiclos(self):
-        return self.sQuery("SELECT * FROM dCiclo")
+        return self.sQueryGET("SELECT * FROM dCiclo")
     
     def getDCiclo(self, dCicloId):
-        return self.sQuery(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
+        return self.sQueryGET(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
     
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
-        self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo {tRojo} WHERE id = {idSemaforo}")
+        self.sQueryGET(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo {tRojo} WHERE id = {idSemaforo}")
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
         query = f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion}, '{dia}', '{hora}')"
-        self.sQuery(query)
+        self.sQueryPOST(query)
 
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
-        self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
+        self.sQueryPOST(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
