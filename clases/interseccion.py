@@ -22,13 +22,10 @@ class Interseccion:
 
     def procesar(self):
         conection = Conexion(self.baseDeDatos)
-        datos = {
-            'idInterseccion': self.idInterseccion,
-            'dia': str(date.today()),
-            'hora': str(datetime.now().time())
-        }
-        conection.crear("mCiclo", datos)
-        noCiclo = conection.leerAll('mCiclo')[-1][0]
+        dia = str(date.today()),
+        hora = str(datetime.now().time())
+        conection.agregarMCiclo(self.idInterseccion, dia, hora)
+        noCiclo = conection.getMCiclos()[-1][0]
         conection.cerrarConexion()
         for i in self.semaforos:
             i.detecta_carros(idCiclo = noCiclo)
@@ -36,8 +33,8 @@ class Interseccion:
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
         conection.establecerConexion()
-        carros_acum_s1 = conection.leerSpecialQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 1 ORDER BY idCiclo DESC")["noCarros"]
-        carros_acum_s2 = conection.leerSpecialQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 2 ORDER BY idCiclo DESC")["noCarros"]
+        carros_acum_s1 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 1 ORDER BY idCiclo DESC")[0]["noCarros"]
+        carros_acum_s2 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 2 ORDER BY idCiclo DESC")[0]["noCarros"]
         conection.cerrarConexion()
         total_carros = carros_acum_s1 + carros_acum_s2
         

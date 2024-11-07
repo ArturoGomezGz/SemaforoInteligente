@@ -113,12 +113,7 @@ class Semaforo:
 
         conection = Conexion(self.baseDeDatos)
         conection.establecerConexion()
-        datos = {
-            'idCiclo': idCiclo,
-            'idSemaforo': self.idSemaforo,
-            'noCarros': noCarros
-        }
-        conection.crear("dCiclo",datos)
+        conection.agregarDCiclo(idCiclo, self.idSemaforo, noCarros)
         conection.cerrarConexion()
 
         return 0
@@ -129,7 +124,7 @@ class Semaforo:
 
         conexion = Conexion(self.baseDeDatos)
         conexion.establecerConexion()
-        conexion.ajustarTiempoSemaforo("Semaforo", {"tVerde": self.tVerde, "tRojo": self.tRojo}, "id = " + str(self.idSemaforo))
+        conexion.ajustarTiempoSemaforo(self.idSemaforo, self.tVerde, self.tRojo)
         conexion.cerrarConexion()
 
         return tVerde+tRojo
