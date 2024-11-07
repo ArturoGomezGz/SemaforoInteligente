@@ -1,7 +1,7 @@
 import mysql.connector
 import pandas as pd
 import json
-import date 
+from datetime import date
 
 class Conexion:
     def __init__(self, jsonBaseDeDatos):
