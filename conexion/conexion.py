@@ -32,17 +32,38 @@ class Conexion:
         return json_result
 
     def sQueryGET(self, query):
-        cursor = self.conexion.cursor()
-        cursor.execute(query)
-        
-        # Obtener resultados y nombres de columnas
-        resultados = cursor.fetchall()
-        columnas = [column[0] for column in cursor.description]
-        
-        # Llama a la función de transformación a JSON
-        json_result = self.query_results_to_json(resultados, columnas)
-        
-        return json_result
+        try:
+            cursor = self.conexion.cursor()
+            
+            # Ejecuta la consulta
+            cursor.execute(query)
+            
+            # Obtiene resultados y nombres de columnas
+            resultados = cursor.fetchall()
+            columnas = [column[0] for column in cursor.description]
+            
+            # Llama a la función de transformación a JSON
+            json_result = self.query_results_to_json(resultados, columnas)
+            
+            # Cierra el cursor
+            cursor.close()
+            
+            return json_result
+        except Exception as e:
+            print("Error en sQueryGET:", e)
+            return None
+
+            cursor = self.conexion.cursor()
+            cursor.execute(query)
+            
+            # Obtener resultados y nombres de columnas
+            resultados = cursor.fetchall()
+            columnas = [column[0] for column in cursor.description]
+            
+            # Llama a la función de transformación a JSON
+            json_result = self.query_results_to_json(resultados, columnas)
+            
+            return json_result
 
     def sQueryPOST(self, query):
         cursor = self.conexion.cursor()
