@@ -7,7 +7,6 @@ class Semaforo:
     def __init__(self, jsonSemaforo, jsonBaseDeDatos ):
         # Datos necesarios para la conexion a la db
         self.baseDeDatos = jsonBaseDeDatos
-        self.dbDriver = jsonBaseDeDatos["driver"]
         self.dbServer = jsonBaseDeDatos["server"]
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
