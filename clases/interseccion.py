@@ -27,7 +27,7 @@ class Interseccion:
         # Llama a la función con los valores corregidos
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
 
-        json_data = conection.getMCiclo()
+        json_data = conection.getMCiclos()
         data = json.loads(json_data)
         print(data)
 
