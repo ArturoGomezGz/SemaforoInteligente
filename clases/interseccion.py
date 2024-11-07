@@ -26,6 +26,7 @@ class Interseccion:
         hora = str(datetime.now().time())
         # Llama a la función con los valores corregidos
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
+        print(conection.getMCiclos())
         noCiclo = conection.getMCiclos()[-1][0]
         conection.cerrarConexion()
         for i in self.semaforos:
