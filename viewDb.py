@@ -10,9 +10,10 @@ baseDeDatos = {
     "contrasena" : "Pword1",
 }
 
-conection = Conexion(baseDeDatos)
+
 
 while True:
+    conection = Conexion(baseDeDatos)
     os.system("clear")
 
     print("mCiclos --------------------------------------")
@@ -44,8 +45,7 @@ while True:
     print("")
 
     time.sleep(5)
-
-conection.cerrarConexion()
+    conection.cerrarConexion()
 
 
 
