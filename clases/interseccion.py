@@ -26,6 +26,7 @@ class Interseccion:
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
         jsonNoCiclo = conection.getMCiclos()
         noCiclo = json.loads(jsonNoCiclo)[-1]['id']
+        print(json.loads(jsonNoCiclo))
         print(noCiclo)
         conection.cerrarConexion()
         for i in self.semaforos:

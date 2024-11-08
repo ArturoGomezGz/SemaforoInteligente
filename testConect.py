@@ -14,6 +14,18 @@ json_data = conection.getMCiclos()
 data = json.loads(json_data)
 print(data)
 
+json_data = conection.getDCiclos()
+data = json.loads(json_data)
+print(data)
+
+json_data = conection.getSemaforos()
+data = json.loads(json_data)
+print(data)
+
+json_data = conection.getIntersecciones()
+data = json.loads(json_data)
+print(data)
+
 conection.cerrarConexion()
 
 
