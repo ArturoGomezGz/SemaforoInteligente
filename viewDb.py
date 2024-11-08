@@ -10,42 +10,38 @@ baseDeDatos = {
     "contrasena" : "Pword1",
 }
 
+conection = Conexion(baseDeDatos)
+os.system("clear")
 
+print("mCiclos --------------------------------------")
+json_data = conection.getMCiclos()
+data = json.loads(json_data)
+for i in data:
+    print(i)
+print("")
 
-while True:
-    conection = Conexion(baseDeDatos)
-    os.system("clear")
+print("dCiclos --------------------------------------")
+json_data = conection.getDCiclos()
+data = json.loads(json_data)
+for i in data:
+    print(i)
+print("")
 
-    print("mCiclos --------------------------------------")
-    json_data = conection.getMCiclos()
-    data = json.loads(json_data)
-    for i in data:
-        print(i)
-    print("")
+print("Semaforos --------------------------------------")
+json_data = conection.getSemaforos()
+data = json.loads(json_data)
+for i in data:
+    print(i)
+print("")
 
-    print("dCiclos --------------------------------------")
-    json_data = conection.getDCiclos()
-    data = json.loads(json_data)
-    for i in data:
-        print(i)
-    print("")
+print("Interseciones --------------------------------------")
+json_data = conection.getIntersecciones()
+data = json.loads(json_data)
+for i in data:
+    print(i)
+print("")
 
-    print("Semaforos --------------------------------------")
-    json_data = conection.getSemaforos()
-    data = json.loads(json_data)
-    for i in data:
-        print(i)
-    print("")
-
-    print("Interseciones --------------------------------------")
-    json_data = conection.getIntersecciones()
-    data = json.loads(json_data)
-    for i in data:
-        print(i)
-    print("")
-
-    time.sleep(5)
-    conection.cerrarConexion()
+conection.cerrarConexion()
 
 
 
