@@ -75,8 +75,7 @@ class Conexion:
         return self.sQueryGET(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
     
     def getUltimoRegistro(self, idSemaforo):
-        print(f"SELECT * FROM dCiclo WHERE idSemaforo = {idSemaforo} ORDER BY idCiclo DESC LIMIT 1")
-        self.sQueryGET(f"SELECT * FROM dCiclo WHERE idSemaforo = {idSemaforo} ORDER BY idCiclo DESC LIMIT 1")
+        return self.sQueryGET(f"SELECT * FROM dCiclo WHERE idSemaforo = {idSemaforo} ORDER BY idCiclo DESC LIMIT 1")
 
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
