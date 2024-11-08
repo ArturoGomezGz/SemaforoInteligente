@@ -111,10 +111,8 @@ class Semaforo:
         cv2.destroyAllWindows()
 
         conection = Conexion(self.baseDeDatos)
-        conection.establecerConexion()
         conection.agregarDCiclo(idCiclo, self.idSemaforo, noCarros)
         conection.cerrarConexion()
-
         return 0
 
     def ajustarTimpo(self, tVerde, tRojo):
