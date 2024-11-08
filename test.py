@@ -12,7 +12,8 @@ baseDeDatos = {
 
 conection = Conexion(baseDeDatos)
 
-data = conection.getUltimoRegistro(1)
+conection.ajustarTiempoSemaforo(1,30,20)
+data = conection.getSemaforo(1)
 print(data)
 
 conection.cerrarConexion()
