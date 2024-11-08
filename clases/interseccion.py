@@ -24,7 +24,8 @@ class Interseccion:
         dia = str(date.today())
         hora = str(datetime.now().time())
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
-        noCiclo = conection.getMCiclos()[-1][0]
+        jsonNoCiclo = conection.getMCiclos()
+        noCiclo = json.loads(jsonNoCiclo)[-1][0]
         conection.cerrarConexion()
         for i in self.semaforos:
             i.detecta_carros(noCiclo)
