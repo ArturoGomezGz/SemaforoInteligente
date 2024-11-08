@@ -34,6 +34,7 @@ class Conexion:
     def sQuery(self, query):
         cursor = self.conexion.cursor()
         cursor.execute(query)
+        self.conexion.commit()
 
     def sQueryGET(self, query):
         cursor = self.conexion.cursor()
@@ -85,3 +86,6 @@ class Conexion:
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
         print(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
+
+    def limpiarRegistros(self):
+        self.sQuery("DELETE FROM mCiclo;DELETE FROM dCiclo;ALTER TABLE mCiclo AUTO_INCREMENT = 1;ALTER TABLE dCiclo AUTO_INCREMENT = 1;")
