@@ -84,7 +84,6 @@ class Conexion:
         
 
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
-        print(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
 
     def limpiarRegistros(self):

@@ -34,7 +34,6 @@ class Interseccion:
 
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
-        conection.establecerConexion()
         carros_acum_s1 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 1 ORDER BY idCiclo DESC")[0]["noCarros"]
         carros_acum_s2 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 2 ORDER BY idCiclo DESC")[0]["noCarros"]
         conection.cerrarConexion()
