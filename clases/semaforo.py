@@ -96,7 +96,7 @@ class Semaforo:
             detected_cars = new_detected_cars
 
             # Dibujar la línea de salida
-            cv2.line(frame, (0, self.salida_y), (frame.shape[1], self.salida_y), (0, 0, 255), 2)
+            cv2.line(frame, (0, float(self.salida_y)), (frame.shape[1], float(self.salida_y)), (0, 0, 255), 2)
 
             # Mostrar el contador de autos detectados que salieron en la ventana
             cv2.putText(frame, f'Cars Exited: {noCarros}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
