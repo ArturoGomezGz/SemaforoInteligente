@@ -12,7 +12,8 @@ baseDeDatos = {
 
 conection = Conexion(baseDeDatos)
 
-conection.getUltimoRegistro(1)
+data = conection.getUltimoRegistro(1)
+print(data)
 
 conection.cerrarConexion()
 
