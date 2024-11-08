@@ -124,7 +124,6 @@ class Semaforo:
         self.tRojo = tRojo
 
         conexion = Conexion(self.baseDeDatos)
-        conexion.establecerConexion()
         conexion.ajustarTiempoSemaforo(self.idSemaforo, self.tVerde, self.tRojo)
         conexion.cerrarConexion()
 
