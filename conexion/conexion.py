@@ -24,7 +24,7 @@ class Conexion:
 
     def query_results_to_json(self, resultados, columnas):
         # Convierte cada fila en un diccionario usando las columnas proporcionadas
-        rows = [dict(zip(columnas, row)) for row in resultados]
+        rows = [{col: str(value) for col, value in zip(columnas, row)} for row in resultados]
         
         # Convierte la lista de diccionarios a JSON
         json_result = json.dumps(rows, indent=4)
