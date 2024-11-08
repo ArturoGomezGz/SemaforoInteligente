@@ -15,9 +15,9 @@ class Interseccion:
             semaforos = []
         self.semaforos = semaforos
 
-        self.idInterseccion = jsonInterseccion["id"]
-        self.no_semaforos = jsonInterseccion["noSemaforos"]
-        self.tCiclo = jsonInterseccion["tCiclo"]
+        self.idInterseccion = int(jsonInterseccion["id"])
+        self.no_semaforos = int(jsonInterseccion["noSemaforos"])
+        self.tCiclo = int(jsonInterseccion["tCiclo"])
 
     def procesar(self):
         conection = Conexion(self.baseDeDatos)
