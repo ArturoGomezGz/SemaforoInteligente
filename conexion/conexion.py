@@ -88,4 +88,7 @@ class Conexion:
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
 
     def limpiarRegistros(self):
-        self.sQuery("DELETE FROM mCiclo;DELETE FROM dCiclo;ALTER TABLE mCiclo AUTO_INCREMENT = 1;ALTER TABLE dCiclo AUTO_INCREMENT = 1;")
+        self.sQuery("DELETE FROM mCiclo")
+        self.sQuery("DELETE FROM dCiclo")
+        self.sQuery("ALTER TABLE mCiclo AUTO_INCREMENT = 1")
+        self.sQuery("ALTER TABLE dCiclo AUTO_INCREMENT = 1")
