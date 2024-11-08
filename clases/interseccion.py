@@ -27,7 +27,7 @@ class Interseccion:
         noCiclo = conection.getMCiclos()#[-1][0]
         conection.cerrarConexion()
         for i in self.semaforos:
-            i.detecta_carros(idCiclo = noCiclo)
+            i.detecta_carros(noCiclo)
 
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
