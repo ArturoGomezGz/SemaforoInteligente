@@ -31,6 +31,7 @@ class Semaforo:
         print(f"Tiempo en alto: {self.tRojo}")
 
     def detecta_carros(self, idCiclo):
+        print("Deteccion comenzada")
         noCarros = 0
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
         cap = cv2.VideoCapture(self.ruta_video)
@@ -107,11 +108,14 @@ class Semaforo:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
+
         cap.release()
         cv2.destroyAllWindows()
+        print("Deteccion terminada")
 
         conection = Conexion(self.baseDeDatos)
         conection.agregarDCiclo(idCiclo, self.idSemaforo, noCarros)
+        print("dCiclo registrado")
         conection.cerrarConexion()
         return 0
 

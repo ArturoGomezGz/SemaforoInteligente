@@ -24,6 +24,7 @@ class Interseccion:
         dia = str(date.today())
         hora = str(datetime.now().time())
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
+        print("mCiclo registrado")
         jsonNoCiclo = conection.getMCiclos()
         noCiclo = json.loads(jsonNoCiclo)[-1]['id']
         conection.cerrarConexion()
