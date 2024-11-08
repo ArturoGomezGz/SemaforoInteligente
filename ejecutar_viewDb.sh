@@ -10,7 +10,7 @@ ELAPSED=0
 # Bucle para ejecutar el script cada 5 segundos durante 3 minutos
 while [ $ELAPSED -lt $DURATION ]; do
     # Ejecutar el programa viewDb.py
-    python3 /ruta/a/tu/viewDb.py
+    python3 viewDb.py
 
     # Esperar 5 segundos
     sleep $INTERVAL
