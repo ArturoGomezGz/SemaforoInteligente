@@ -79,8 +79,8 @@ class Conexion:
 
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
-        print(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo {tRojo} WHERE id = {idSemaforo}")
-        self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo {tRojo} WHERE id = {idSemaforo}")
+        print(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo = {tRojo} WHERE id = {idSemaforo}")
+        self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo = {tRojo} WHERE id = {idSemaforo}")
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
