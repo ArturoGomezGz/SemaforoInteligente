@@ -1,6 +1,7 @@
 from conexion.conexion import Conexion
 import json
 import time
+import os
 
 baseDeDatos = {
     "server" : "localhost",  # Cambia esto a tu servidor SQL
@@ -12,6 +13,8 @@ baseDeDatos = {
 conection = Conexion(baseDeDatos)
 
 while True:
+    os.system("clear")
+
     print("mCiclos --------------------------------------")
     json_data = conection.getMCiclos()
     data = json.loads(json_data)
