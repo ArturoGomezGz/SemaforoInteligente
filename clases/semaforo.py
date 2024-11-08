@@ -85,7 +85,7 @@ class Semaforo:
                 else:
 
                     # Si el auto ha cruzado la línea de salida
-                    if prev_position[1] > self.salida_y:
+                    if prev_position[1] > int(self.salida_y):
                         # Incrementar el contador de autos salientes
                         noCarros += 1  
 
