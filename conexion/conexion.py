@@ -74,14 +74,16 @@ class Conexion:
     def getDCiclo(self, dCicloId):
         return self.sQueryGET(f"SELECT * FROM dCiclo WHERE id = {dCicloId}")
     
+    def getUltimoRegistro(self, idSemaforo):
+        self.sQueryGET(f"SELECT * FROM dCiclo WHERE idSemaforo = {idSemaforo} ORDER BY idCiclo DESC LIMIT 1")
+
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
         self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo {tRojo} WHERE id = {idSemaforo}")
     
     #POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
-        self.sQuery(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},'{dia}','{hora}')")
-        
+        self.sQuery(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},'{dia}','{hora}')")    
 
     def agregarDCiclo(self, idMCiclo, idSemaforo, noCarros):
         self.sQuery(f"INSERT INTO dCiclo (idCiclo, idSemaforo, noCarros) VALUES ({idMCiclo},{idSemaforo},{noCarros})")
