@@ -33,8 +33,8 @@ class Interseccion:
 
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
-        carros_acum_s1 = json.loads(conection.getUltimoRegistro(1))[0]["noCarros"]
-        carros_acum_s2 = json.loads(conection.getUltimoRegistro(2))[0]["noCarros"]
+        carros_acum_s1 = int(json.loads(conection.getUltimoRegistro(1))[0]["noCarros"])
+        carros_acum_s2 = int(json.loads(conection.getUltimoRegistro(2))[0]["noCarros"])
         conection.cerrarConexion()
         total_carros = carros_acum_s1 + carros_acum_s2
         
