@@ -1,5 +1,6 @@
 from conexion.conexion import Conexion
 import json
+import time
 
 baseDeDatos = {
     "server" : "localhost",  # Cambia esto a tu servidor SQL
@@ -10,33 +11,36 @@ baseDeDatos = {
 
 conection = Conexion(baseDeDatos)
 
-print("mCiclos --------------------------------------")
-json_data = conection.getMCiclos()
-data = json.loads(json_data)
-for i in data:
-    print(i)
-print("")
+while True:
+    print("mCiclos --------------------------------------")
+    json_data = conection.getMCiclos()
+    data = json.loads(json_data)
+    for i in data:
+        print(i)
+    print("")
 
-print("dCiclos --------------------------------------")
-json_data = conection.getDCiclos()
-data = json.loads(json_data)
-for i in data:
-    print(i)
-print("")
+    print("dCiclos --------------------------------------")
+    json_data = conection.getDCiclos()
+    data = json.loads(json_data)
+    for i in data:
+        print(i)
+    print("")
 
-print("Semaforos --------------------------------------")
-json_data = conection.getSemaforos()
-data = json.loads(json_data)
-for i in data:
-    print(i)
-print("")
+    print("Semaforos --------------------------------------")
+    json_data = conection.getSemaforos()
+    data = json.loads(json_data)
+    for i in data:
+        print(i)
+    print("")
 
-print("Interseciones --------------------------------------")
-json_data = conection.getIntersecciones()
-data = json.loads(json_data)
-for i in data:
-    print(i)
-print("")
+    print("Interseciones --------------------------------------")
+    json_data = conection.getIntersecciones()
+    data = json.loads(json_data)
+    for i in data:
+        print(i)
+    print("")
+
+    time.sleep(5)
 
 conection.cerrarConexion()
 
