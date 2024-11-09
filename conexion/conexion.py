@@ -94,3 +94,7 @@ class Conexion:
         self.sQuery("ALTER TABLE dCiclo AUTO_INCREMENT = 1")
         self.sQuery("DELETE FROM mCiclo")
         self.sQuery("ALTER TABLE mCiclo AUTO_INCREMENT = 1")
+    
+    #PUT
+    def updateInterseccionTime(self,idInterseccion, tCiclo):
+        self.sQuery(f"UPDATE Interseccion SET tCiclo = {tCiclo} WHERE id = {idInterseccion}")
