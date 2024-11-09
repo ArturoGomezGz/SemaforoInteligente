@@ -2,7 +2,7 @@
 const usuario = 'testing';
 
 // Realiza una solicitud GET a la API
-fetch(`localhost:5000/getUsuario/${usuario}`)
+fetch(`127.0.0.1:5000/getUsuario/${usuario}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Usuario no encontrado');
