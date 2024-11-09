@@ -1,12 +1,14 @@
-let usuario = document.getElementById("username")
-let contrasena = document.getElementById("password")
 
-// URL local
-const url = 'http://127.0.0.1:5000/getUsuario/'+toString(usuario);
-console.log(url)
 
 // Hacer una solicitud GET
 function iniciarSesion() {
+    let usuario = document.getElementById("username").value
+    let contrasena = document.getElementById("password").value
+
+    // URL local
+    const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+    console.log(url)
+
   let sesion
   axios.get(url)
   .then(response => {
