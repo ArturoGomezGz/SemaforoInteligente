@@ -1,5 +1,7 @@
 from conexion.conexion import Conexion
 import json
+import time
+import os
 
 baseDeDatos = {
     "server" : "localhost",  # Cambia esto a tu servidor SQL
@@ -10,8 +12,8 @@ baseDeDatos = {
 
 conection = Conexion(baseDeDatos)
 
-json_data = conection.getIntersecciones()
-data = json.loads(json_data)
+conection.ajustarTiempoSemaforo(1,30,20)
+data = conection.getSemaforo(1)
 print(data)
 
 conection.cerrarConexion()

@@ -7,7 +7,6 @@ class Semaforo:
     def __init__(self, jsonSemaforo, jsonBaseDeDatos ):
         # Datos necesarios para la conexion a la db
         self.baseDeDatos = jsonBaseDeDatos
-        self.dbDriver = jsonBaseDeDatos["driver"]
         self.dbServer = jsonBaseDeDatos["server"]
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
@@ -32,6 +31,7 @@ class Semaforo:
         print(f"Tiempo en alto: {self.tRojo}")
 
     def detecta_carros(self, idCiclo):
+        print("Deteccion comenzada")
         noCarros = 0
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
         cap = cv2.VideoCapture(self.ruta_video)
@@ -49,10 +49,10 @@ class Semaforo:
             # Detección de autos en el frame actual
             cars = car_cascade.detectMultiScale(
                 gray, 
-                scaleFactor=self.scaleFactor, 
-                minNeighbors=self.minNeighbors,   
-                minSize=(self.minSize, self.minSize),  
-                maxSize=(self.maxSize, self.maxSize)
+                scaleFactor=float(self.scaleFactor), 
+                minNeighbors=int(self.minNeighbors),   
+                minSize=(int(self.minSize), int(self.minSize)),  
+                maxSize=(int(self.maxSize), int(self.maxSize))
             )
 
 
@@ -86,7 +86,7 @@ class Semaforo:
                 else:
 
                     # Si el auto ha cruzado la línea de salida
-                    if prev_position[1] > self.salida_y:
+                    if prev_position[1] > int(self.salida_y):
                         # Incrementar el contador de autos salientes
                         noCarros += 1  
 
@@ -97,7 +97,7 @@ class Semaforo:
             detected_cars = new_detected_cars
 
             # Dibujar la línea de salida
-            cv2.line(frame, (0, self.salida_y), (frame.shape[1], self.salida_y), (0, 0, 255), 2)
+            cv2.line(frame, (0, int(self.salida_y)), (frame.shape[1], int(self.salida_y)), (0, 0, 255), 2)
 
             # Mostrar el contador de autos detectados que salieron en la ventana
             cv2.putText(frame, f'Cars Exited: {noCarros}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
@@ -108,14 +108,15 @@ class Semaforo:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
+
         cap.release()
         cv2.destroyAllWindows()
+        print("Deteccion terminada")
 
         conection = Conexion(self.baseDeDatos)
-        conection.establecerConexion()
         conection.agregarDCiclo(idCiclo, self.idSemaforo, noCarros)
+        print("dCiclo registrado")
         conection.cerrarConexion()
-
         return 0
 
     def ajustarTimpo(self, tVerde, tRojo):
@@ -123,7 +124,6 @@ class Semaforo:
         self.tRojo = tRojo
 
         conexion = Conexion(self.baseDeDatos)
-        conexion.establecerConexion()
         conexion.ajustarTiempoSemaforo(self.idSemaforo, self.tVerde, self.tRojo)
         conexion.cerrarConexion()
 

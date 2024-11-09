@@ -6,7 +6,6 @@ class Interseccion:
     def __init__(self, jsonInterseccion, semaforos = None, jsonBaseDeDatos = {}):
         # Datos necesarios para la conexion a la db
         self.baseDeDatos = jsonBaseDeDatos
-        self.dbDriver = jsonBaseDeDatos["driver"]
         self.dbServer = jsonBaseDeDatos["server"]
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
@@ -16,25 +15,26 @@ class Interseccion:
             semaforos = []
         self.semaforos = semaforos
 
-        self.idInterseccion = jsonInterseccion["id"]
-        self.no_semaforos = jsonInterseccion["noSemaforos"]
-        self.tCiclo = jsonInterseccion["tCiclo"]
+        self.idInterseccion = int(jsonInterseccion["id"])
+        self.no_semaforos = int(jsonInterseccion["noSemaforos"])
+        self.tCiclo = int(jsonInterseccion["tCiclo"])
 
     def procesar(self):
         conection = Conexion(self.baseDeDatos)
-        dia = str(date.today()),
+        dia = str(date.today())
         hora = str(datetime.now().time())
         conection.agregarMCiclo(self.idInterseccion, dia, hora)
-        noCiclo = conection.getMCiclos()[-1][0]
+        print("mCiclo registrado")
+        jsonNoCiclo = conection.getMCiclos()
+        noCiclo = json.loads(jsonNoCiclo)[-1]['id']
         conection.cerrarConexion()
         for i in self.semaforos:
-            i.detecta_carros(idCiclo = noCiclo)
+            i.detecta_carros(noCiclo)
 
     def ajustarTiempo(self):
         conection = Conexion(self.baseDeDatos)
-        conection.establecerConexion()
-        carros_acum_s1 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 1 ORDER BY idCiclo DESC")[0]["noCarros"]
-        carros_acum_s2 = conection.sQuery("SELECT TOP 1 * FROM dCiclo WHERE idSemaforo = 2 ORDER BY idCiclo DESC")[0]["noCarros"]
+        carros_acum_s1 = int(json.loads(conection.getUltimoRegistro(1))[0]["noCarros"])
+        carros_acum_s2 = int(json.loads(conection.getUltimoRegistro(2))[0]["noCarros"])
         conection.cerrarConexion()
         total_carros = carros_acum_s1 + carros_acum_s2
         

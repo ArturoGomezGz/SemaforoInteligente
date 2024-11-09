@@ -16,17 +16,20 @@ semaforo1 = Semaforo(
     json.loads(conection.getSemaforo(1))[0],
     baseDeDatos
     )
+print("Semaforo 1 creado")
 
 semaforo2 = Semaforo(
     json.loads(conection.getSemaforo(2))[0],
     baseDeDatos
     )
+print("Semaforo 2 creado")
 
 interseccion1 = Interseccion(
     json.loads(conection.getInterseccion(1))[0],
     [semaforo1, semaforo2], 
     baseDeDatos
     )
+print("Interseccion 1 creada")
 
 conection.cerrarConexion()
 
