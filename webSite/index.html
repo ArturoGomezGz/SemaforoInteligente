@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redireccionando...</title>
-    <!-- Redirecciona automáticamente después de 2 segundos -->
-    <meta http-equiv="refresh" content="2; url=localhost:/logIn.html">
+    <title>Iniciar Sesión</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <p>Redirigiendo a la página de inicio de sesión...</p>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1>Bienvenido</h1>
+        <p>Haz clic en el botón para iniciar sesión:</p>
+        <button class="btn btn-primary btn-lg" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+    </div>
+
+    <!-- Enlace a jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
