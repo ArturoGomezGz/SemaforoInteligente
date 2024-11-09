@@ -1,5 +1,3 @@
-
-
 // Hacer una solicitud GET
 function iniciarSesion() {
     let usuario = document.getElementById("username").value
