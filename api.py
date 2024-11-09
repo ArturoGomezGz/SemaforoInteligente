@@ -1,7 +1,9 @@
 from conexion.conexion import Conexion
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 baseDeDatos = {
     "server" : "localhost",  # Cambia esto a tu servidor SQL
