@@ -1,4 +1,4 @@
-//const axios = require('axios');
+
 
 // URL local
 const url = 'http://127.0.0.1:5000/getUsuario/testing';
