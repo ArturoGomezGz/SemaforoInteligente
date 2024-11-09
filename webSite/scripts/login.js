@@ -11,8 +11,12 @@ function iniciarSesion() {
   axios.get(url)
   .then(response => {
     // Imprimir los datos de la respuesta
-    sesion = JSON.parse(response.data);
-    console.log(sesion[0])
+    sesion = JSON.parse(response.data)[0];
+    if (sesion){
+      if (sesion["contrasena"]==contrasena){
+        console.log("Acceso correcto")
+      }
+    }
   })
   .catch(error => {
     // Manejo de errores
