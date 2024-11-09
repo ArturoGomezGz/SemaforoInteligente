@@ -3,6 +3,7 @@ let contrasena = document.getElementById("password")
 
 // URL local
 const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+console.log(url)
 
 // Hacer una solicitud GET
 function iniciarSesion() {
