@@ -1,6 +1,7 @@
 import mysql.connector
-import pandas as pd
 import json
+from flask import Flask, request, jsonify
+
 
 class Conexion:
     def __init__(self, jsonBaseDeDatos):
