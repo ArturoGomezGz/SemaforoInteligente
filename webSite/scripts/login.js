@@ -12,11 +12,10 @@ function iniciarSesion() {
   .then(response => {
     // Imprimir los datos de la respuesta
     sesion = (response.data);
+    console.log(sesion[0]["id"])
   })
   .catch(error => {
     // Manejo de errores
     console.error("Error fetching data:", error);
   });
-
-  console.log(sesion[0]["id"])
 }
