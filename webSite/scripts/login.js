@@ -14,7 +14,7 @@ function iniciarSesion() {
     sesion = JSON.parse(response.data)[0];
     if (sesion){
       if (sesion["contrasena"]==contrasena){
-        console.log("Acceso correcto")
+        window.location.href = "./main.html";
       }
     }
   })
