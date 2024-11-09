@@ -12,7 +12,7 @@ function iniciarSesion() {
   .then(response => {
     // Imprimir los datos de la respuesta
     sesion = (response.data);
-    console.log(sesion[0]["id"])
+    console.log(sesion)
   })
   .catch(error => {
     // Manejo de errores
