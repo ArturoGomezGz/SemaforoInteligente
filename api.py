@@ -80,5 +80,13 @@ def updateTCiclo(interseccion_id,tCiclo):
     conexion.cerrarConexion()
     return jsonify({'mensaje': 'Tiempo de ciclo actualizado correctamente'}), 200
 
+@app.route('/getUsuario/<str:usuario>', methods=['GET'])
+def get_ultimo_registro(usuario):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getUsuario(usuario)
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
