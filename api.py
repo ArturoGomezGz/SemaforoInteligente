@@ -76,9 +76,9 @@ def get_ultimo_registro(semaforo_id):
 @app.route('/updateTCiclo/<int:interseccion_id>/<int:tCiclo>', methods=['PUT'])
 def updateTCiclo(interseccion_id,tCiclo):
     conexion = Conexion(baseDeDatos)
-    conexion.updateInterseccionTime(interseccion_id,tCiclo)
+    result = conexion.updateInterseccionTime(interseccion_id,tCiclo)
     conexion.cerrarConexion()
-    return jsonify({'mensaje': 'Tiempo de ciclo actualizado correctamente'}), 200
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)
