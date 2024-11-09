@@ -11,7 +11,7 @@ function iniciarSesion() {
   axios.get(url)
   .then(response => {
     // Imprimir los datos de la respuesta
-    sesion = (response.data);
+    sesion = JSON.parse(response.data);
     console.log(sesion[0])
   })
   .catch(error => {
