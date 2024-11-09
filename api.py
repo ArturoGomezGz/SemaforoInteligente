@@ -78,7 +78,7 @@ def updateTCiclo(interseccion_id,tCiclo):
     conexion = Conexion(baseDeDatos)
     result = conexion.updateInterseccionTime(interseccion_id,tCiclo)
     conexion.cerrarConexion()
-    return jsonify(result)
+    return jsonify({"Modificacion exitosa"})
 
 if __name__ == '__main__':
     app.run(debug=True)
