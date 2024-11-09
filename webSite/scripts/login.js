@@ -10,12 +10,10 @@ function iniciarSesion() {
   axios.get(url)
   .then(response => {
     // Imprimir los datos de la respuesta
-    sesion = (response.data);
+    console.log(response.data);
   })
   .catch(error => {
     // Manejo de errores
     console.error("Error fetching data:", error);
   });
-
-  console.log(sesion["id"])
 }
