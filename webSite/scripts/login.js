@@ -1,17 +1,15 @@
-// Nombre de usuario que deseas buscar
-const usuario = 'testing';
+const axios = require('axios');
 
-// Realiza una solicitud GET a la API
-fetch(`127.0.0.1:5000/getUsuario/${usuario}`)
+// URL local
+const url = 'http://127.0.0.1:5000/getUsuario/testing';
+
+// Hacer una solicitud GET
+axios.get(url)
   .then(response => {
-    if (!response.ok) {
-      throw new Error('Usuario no encontrado');
-    }
-    return response.json(); // Convierte la respuesta a JSON
-  })
-  .then(data => {
-    console.log('Datos del usuario:', data); // Imprime los datos en la consola o úsalos en tu aplicación
+    // Imprimir los datos de la respuesta
+    console.log(response.data);
   })
   .catch(error => {
-    console.error('Error:', error); // Muestra el error si ocurre algún problema
+    // Manejo de errores
+    console.error("Error fetching data:", error);
   });
