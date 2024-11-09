@@ -17,5 +17,5 @@ function iniciarSesion() {
     console.error("Error fetching data:", error);
   });
 
-  console.log(sesion[0]["id"])
+  console.log(sesion["id"])
 }
