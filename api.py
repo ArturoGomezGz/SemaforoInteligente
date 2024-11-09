@@ -12,7 +12,7 @@ baseDeDatos = {
 
 @app.route('/semaforos', methods=['GET'])
 def get_all_semaforos():
-    conexion = Conexion(baseDeDatos)  # Assuming you have a JSON config file
+    conexion = Conexion(baseDeDatos)
     result = conexion.getSemaforos()
     conexion.cerrarConexion()
     return jsonify(result)
@@ -24,18 +24,54 @@ def get_semaforo(semaforo_id):
     conexion.cerrarConexion()
     return jsonify(result)
 
-# ... (similarly for other endpoints)
-
-@app.route('/ajustar_tiempo_semaforo/<int:semaforo_id>', methods=['PUT'])
-def ajustar_tiempo_semaforo(semaforo_id):
-    t_verde = request.json['tVerde']
-    t_rojo = request.json['tRojo']
+@app.route('/intersecciones', methods=['GET'])
+def get_all_intersecciones():
     conexion = Conexion(baseDeDatos)
-    conexion.ajustarTiempoSemaforo(semaforo_id, t_verde, t_rojo)
+    result = conexion.getIntersecciones()
     conexion.cerrarConexion()
-    return jsonify({'message': 'Tiempo de semáforo ajustado correctamente'})
+    return jsonify(result)
 
-# ... (similarly for other endpoints)
+@app.route('/interseccion/<int:interseccion_id>', methods=['GET'])
+def get_interseccion(interseccion_id):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getInterseccion(interseccion_id)
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+@app.route('/mciclos', methods=['GET'])
+def get_all_mciclos():
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getMCiclos()
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+@app.route('/mciclo/<int:mciclo_id>', methods=['GET'])
+def get_mciclo(mciclo_id):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getMCiclo(mciclo_id)
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+@app.route('/dciclos', methods=['GET'])
+def get_all_dciclos():
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getDCiclos()
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+@app.route('/dciclo/<int:dciclo_id>', methods=['GET'])
+def get_dciclo(dciclo_id):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getDCiclo(dciclo_id)
+    conexion.cerrarConexion()
+    return jsonify(result)
+
+@app.route('/ultimo_registro/<int:semaforo_id>', methods=['GET'])
+def get_ultimo_registro(semaforo_id):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getUltimoRegistro(semaforo_id)
+    conexion.cerrarConexion()
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
