@@ -66,7 +66,7 @@ function mostrarGrafico(labels, data, idGrafico, tipo) {
             labels: labels,
             datasets: [{
                 label: 'Cantidad de Autos',
-                data: [12, 19],
+                data: data,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)', // Añade el canal alfa para transparencia
                 borderColor: 'rgba(75, 192, 192, 1)', // Color completo de borde
                 borderWidth: 1
