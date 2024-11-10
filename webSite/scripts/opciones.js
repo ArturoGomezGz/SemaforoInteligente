@@ -5,7 +5,7 @@ const url = 'http://127.0.0.1:5000/intersecciones';
 axios.get(url)
     .then(response => {
         // Parse response data
-        options = response.data;
+        options = JSON.parse(response.data);
         console.log(options);
         options.forEach(optionData => {
             // Create an <option> element
