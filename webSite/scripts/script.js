@@ -47,14 +47,16 @@ function verEstadisticas() {
     axios.get(url2)
         .then(response => {
             
-            console.log(JSON.parse(response.data))
+            let suma = JSON.parse(response.data)
             
-            /* const labels = []
-            for (let index = 0; index < semaforos.length; index++) {
-                labels.push("Semaforo " + semaforos[index].id); 
+            let labels = []
+            let values = []
+            for (let index = 0; index < suma.length; index++) {
+                labels.push("Semaforo " + index); 
+                values.push(suma[index].noCarros)
             }
-            mostrarGrafico(labels, [2,4],1, 'bar')
-            mostrarGrafico(["palabras","palabras"],[4,2],2, 'line') */
+            mostrarGrafico(labels, values,1, 'bar')
+            mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
 
             
         })
