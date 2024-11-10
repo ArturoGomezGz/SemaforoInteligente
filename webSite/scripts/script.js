@@ -158,13 +158,14 @@ function verIntersecciones(){
 async function loadDataBase(){
     try{
         const semaforos = await getSemaforos()
-        //const intersecciones = await JSON.parse(getIntersecciones())
-        //const mCiclos = await JSON.parse(getMCiclos())
-        //const dCiclos = await JSON.parse(getDCiclos())
-        console.log(semaforos[0].id)
-        //console.log(intersecciones)
-        //console.log(mCiclos)
-        //console.log(dCiclos)
+        const intersecciones = await getIntersecciones()
+        const mCiclos = await getMCiclos()
+        const dCiclos = await getDCiclos()
+
+        console.log(semaforos)
+        console.log(intersecciones)
+        console.log(mCiclos)
+        console.log(dCiclos)
     } catch (error){
         console.error("Error loading database:", error);
     }
@@ -172,3 +173,5 @@ async function loadDataBase(){
 
 
 verIntersecciones()
+
+loadDataBase()
