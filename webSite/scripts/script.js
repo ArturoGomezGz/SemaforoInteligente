@@ -1,3 +1,58 @@
+// GETs a api
+
+function getSemaforos() {
+    const url1 = 'http://127.0.0.1:5000/semaforos';
+    return axios.get(url1)
+        .then(response => {
+            // Verifica si la respuesta es una cadena y parsea si es necesario
+            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+        })
+        .catch(error => {
+            console.error("Error fetching semaforos data:", error);
+            throw error;
+        });
+}
+
+function getIntersecciones() {
+    const url1 = 'http://127.0.0.1:5000/intersecciones';
+    return axios.get(url1)
+        .then(response => {
+            // Verifica si la respuesta es una cadena y parsea si es necesario
+            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+        })
+        .catch(error => {
+            console.error("Error fetching semaforos data:", error);
+            throw error;
+        });
+}
+
+function getMCiclos() {
+    const url1 = 'http://127.0.0.1:5000/mciclos';
+    return axios.get(url1)
+        .then(response => {
+            // Verifica si la respuesta es una cadena y parsea si es necesario
+            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+        })
+        .catch(error => {
+            console.error("Error fetching semaforos data:", error);
+            throw error;
+        });
+}
+
+function getDCiclos() {
+    const url1 = 'http://127.0.0.1:5000/dciclos';
+    return axios.get(url1)
+        .then(response => {
+            // Verifica si la respuesta es una cadena y parsea si es necesario
+            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+        })
+        .catch(error => {
+            console.error("Error fetching semaforos data:", error);
+            throw error;
+        });
+}
+
+// ---------
 function iniciarSesion(){
     let usuario = document.getElementById("username").value
     let contrasena = document.getElementById("password").value
@@ -24,18 +79,6 @@ function iniciarSesion(){
     })
 }
 
-function getSemaforos() {
-    const url1 = 'http://127.0.0.1:5000/semaforos';
-    return axios.get(url1)
-        .then(response => {
-            // Verifica si la respuesta es una cadena y parsea si es necesario
-            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
-        })
-        .catch(error => {
-            console.error("Error fetching semaforos data:", error);
-            throw error;
-        });
-}
 
 function verEstadisticas() {
     let interseccion = document.getElementById("interseccion").value
@@ -112,9 +155,21 @@ function verIntersecciones(){
 }
 
 // Base de datos
-function loadDataBase(){
-    const semaforos = JSON.parse(getSemaforos())
-    console.log(semaforos)
+async function loadDataBase(){
+    try{
+        const semaforos = await JSON.parse(getSemaforos())
+        const intersecciones = await JSON.parse(getIntersecciones())
+        const mCiclos = await JSON.parse(getMCiclos())
+        const dCiclos = await JSON.parse(getDCiclos())
+        console.log(semaforos)
+        console.log(intersecciones)
+        console.log(mCiclos)
+        console.log(dCiclos)
+    } catch (error){
+        console.error("Error loading database:", error);
+    }
+    
+    
 }
 
 
