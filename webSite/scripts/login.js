@@ -10,20 +10,19 @@ function iniciarSesion() {
 
   // URL local
   const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
-  console.log(url)
 
   axios.get(url)
   .then(response => {
-    // Imprimir los datos de la respuesta
-    let sesion = JSON.parse(response.data)[0];
-    if (sesion){
-      if (sesion["contrasena"]==contrasena){
-        window.location.href = "./estadisticas.html";
+      // Imprimir los datos de la respuesta
+      let sesion = JSON.parse(response.data)[0];
+      if (sesion){
+          if (sesion["contrasena"]==contrasena){
+            window.location.href = "./estadisticas.html";
+          }
       }
-    }
   })
   .catch(error => {
-    // Manejo de errores
-    console.error("Error fetching data:", error);
+      // Manejo de errores
+      console.error("Error fetching data:", error);
   });
 }
