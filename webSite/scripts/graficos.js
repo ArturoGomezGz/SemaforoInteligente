@@ -81,5 +81,3 @@ function verEstadisticas(){
         console.error("Error fetching data:", error);
     });
 }
-
-verEstadisticas()
