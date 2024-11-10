@@ -94,7 +94,7 @@ function verEstadisticas() {
             
             let labels = []
             let values = []
-            for (let index = 0; index < suma.length || i==-1; index++) {
+            for (let index = 0; index < suma.length; index++) {
                 labels.push("Semaforo " + index+1); 
                 values.push(suma[index].noCarros)
             }
@@ -163,7 +163,7 @@ async function loadDataBase(){
         const dCiclos = await getDCiclos()
 
         const tBodyInterseccion = document.getElementById("dt-interseccion");
-        for (let i = 0; i < intersecciones.length || i==-1; i++) {
+        for (let i = 0; i < intersecciones.length; i++) {
             if (i > 4){break}
             const element = intersecciones[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
@@ -184,7 +184,7 @@ async function loadDataBase(){
         }
 
         const tBodySemaforo = document.getElementById("dt-semaforo");
-        for (let i = 0; i < semaforos.length || i==-1; i++) {
+        for (let i = 0; i < semaforos.length; i++) {
             if (i > 4){break}
             const element = semaforos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
@@ -227,8 +227,8 @@ async function loadDataBase(){
         }
 
         const tBodyMCiclo = document.getElementById("dt-mciclo");
-        for (let i = 0; i < mCiclos.length || i==-1; i++) {
-            if (i > 4){i = -1}
+        for (let i = 0; i < mCiclos.length; i++) {
+            if (i > 5){break}
             const element = mCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -252,7 +252,7 @@ async function loadDataBase(){
         }
 
         const tBodyDCiclo = document.getElementById("dt-dciclo");
-        for (let i = 0; i < dCiclos.length || i==-1; i++) {
+        for (let i = 0; i < dCiclos.length; i++) {
             if (i > 4){break}
             const element = dCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
