@@ -165,7 +165,7 @@ async function loadDataBase(){
         const tbodySemaforo = document.getElementById("dt-semaforo");
         for (let i = 0; i < semaforos.length; i++) {
             if (i > 6){break}
-            const element = semaforos; // Obtenemos el objeto de la element actual
+            const element = semaforos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
             // Creamos las celdas de la fila
