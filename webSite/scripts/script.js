@@ -111,5 +111,11 @@ function verIntersecciones(){
     })
 }
 
+// Base de datos
+function loadDataBase(){
+    const semaforos = JSON.parse(getSemaforos())
+    console.log(semaforos)
+}
+
 
 verIntersecciones()
