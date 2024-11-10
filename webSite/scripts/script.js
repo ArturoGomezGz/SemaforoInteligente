@@ -42,8 +42,12 @@ function verEstadisticas() {
     axios.get(url2)
         .then(response => {
             getSemaforos().then(semaforos => {
-                mostrarGrafico(semaforos,1, 'bar')
-                mostrarGrafico(semaforos,2, 'line')
+                const labels = []
+                for (let index = 0; index < semaforos.length; index++) {
+                    labels.push("Semaforo " + semaforos[index].id); 
+                }
+                mostrarGrafico(labels, [2,4],1, 'bar')
+                mostrarGrafico([palabras,palabras],[4,2],2, 'line')
             }).catch(error => {
                 console.error("Error:", error);
             });
@@ -54,11 +58,7 @@ function verEstadisticas() {
 }
 
 // Función para mostrar gráficos
-function mostrarGrafico(semaforos, idGrafico, tipo) {
-    const labels = []
-    for (let index = 0; index < semaforos.length; index++) {
-        labels.push("Semaforo " + semaforos[index].id); 
-    }
+function mostrarGrafico(labels, data, idGrafico, tipo) {
     const ctx1 = document.getElementById('grafico'+idGrafico).getContext('2d');
     const grafico1 = new Chart(ctx1, {
         type: tipo,
