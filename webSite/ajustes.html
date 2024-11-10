@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Semáforo Inteligente</title>
+    <title>Configuración de Tiempo por Intersección</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Optional: Chart.js for graphs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container-fluid">
@@ -17,12 +15,12 @@
                     <h4 class="text-center">Menú</h4>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="estadisticas.html">
                                 Estadísticas
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="ajustes.html">
                                 Ajustes de Parámetros
                             </a>
                         </li>
@@ -31,41 +29,27 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <h2 class="text-center mt-4">Estadísticas del Semáforo</h2>
+                <h2 class="text-center mt-4">Configuración de Tiempo por Intersección</h2>
 
-                <!-- Formulario para seleccionar rango de horas y día -->
+                <!-- Formulario para seleccionar intersección y establecer tiempo -->
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <form>
                             <div class="form-group">
-                                <label for="horaInicio">Hora de Inicio</label>
-                                <input type="time" class="form-control" id="horaInicio" required>
+                                <label for="interseccion">Seleccionar Intersección</label>
+                                <select class="form-control" id="interseccion" required>
+                                    <option value="interseccion1">Intersección 1</option>
+                                    <option value="interseccion2">Intersección 2</option>
+                                    <option value="interseccion3">Intersección 3</option>
+                                    <!-- Agrega más opciones según sea necesario -->
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="horaFin">Hora de Fin</label>
-                                <input type="time" class="form-control" id="horaFin" required>
+                                <label for="tiempoCiclo">Tiempo de Ciclo (segundos)</label>
+                                <input type="number" class="form-control" id="tiempoCiclo" min="10" required>
                             </div>
-                            <div class="form-group">
-                                <label for="fecha">Seleccionar Día</label>
-                                <input type="date" class="form-control" id="fecha" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Ver Estadísticas</button>
+                            <button type="submit" class="btn btn-primary">Guardar Configuración</button>
                         </form>
-                    </div>
-                </div>
-
-                <!-- Área para gráficos -->
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <canvas id="grafico1"></canvas>
-                    </div>
-                    <div class="col-md-6">
-                        <canvas id="grafico2"></canvas>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-md-12">
-                        <canvas id="grafico3"></canvas>
                     </div>
                 </div>
             </main>
@@ -76,6 +60,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="./scripts/graficos.js"></script>
 </body>
 </html>

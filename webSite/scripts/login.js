@@ -1,20 +1,24 @@
 // Hacer una solicitud GET
 function iniciarSesion() {
-    let usuario = document.getElementById("username").value
-    let contrasena = document.getElementById("password").value
+  let usuario = document.getElementById("username").value
+  let contrasena = document.getElementById("password").value
 
-    // URL local
-    const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
-    console.log(url)
+  if (usuario == "" || contrasena == ""){
+    alert("Llenar todos los campos")
+    return 0
+  }
 
-  let sesion
+  // URL local
+  const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+  console.log(url)
+
   axios.get(url)
   .then(response => {
     // Imprimir los datos de la respuesta
-    sesion = JSON.parse(response.data)[0];
+    let sesion = JSON.parse(response.data)[0];
     if (sesion){
       if (sesion["contrasena"]==contrasena){
-        window.location.href = "./main.html";
+        window.location.href = "./estadisticas.html";
       }
     }
   })
