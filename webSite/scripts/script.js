@@ -33,7 +33,8 @@ function verEstadisticas(){
     const url = 'http://127.0.0.1:5000/mciclos';
     axios.get(url)
     .then(response => {
-        // Ejemplo de inicialización de gráficos con Chart.js
+        let mCiclos = JSON.parse(response.data);
+        print(mCiclos)
         const ctx1 = document.getElementById('grafico1').getContext('2d');
         const grafico1 = new Chart(ctx1, {
             type: 'bar',
