@@ -6,7 +6,7 @@ function agregarOpciones(){
     axios.get(url)
         .then(response => {
             // Imprimir los datos de la respuesta
-            options = JSON.parse(response.data)[0];
+            options = JSON.parse(response.data);
             console.log(options)
             options.forEach(optionData => {
                 // Crea un elemento <option>
