@@ -197,9 +197,9 @@ async function loadDataBase(){
             celdaMinSize.textContent = element.minSize; // Añadimos la edad
             fila.appendChild(celdaMinSize);
 
-            const celdaMaxNeighbors = document.createElement("td");
-            celdaMaxNeighbors.textContent = element.MaxNeighbors; // Añadimos la edad
-            fila.appendChild(celdaMaxNeighbors);
+            const celdaMaxSize = document.createElement("td");
+            celdaMaxSize.textContent = element.maxize; // Añadimos la edad
+            fila.appendChild(celdaMaxSize);
     
             // Añadimos la fila completa al tbodySemaforo
             tbodySemaforo.appendChild(fila);
