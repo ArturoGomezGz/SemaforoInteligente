@@ -35,10 +35,14 @@ function getSemaforos(){
 }
 
 function verEstadisticas(){
-    let semaforos = getSemaforos()
-    semaforos.forEach(element => {
-        console.log(element["id"])
+    getSemaforos().then(semaforos => {
+        semaforos.forEach(element => {
+            console.log(element["id"]);
+        });
+    }).catch(error => {
+        console.error("Error:", error);
     });
+    
 
     let url2 = 'http://127.0.0.1:5000/mciclos'
     axios.get(url2).then(response => {
