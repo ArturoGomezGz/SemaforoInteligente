@@ -47,7 +47,7 @@ function verEstadisticas() {
                     labels.push("Semaforo " + semaforos[index].id); 
                 }
                 mostrarGrafico(labels, [2,4],1, 'bar')
-                mostrarGrafico([palabras,palabras],[4,2],2, 'line')
+                mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
             }).catch(error => {
                 console.error("Error:", error);
             });
