@@ -34,7 +34,7 @@ function verEstadisticas(){
     axios.get(url)
     .then(response => {
         let mCiclos = JSON.parse(response.data);
-        print(mCiclos)
+        console.log(mCiclos)
         const ctx1 = document.getElementById('grafico1').getContext('2d');
         const grafico1 = new Chart(ctx1, {
             type: 'bar',
@@ -119,7 +119,6 @@ function verIntersecciones(){
     .then(response => {
         // Parse response data
         options = JSON.parse(response.data);
-        console.log(options);
         options.forEach(optionData => {
             // Create an <option> element
             const option = document.createElement("option");
