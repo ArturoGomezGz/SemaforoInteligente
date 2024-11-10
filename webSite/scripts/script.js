@@ -52,7 +52,7 @@ function verEstadisticas() {
             let labels = []
             let values = []
             for (let index = 0; index < suma.length; index++) {
-                labels.push("Semaforo " + index); 
+                labels.push("Semaforo " + index+1); 
                 values.push(suma[index].noCarros)
             }
             mostrarGrafico(labels, values,1, 'bar')
