@@ -56,7 +56,7 @@ function verEstadisticas() {
 function mostrarGraficos(semaforos) {
     const labels = []
     for (let index = 0; index < semaforos.length; index++) {
-        labels.push[index]; 
+        labels.push["Semaforo " + semaforos["id"]]; 
     }
     const ctx1 = document.getElementById('grafico1').getContext('2d');
     const grafico1 = new Chart(ctx1, {
