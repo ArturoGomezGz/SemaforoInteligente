@@ -58,7 +58,6 @@ function verEstadisticas() {
             mostrarGrafico(labels, values,1, 'bar')
             mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
 
-            
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
