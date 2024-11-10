@@ -162,11 +162,30 @@ async function loadDataBase(){
         const mCiclos = await getMCiclos()
         const dCiclos = await getDCiclos()
 
+        const tbodySemaforo = document.getElementById("dt-semaforo");
         for (let i = 0; i < semaforos.length; i++) {
             if (i > 6){break}
-            const element = semaforos[i];
-            console.log(element)
+            const element = semaforos[i]; // Obtenemos el objeto de la element actual
+            const fila = document.createElement("tr"); // Creamos una nueva fila
+    
+            // Creamos las celdas de la fila
+            const celdaNombre = document.createElement("td");
+            celdaNombre.textContent = element.nombre; // Añadimos el nombre
+            fila.appendChild(celdaNombre);
+    
+            const celdaEdad = document.createElement("td");
+            celdaEdad.textContent = element.edad; // Añadimos la edad
+            fila.appendChild(celdaEdad);
+    
+            const celdaCiudad = document.createElement("td");
+            celdaCiudad.textContent = element.ciudad; // Añadimos la ciudad
+            fila.appendChild(celdaCiudad);
+    
+            // Añadimos la fila completa al tbodySemaforo
+            tbodySemaforo.appendChild(fila);
         }
+
+
         for (let i = 0; i < intersecciones.length; i++) {
             if (i > 6){break}
             const element = intersecciones[i];
