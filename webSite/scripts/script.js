@@ -162,10 +162,26 @@ async function loadDataBase(){
         const mCiclos = await getMCiclos()
         const dCiclos = await getDCiclos()
 
-        console.log(semaforos)
-        console.log(intersecciones)
-        console.log(mCiclos)
-        console.log(dCiclos)
+        for (let i = 0; i < semaforos.length; i++) {
+            if (i > 6){break}
+            const element = semaforos[i];
+            console.log(element)
+        }
+        for (let i = 0; i < intersecciones.length; i++) {
+            if (i > 6){break}
+            const element = intersecciones[i];
+            console.log(element)
+        }
+        for (let i = 0; i < mCiclos.length; i++) {
+            if (i > 6){break}
+            const element = mCiclos[i];
+            console.log(element)
+        }
+        for (let i = 0; i < dCiclos.length; i++) {
+            if (i > 6){break}
+            const element = dCiclos[i];
+            console.log(element)
+        }
     } catch (error){
         console.error("Error loading database:", error);
     }
