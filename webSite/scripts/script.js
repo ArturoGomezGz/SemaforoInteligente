@@ -8,10 +8,9 @@ function iniciarSesion(){
     }
   
     // URL local
-    const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+    let url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
   
-    axios.get(url)
-    .then(response => {
+    axios.get(url).then(response => {
         // Imprimir los datos de la respuesta
         let sesion = JSON.parse(response.data)[0];
         if (sesion){
@@ -19,22 +18,34 @@ function iniciarSesion(){
               window.location.href = "./estadisticas.html";
             }
         }
-    })
-    .catch(error => {
+    }).catch(error => {
         // Manejo de errores
         console.error("Error fetching data:", error);
-    });
+    })
+}
+
+function getSemaforos(){
+    let url1 = 'http://127.0.0.1:5000/semaforos'
+    axions.get(url1).then(response => {
+        return JSON.parse(response.data);
+    }).catch(error => {
+        // Manejo de errores
+        console.error("Error fetching data:", error);
+    })
 }
 
 function verEstadisticas(){
+    let semaforos = getSemaforos()
+    semaforos.forEach(element => {
+        console.log(element["id"])
+    });
 
-    const url = 'http://127.0.0.1:5000/mciclos';
-    axios.get(url)
-    .then(response => {
+    let url2 = 'http://127.0.0.1:5000/mciclos'
+    axios.get(url2).then(response => {
         let mCiclos = JSON.parse(response.data);
         console.log(mCiclos)
-        const ctx1 = document.getElementById('grafico1').getContext('2d');
-        const grafico1 = new Chart(ctx1, {
+        let ctx1 = document.getElementById('grafico1').getContext('2d');
+        let grafico1 = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
@@ -55,8 +66,8 @@ function verEstadisticas(){
             }
         });
 
-        const ctx2 = document.getElementById('grafico2').getContext('2d');
-        const grafico2 = new Chart(ctx2, {
+        let ctx2 = document.getElementById('grafico2').getContext('2d');
+        let grafico2 = new Chart(ctx2, {
             type: 'line',
             data: {
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
@@ -76,34 +87,31 @@ function verEstadisticas(){
                 }
             }
         });
-    })
-    .catch(error => {
+    }).catch(error => {
         // Manejo de errores
         console.error("Error fetching data:", error);
-    });
+    })
 }
 
 function verIntersecciones(){
-    const select = document.getElementById("interseccion");
+    let select = document.getElementById("interseccion");
     let options;
 
-    const url = 'http://127.0.0.1:5000/intersecciones';
-    axios.get(url)
-    .then(response => {
+    let url = 'http://127.0.0.1:5000/intersecciones';
+    axios.get(url).then(response => {
         // Parse response data
         options = JSON.parse(response.data);
         options.forEach(optionData => {
             // Create an <option> element
-            const option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = optionData.id;
             option.text = 'Interseccion ' + optionData.id;
             select.appendChild(option);
         });
-    })
-    .catch(error => {
+    }).catch(error => {
         // Error handling
         console.error("Error fetching data:", error);
-    });
+    })
 }
 
 
