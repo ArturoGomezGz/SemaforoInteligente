@@ -1,7 +1,7 @@
 // GETs a api
 
 function getSemaforos() {
-    const url1 = 'http://127.0.0.1:4000/semaforos';
+    const url1 = 'http://127.0.0.1:5000/semaforos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -14,7 +14,7 @@ function getSemaforos() {
 }
 
 function getIntersecciones() {
-    const url1 = 'http://127.0.0.1:4000/intersecciones';
+    const url1 = 'http://127.0.0.1:5000/intersecciones';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -27,7 +27,7 @@ function getIntersecciones() {
 }
 
 function getMCiclos() {
-    const url1 = 'http://127.0.0.1:4000/mciclos';
+    const url1 = 'http://127.0.0.1:5000/mciclos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -40,7 +40,7 @@ function getMCiclos() {
 }
 
 function getDCiclos() {
-    const url1 = 'http://127.0.0.1:4000/dciclos';
+    const url1 = 'http://127.0.0.1:5000/dciclos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -63,7 +63,7 @@ function iniciarSesion(){
     }
   
     // URL local
-    let url = 'http://127.0.0.1:4000/getUsuario/'+usuario;
+    let url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
   
     axios.get(url).then(response => {
         // Imprimir los datos de la respuesta
@@ -86,7 +86,7 @@ function verEstadisticas() {
     let timeIni = document.getElementById("horaInicio").value.toString()
     let timeFin =document.getElementById("horaFin").value.toString()
 
-    const url2 = 'http://127.0.0.1:4000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
+    const url2 = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
     axios.get(url2)
         .then(response => {
             
@@ -137,7 +137,7 @@ function verIntersecciones(){
     let select = document.getElementById("interseccion");
     let options;
 
-    let url = 'http://127.0.0.1:4000/intersecciones';
+    let url = 'http://127.0.0.1:5000/intersecciones';
     axios.get(url).then(response => {
         // Parse response data
         options = JSON.parse(response.data);
