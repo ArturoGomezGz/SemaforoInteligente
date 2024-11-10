@@ -28,12 +28,16 @@ function iniciarSesion(){
 function getSemaforos() {
     const url1 = 'http://127.0.0.1:5000/semaforos';
     return axios.get(url1)
-        .then(response => response.data)  // axios ya parsea la respuesta JSON
+        .then(response => {
+            // Verifica si la respuesta es una cadena y parsea si es necesario
+            return typeof response.data === "string" ? JSON.parse(response.data) : response.data;
+        })
         .catch(error => {
             console.error("Error fetching semaforos data:", error);
-            throw error;  // Lanza el error para manejarlo fuera de la función si es necesario
+            throw error;
         });
 }
+
 
 // Función principal para ver estadísticas
 function verEstadisticas() {
