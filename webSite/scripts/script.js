@@ -38,16 +38,24 @@ function getSemaforos() {
 }
 
 function verEstadisticas() {
-    const url2 = 'http://127.0.0.1:5000/mciclos';
+    let interseccion = document.getElementById("interseccion").value
+    let dia = document.getElementById("fecha").value
+    let timeIni = document.getElementById("horaInicio").value
+    let timeFin =document.getElementById("horaFin").value
+
+    const url2 = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
     axios.get(url2)
         .then(response => {
             getSemaforos().then(semaforos => {
+                console.log(response)
+                
                 const labels = []
                 for (let index = 0; index < semaforos.length; index++) {
                     labels.push("Semaforo " + semaforos[index].id); 
                 }
                 mostrarGrafico(labels, [2,4],1, 'bar')
                 mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
+
             }).catch(error => {
                 console.error("Error:", error);
             });

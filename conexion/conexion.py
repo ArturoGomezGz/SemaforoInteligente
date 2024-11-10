@@ -80,6 +80,19 @@ class Conexion:
 
     def getUsuario(self, usuario):
         return self.sQueryGET(f"SELECT * FROM usuario WHERE usuario = '{usuario}'")
+    
+    def getSumByRange(self,idInterseccion, timeIni, timeFin, date):
+        return self.sQueryGET(f"""
+            SELECT 
+                idSemaforo,
+                SUM(noCarros) AS noCarros
+            FROM dCiclo 
+            JOIN mCiclo ON mCiclo.id = dCiclo.idCiclo
+            WHERE mCiclo.dia = '{date}'
+            AND mCiclo.hora >= '{timeIni}' AND mCiclo.hora < '{timeFin}'
+            AND idInterseccion = {idInterseccion}
+            GROUP BY idSemaforo
+            """)
 
     #UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
