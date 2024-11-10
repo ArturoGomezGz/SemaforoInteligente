@@ -252,8 +252,8 @@ async function loadDataBase(){
         }
 
         const tBodyDCiclo = document.getElementById("dt-dciclo");
-        for (let i = 0; i < dCiclos.length; i++) {
-            if (i > 4){break}
+        for (let i = 0; i < dCiclos.length || i == -1; i++) {
+            if (i > 4){i = -1}
             const element = dCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
