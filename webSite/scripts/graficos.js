@@ -3,7 +3,7 @@ function verEstadisticas(){
     let usuario = document.getElementById("username").value
     let contrasena = document.getElementById("password").value
 
-    const url = 'http://127.0.0.1:5000/mciclos/';
+    const url = 'http://127.0.0.1:5000/mciclos';
     axios.get(url)
     .then(response => {
         // Ejemplo de inicialización de gráficos con Chart.js
