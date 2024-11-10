@@ -68,7 +68,7 @@ def get_dciclo(dciclo_id):
     conexion.cerrarConexion()
     return jsonify(result)
 
-@app.route('/carSumRange/<int:idInterseccion>/<int:timeIni>/<int:timeFin>/<string:date>', methods=['GET'])
+@app.route('/carSumRange/<int:idInterseccion>/<string:timeIni>/<string:timeFin>/<string:date>', methods=['GET'])
 def get_car_sum(idInterseccion,timeIni, timeFin, date):
     conexion = Conexion(baseDeDatos)
     result = conexion.getSumByRange(idInterseccion,timeIni, timeFin, date)

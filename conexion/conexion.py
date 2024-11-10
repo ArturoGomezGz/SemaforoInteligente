@@ -81,7 +81,7 @@ class Conexion:
     def getUsuario(self, usuario):
         return self.sQueryGET(f"SELECT * FROM usuario WHERE usuario = '{usuario}'")
     
-    def getSumByRange(self,idInterseccion, timeIni, timeFin, date):
+    def getSumByRange(self, idInterseccion, timeIni, timeFin, date):
         return self.sQueryGET(f"""
             SELECT 
                 idSemaforo,

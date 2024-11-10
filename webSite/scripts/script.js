@@ -39,9 +39,9 @@ function getSemaforos() {
 
 function verEstadisticas() {
     let interseccion = document.getElementById("interseccion").value
-    let dia = document.getElementById("fecha").value
-    let timeIni = document.getElementById("horaInicio").value
-    let timeFin =document.getElementById("horaFin").value
+    let dia = document.getElementById("fecha").value.toString()
+    let timeIni = document.getElementById("horaInicio").value.toString()
+    let timeFin =document.getElementById("horaFin").value.toString()
 
     const url2 = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
     axios.get(url2)
