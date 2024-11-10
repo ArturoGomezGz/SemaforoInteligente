@@ -66,10 +66,11 @@ function mostrarGraficos(semaforos) {
             datasets: [{
                 label: 'Cantidad de Autos',
                 data: [12, 19],
-                backgroundColor: 'rgba(75, 192)',
-                borderColor: 'rgba(75, 192',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Añade el canal alfa para transparencia
+                borderColor: 'rgba(75, 192, 192, 1)', // Color completo de borde
                 borderWidth: 1
             }]
+            
         },
         options: {
             scales: {
