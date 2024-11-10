@@ -1,7 +1,7 @@
 // GETs a api
 
 function getSemaforos() {
-    const url1 = 'http://127.0.0.1:5000/semaforos';
+    const url1 = 'http://127.0.0.1:4000/semaforos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -14,7 +14,7 @@ function getSemaforos() {
 }
 
 function getIntersecciones() {
-    const url1 = 'http://127.0.0.1:5000/intersecciones';
+    const url1 = 'http://127.0.0.1:4000/intersecciones';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -27,7 +27,7 @@ function getIntersecciones() {
 }
 
 function getMCiclos() {
-    const url1 = 'http://127.0.0.1:5000/mciclos';
+    const url1 = 'http://127.0.0.1:4000/mciclos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -40,7 +40,7 @@ function getMCiclos() {
 }
 
 function getDCiclos() {
-    const url1 = 'http://127.0.0.1:5000/dciclos';
+    const url1 = 'http://127.0.0.1:4000/dciclos';
     return axios.get(url1)
         .then(response => {
             // Verifica si la respuesta es una cadena y parsea si es necesario
@@ -63,7 +63,7 @@ function iniciarSesion(){
     }
   
     // URL local
-    let url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+    let url = 'http://127.0.0.1:4000/getUsuario/'+usuario;
   
     axios.get(url).then(response => {
         // Imprimir los datos de la respuesta
@@ -86,7 +86,7 @@ function verEstadisticas() {
     let timeIni = document.getElementById("horaInicio").value.toString()
     let timeFin =document.getElementById("horaFin").value.toString()
 
-    const url2 = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
+    const url2 = 'http://127.0.0.1:4000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
     axios.get(url2)
         .then(response => {
             
@@ -94,7 +94,7 @@ function verEstadisticas() {
             
             let labels = []
             let values = []
-            for (let index = 0; index < suma.length; index++) {
+            for (let index = 0; index < suma.length || i==-1; index++) {
                 labels.push("Semaforo " + index+1); 
                 values.push(suma[index].noCarros)
             }
@@ -117,8 +117,8 @@ function mostrarGrafico(labels, data, idGrafico, tipo) {
             datasets: [{
                 label: 'Cantidad de Autos',
                 data: data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Añade el canal alfa para transparencia
-                borderColor: 'rgba(75, 192, 192, 1)', // Color completo de borde
+                backgroundColor: 'rgba(74, 192, 192, 0.2)', // Añade el canal alfa para transparencia
+                borderColor: 'rgba(74, 192, 192, 1)', // Color completo de borde
                 borderWidth: 1
             }]
             
@@ -137,7 +137,7 @@ function verIntersecciones(){
     let select = document.getElementById("interseccion");
     let options;
 
-    let url = 'http://127.0.0.1:5000/intersecciones';
+    let url = 'http://127.0.0.1:4000/intersecciones';
     axios.get(url).then(response => {
         // Parse response data
         options = JSON.parse(response.data);
@@ -163,8 +163,8 @@ async function loadDataBase(){
         const dCiclos = await getDCiclos()
 
         const tBodyInterseccion = document.getElementById("dt-interseccion");
-        for (let i = 0; i < intersecciones.length; i++) {
-            if (i > 5){break}
+        for (let i = 0; i < intersecciones.length || i==-1; i++) {
+            if (i > 4){break}
             const element = intersecciones[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -184,8 +184,8 @@ async function loadDataBase(){
         }
 
         const tBodySemaforo = document.getElementById("dt-semaforo");
-        for (let i = 0; i < semaforos.length; i++) {
-            if (i > 5){break}
+        for (let i = 0; i < semaforos.length || i==-1; i++) {
+            if (i > 4){break}
             const element = semaforos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -227,8 +227,8 @@ async function loadDataBase(){
         }
 
         const tBodyMCiclo = document.getElementById("dt-mciclo");
-        for (let i = 0; i < mCiclos.length; i++) {
-            if (i > 5){break}
+        for (let i = 0; i < mCiclos.length || i==-1; i++) {
+            if (i > 4){i = -1}
             const element = mCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -252,8 +252,8 @@ async function loadDataBase(){
         }
 
         const tBodyDCiclo = document.getElementById("dt-dciclo");
-        for (let i = 0; i < dCiclos.length; i++) {
-            if (i > 5){break}
+        for (let i = 0; i < dCiclos.length || i==-1; i++) {
+            if (i > 4){break}
             const element = dCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
