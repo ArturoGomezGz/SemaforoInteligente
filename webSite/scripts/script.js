@@ -24,7 +24,6 @@ function iniciarSesion(){
     })
 }
 
-// Función para obtener los datos de semáforos
 function getSemaforos() {
     const url1 = 'http://127.0.0.1:5000/semaforos';
     return axios.get(url1)
@@ -38,10 +37,7 @@ function getSemaforos() {
         });
 }
 
-
-// Función principal para ver estadísticas
 function verEstadisticas() {
-    // Obtener datos de semáforos y luego iterar sobre ellos
     getSemaforos().then(semaforos => {
         semaforos.forEach(element => {
             console.log(element["id"]);
@@ -50,12 +46,11 @@ function verEstadisticas() {
         console.error("Error:", error);
     });
 
-    // Obtener datos de ciclos y luego mostrar gráficos
     const url2 = 'http://127.0.0.1:5000/mciclos';
     axios.get(url2)
         .then(response => {
             const mCiclos = response.data;
-            console.log(mCiclos);
+            //console.log(mCiclos);
             mostrarGraficos();
         })
         .catch(error => {
