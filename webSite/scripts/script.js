@@ -38,20 +38,14 @@ function getSemaforos() {
 }
 
 function verEstadisticas() {
-    getSemaforos().then(semaforos => {
-        semaforos.forEach(element => {
-            console.log(element["id"]);
-        });
-    }).catch(error => {
-        console.error("Error:", error);
-    });
-
     const url2 = 'http://127.0.0.1:5000/mciclos';
     axios.get(url2)
         .then(response => {
-            const mCiclos = response.data;
-            //console.log(mCiclos);
-            mostrarGraficos();
+            getSemaforos().then(semaforos => {
+                mostrarGraficos(semaforos);
+            }).catch(error => {
+                console.error("Error:", error);
+            });
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
@@ -59,17 +53,21 @@ function verEstadisticas() {
 }
 
 // Función para mostrar gráficos
-function mostrarGraficos() {
+function mostrarGraficos(semaforos) {
+    const labels = []
+    for (let index = 0; index < semaforos.length; index++) {
+        labels.push[index]; 
+    }
     const ctx1 = document.getElementById('grafico1').getContext('2d');
     const grafico1 = new Chart(ctx1, {
         type: 'bar',
         data: {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+            labels: labels,
             datasets: [{
                 label: 'Cantidad de Autos',
-                data: [12, 19, 3, 5],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                data: [12, 19],
+                backgroundColor: 'rgba(75, 192)',
+                borderColor: 'rgba(75, 192',
                 borderWidth: 1
             }]
         },
