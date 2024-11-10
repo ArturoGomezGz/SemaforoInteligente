@@ -162,6 +162,27 @@ async function loadDataBase(){
         const mCiclos = await getMCiclos()
         const dCiclos = await getDCiclos()
 
+        const tBodyInterseccion = document.getElementById("dt-interseccion");
+        for (let i = 0; i < intersecciones.length; i++) {
+            if (i > 6){break}
+            const element = intersecciones[i]; // Obtenemos el objeto de la element actual
+            const fila = document.createElement("tr"); // Creamos una nueva fila
+    
+            const celdaId = document.createElement("td");
+            celdaId.textContent = element.id; // Añadimos el nombre
+            fila.appendChild(celdaId);
+
+            const celdaNoSemaforo = document.createElement("td");
+            celdaNoSemaforo.textContent = element.noSemaforos; // Añadimos el nombre
+            fila.appendChild(celdaNoSemaforo);
+
+            const celdaTCiclo = document.createElement("td");
+            celdaTCiclo.textContent = element.tCiclo; // Añadimos el nombre
+            fila.appendChild(celdaTCiclo);
+
+            tBodyInterseccion.appendChild(fila);
+        }
+
         const tBodySemaforo = document.getElementById("dt-semaforo");
         for (let i = 0; i < semaforos.length; i++) {
             if (i > 6){break}
@@ -203,27 +224,6 @@ async function loadDataBase(){
     
             // Añadimos la fila completa al tBodySemaforo
             tBodySemaforo.appendChild(fila);
-        }
-
-        const tBodyInterseccion = document.getElementById("dt-interseccion");
-        for (let i = 0; i < intersecciones.length; i++) {
-            if (i > 6){break}
-            const element = intersecciones[i]; // Obtenemos el objeto de la element actual
-            const fila = document.createElement("tr"); // Creamos una nueva fila
-    
-            const celdaId = document.createElement("td");
-            celdaId.textContent = element.id; // Añadimos el nombre
-            fila.appendChild(celdaId);
-
-            const celdaNoSemaforo = document.createElement("td");
-            celdaNoSemaforo.textContent = element.noSemaforos; // Añadimos el nombre
-            fila.appendChild(celdaNoSemaforo);
-
-            const celdaTCiclo = document.createElement("td");
-            celdaTCiclo.textContent = element.tCiclo; // Añadimos el nombre
-            fila.appendChild(celdaTCiclo);
-
-            tBodyInterseccion.appendChild(fila);
         }
 
         const tBodyMCiclo = document.getElementById("dt-mciclo");
