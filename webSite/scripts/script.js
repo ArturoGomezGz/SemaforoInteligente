@@ -1,3 +1,30 @@
+function iniciarSesion(){
+    let usuario = document.getElementById("username").value
+    let contrasena = document.getElementById("password").value
+  
+    if (usuario == "" || contrasena == ""){
+        alert("Llenar todos los campos")
+        return 0
+    }
+  
+    // URL local
+    const url = 'http://127.0.0.1:5000/getUsuario/'+usuario;
+  
+    axios.get(url)
+    .then(response => {
+        // Imprimir los datos de la respuesta
+        let sesion = JSON.parse(response.data)[0];
+        if (sesion){
+            if (sesion["contrasena"]==contrasena){
+              window.location.href = "./estadisticas.html";
+            }
+        }
+    })
+    .catch(error => {
+        // Manejo de errores
+        console.error("Error fetching data:", error);
+    });
+}
 
 function verEstadisticas(){
     let usuario = document.getElementById("username").value
@@ -81,3 +108,30 @@ function verEstadisticas(){
         console.error("Error fetching data:", error);
     });
 }
+
+function verIntersecciones(){
+    const select = document.getElementById("interseccion");
+    let options;
+
+    const url = 'http://127.0.0.1:5000/intersecciones';
+    axios.get(url)
+    .then(response => {
+        // Parse response data
+        options = JSON.parse(response.data);
+        console.log(options);
+        options.forEach(optionData => {
+            // Create an <option> element
+            const option = document.createElement("option");
+            option.value = optionData.id;
+            option.text = 'Interseccion ' + optionData.id;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        // Error handling
+        console.error("Error fetching data:", error);
+    });
+}
+
+
+verIntersecciones()
