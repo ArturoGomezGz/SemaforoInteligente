@@ -49,12 +49,12 @@ function verEstadisticas() {
             
             console.log(JSON.parse(response.data))
             
-            const labels = []
+            /* const labels = []
             for (let index = 0; index < semaforos.length; index++) {
                 labels.push("Semaforo " + semaforos[index].id); 
             }
             mostrarGrafico(labels, [2,4],1, 'bar')
-            mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
+            mostrarGrafico(["palabras","palabras"],[4,2],2, 'line') */
 
             
         })
