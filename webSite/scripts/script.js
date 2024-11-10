@@ -26,7 +26,7 @@ function iniciarSesion(){
 
 function getSemaforos(){
     let url1 = 'http://127.0.0.1:5000/semaforos'
-    axions.get(url1).then(response => {
+    axios.get(url1).then(response => {
         return JSON.parse(response.data);
     }).catch(error => {
         // Manejo de errores
