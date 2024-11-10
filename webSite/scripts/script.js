@@ -42,7 +42,8 @@ function verEstadisticas() {
     axios.get(url2)
         .then(response => {
             getSemaforos().then(semaforos => {
-                mostrarGraficos(semaforos);
+                mostrarGrafico(semaforos,1)
+                mostrarGrafico(semaforos,2)
             }).catch(error => {
                 console.error("Error:", error);
             });
@@ -53,12 +54,12 @@ function verEstadisticas() {
 }
 
 // Función para mostrar gráficos
-function mostrarGraficos(semaforos) {
+function mostrarGrafico(semaforos, idGrafico) {
     const labels = []
     for (let index = 0; index < semaforos.length; index++) {
         labels.push("Semaforo " + semaforos[index].id); 
     }
-    const ctx1 = document.getElementById('grafico1').getContext('2d');
+    const ctx1 = document.getElementById('grafico'+idGrafico).getContext('2d');
     const grafico1 = new Chart(ctx1, {
         type: 'bar',
         data: {
@@ -71,28 +72,6 @@ function mostrarGraficos(semaforos) {
                 borderWidth: 1
             }]
             
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    const ctx2 = document.getElementById('grafico2').getContext('2d');
-    const grafico2 = new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
-            datasets: [{
-                label: 'Flujo de Tráfico',
-                data: [2, 3, 20, 5],
-                fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                tension: 0.1
-            }]
         },
         options: {
             scales: {
