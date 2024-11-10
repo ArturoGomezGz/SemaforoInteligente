@@ -164,7 +164,7 @@ async function loadDataBase(){
 
         const tBodyInterseccion = document.getElementById("dt-interseccion");
         for (let i = 0; i < intersecciones.length; i++) {
-            if (i > 6){break}
+            if (i > 5){break}
             const element = intersecciones[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -185,7 +185,7 @@ async function loadDataBase(){
 
         const tBodySemaforo = document.getElementById("dt-semaforo");
         for (let i = 0; i < semaforos.length; i++) {
-            if (i > 6){break}
+            if (i > 5){break}
             const element = semaforos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -228,7 +228,7 @@ async function loadDataBase(){
 
         const tBodyMCiclo = document.getElementById("dt-mciclo");
         for (let i = 0; i < mCiclos.length; i++) {
-            if (i > 6){break}
+            if (i > 5){break}
             const element = mCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -253,7 +253,7 @@ async function loadDataBase(){
 
         const tBodyDCiclo = document.getElementById("dt-dciclo");
         for (let i = 0; i < dCiclos.length; i++) {
-            if (i > 6){break}
+            if (i > 5){break}
             const element = dCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
