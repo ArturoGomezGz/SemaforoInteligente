@@ -163,8 +163,8 @@ async function loadDataBase(){
         const dCiclos = await getDCiclos()
 
         const tBodyInterseccion = document.getElementById("dt-interseccion");
-        for (let i = 0; i < intersecciones.length || i == -1 ; i++) {
-            if (i > 4){i = -1}
+        for (let i = 0; i < intersecciones.length ; i++) {
+            if (i > 4){break}
             const element = intersecciones[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
@@ -252,8 +252,8 @@ async function loadDataBase(){
         }
 
         const tBodyDCiclo = document.getElementById("dt-dciclo");
-        for (let i = 0; i < dCiclos.length || i == -1; i++) {
-            if (i > 4){i = -1}
+        for (let i = 0; i < dCiclos.length; i++) {
+            if (i > 4){break}
             const element = dCiclos[i]; // Obtenemos el objeto de la element actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
