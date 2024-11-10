@@ -169,17 +169,37 @@ async function loadDataBase(){
             const fila = document.createElement("tr"); // Creamos una nueva fila
     
             // Creamos las celdas de la fila
-            const celdaNombre = document.createElement("td");
-            celdaNombre.textContent = element.nombre; // Añadimos el nombre
-            fila.appendChild(celdaNombre);
+            const celdaId = document.createElement("td");
+            celdaId.textContent = element[i].id; // Añadimos el nombre
+            fila.appendChild(celdaId);
     
-            const celdaEdad = document.createElement("td");
-            celdaEdad.textContent = element.edad; // Añadimos la edad
-            fila.appendChild(celdaEdad);
+            const celdaTVerde = document.createElement("td");
+            celdaTVerde.textContent = element[i].tVerde; // Añadimos la edad
+            fila.appendChild(celdaTVerde);
     
-            const celdaCiudad = document.createElement("td");
-            celdaCiudad.textContent = element.ciudad; // Añadimos la ciudad
-            fila.appendChild(celdaCiudad);
+            const celdaTRojo = document.createElement("td");
+            celdaTRojo.textContent = element[i].tRojo; // Añadimos la edad
+            fila.appendChild(celdaTRojo);
+
+            const celdaSaalidaY = document.createElement("td");
+            celdaSaalidaY.textContent = element[i].salidaY; // Añadimos la edad
+            fila.appendChild(celdaSaalidaY);
+
+            const celdaScaleFactor = document.createElement("td");
+            celdaScaleFactor.textContent = element[i].scaleFactor; // Añadimos la edad
+            fila.appendChild(celdaScaleFactor);
+
+            const celdaMinNeighbors = document.createElement("td");
+            celdaMinNeighbors.textContent = element[i].minNeighbors; // Añadimos la edad
+            fila.appendChild(celdaMinNeighbors);
+
+            const celdaMinSize = document.createElement("td");
+            celdaMinSize.textContent = element[i].minSize; // Añadimos la edad
+            fila.appendChild(celdaMinSize);
+
+            const celdaMaxNeighbors = document.createElement("td");
+            celdaMaxNeighbors.textContent = element[i].MaxNeighbors; // Añadimos la edad
+            fila.appendChild(celdaMaxNeighbors);
     
             // Añadimos la fila completa al tbodySemaforo
             tbodySemaforo.appendChild(fila);
