@@ -10,8 +10,8 @@ axios.get(url)
         options.forEach(optionData => {
             // Create an <option> element
             const option = document.createElement("option");
-            option.value = 'Interseccion ' + optionData.id;
-            option.text = optionData.name;  // Adjust this to match the property you want as text
+            option.value = optionData.id;
+            option.text = 'Interseccion ' + optionData.id;
             select.appendChild(option);
         });
     })
