@@ -79,27 +79,32 @@ function iniciarSesion(){
     })
 }
 
-function crearUsuario(){
-    let usuario = getElementById("usuarioCreacion").value
-    let contrasena = getElementById("contrasenaCreacion").value
-    let nombre = getElementById("nombreCreacion").value
-    let url = 'http://127.0.0.1:5000/new_user/'+usuario+'/'+contrasena+'/'+nombre
+function crearUsuario() {
+    let usuario = document.getElementById("usuarioCreacion").value;
+    let contrasena = document.getElementById("contrasenaCreacion").value;
+    let nombre = document.getElementById("nombreCreacion").value;
+    let url = 'http://127.0.0.1:5000/new_user/' + usuario + '/' + contrasena + '/' + nombre;
 
-    if (usuario == "" || contrasena == ""){
-        if (contrasena.length >= 6 ){
-            axios.get(url)
+    // Check if any field is empty
+    if (usuario === "" || contrasena === "" || nombre === "") {
+        alert("Llenar todos los campos");
+    } 
+    // Check password length
+    else if (contrasena.length < 6) {
+        alert("La contraseña debe tener al menos 6 caracteres");
+    } 
+    // Proceed with the API call if all checks are met
+    else {
+        axios.get(url)
             .then(response => {
-                alert("Usuario creado exitosamente")
+                alert("Usuario creado exitosamente");
             })
             .catch(error => {
-                console.error("Error fetching mciclos data:", error);
+                console.error("Error creating user:", error);
             });
-        } else {
-            alert("La contraseña debe tener almenos 6 caracteres")
-        }
-    } else {
-        alert("Llenar todos los campos")
     }
+}
+
 
     
 
