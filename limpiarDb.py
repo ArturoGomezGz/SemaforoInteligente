@@ -14,6 +14,3 @@ conection.limpiarRegistros()
 
 conection.cerrarConexion()
 
-
-
-
