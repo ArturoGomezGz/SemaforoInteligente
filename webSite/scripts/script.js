@@ -85,21 +85,23 @@ function crearUsuario(){
     let nombre = getElementById("nombreCreacion").value
     let url = 'http://127.0.0.1:5000/new_user/'+usuario+'/'+contrasena+'/'+nombre
 
-    axios.get(url)
-        .then(response => {
-            if (usuario == "" || contrasena == ""){
-                if (contrasena.length >= 6 ){
-        
-                } else {
-                    alert("La contraseña debe tener almenos 6 caracteres")
-                }
-            } else {
-                alert("Llenar todos los campos")
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching mciclos data:", error);
-        });
+    if (usuario == "" || contrasena == ""){
+        if (contrasena.length >= 6 ){
+            axios.get(url)
+            .then(response => {
+                alert("Usuario creado exitosamente")
+            })
+            .catch(error => {
+                console.error("Error fetching mciclos data:", error);
+            });
+        } else {
+            alert("La contraseña debe tener almenos 6 caracteres")
+        }
+    } else {
+        alert("Llenar todos los campos")
+    }
+
+    
 
 }
 
