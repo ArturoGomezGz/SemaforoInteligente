@@ -114,3 +114,6 @@ class Conexion:
     #PUT
     def updateInterseccionTime(self,idInterseccion, tCiclo):
         self.sQuery(f"UPDATE Interseccion SET tCiclo = {tCiclo} WHERE id = {idInterseccion}")
+
+    def createUsuario(self,usuario, contrasena, nombre):
+        self.sQuery(f"INSERT INTO usuario (usuario, contrasena, nombre) VALUES ('{usuario}', '{contrasena}', '{nombre}')")

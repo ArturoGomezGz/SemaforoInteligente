@@ -52,7 +52,7 @@ function getDCiclos() {
         });
 }
 
-// ---------
+// Sesiones 
 function iniciarSesion(){
     let usuario = document.getElementById("username").value
     let contrasena = document.getElementById("password").value
@@ -78,6 +78,32 @@ function iniciarSesion(){
         console.error("Error fetching data:", error);
     })
 }
+
+function crearUsuario(){
+    const usuario = getElementById("usuarioCreacion")
+    const contrasena = getElementById("contrasenaCreacion")
+    const nombre = getElementById("nombreCreacion")
+    const url = 'http://127.0.0.1:5000/new_user/'+usuario+'/'+contrasena+'/'+nombre
+
+    axios.get(url)
+        .then(response => {
+            if (usuario == "" || contrasena == ""){
+                if (contrasena.length >= 6 ){
+        
+                } else {
+                    alert("La contraseña debe tener almenos 6 caracteres")
+                }
+            } else {
+                alert("Llenar todos los campos")
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+
+}
+
+//-------------------------------
 
 
 function verEstadisticas() {

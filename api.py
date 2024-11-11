@@ -96,6 +96,12 @@ def getUsuario(usuario):
     conexion.cerrarConexion()
     return jsonify(result)
 
+@app.route('/new_user/<string:usuario>/<string:contrasena>/<string:nombre>', methods=['POST'])
+def createrUser(usuario,contrasena, nombre):
+    conexion = Conexion(baseDeDatos)
+    conexion.createUsuario(usuario, contrasena, nombre)
+    conexion.cerrarConexion()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
