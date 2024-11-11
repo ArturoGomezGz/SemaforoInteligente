@@ -83,7 +83,7 @@ function crearUsuario() {
     let usuario = document.getElementById("usuarioCreacion").value;
     let contrasena = document.getElementById("contrasenaCreacion").value;
     let nombre = document.getElementById("nombreCreacion").value;
-    let url = 'http://127.0.0.1:5000/new_user/' + usuario + '/' + contrasena + '/' + nombre;
+    let url = 'http://127.0.0.1:5000/new_user';
 
     // Check if any field is empty
     if (usuario === "" || contrasena === "" || nombre === "") {
@@ -95,13 +95,17 @@ function crearUsuario() {
     } 
     // Proceed with the API call if all checks are met
     else {
-        axios.post(url)
-            .then(response => {
-                alert("Usuario creado exitosamente");
-            })
-            .catch(error => {
-                console.error("Error creating user:", error);
-            });
+        axios.post(url, {
+            usuario: usuario,
+            contrasena: contrasena,
+            nombre: nombre
+        })
+        .then(response => {
+            alert("Usuario creado exitosamente");
+        })
+        .catch(error => {
+            console.error("Error creating user:", error);
+        });
     }
 }
 

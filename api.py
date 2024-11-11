@@ -96,11 +96,23 @@ def getUsuario(usuario):
     conexion.cerrarConexion()
     return jsonify(result)
 
-@app.route('/new_user/<string:usuario>/<string:contrasena>/<string:nombre>', methods=['POST'])
-def createrUser(usuario,contrasena, nombre):
+@app.route('/new_user', methods=['POST'])
+def create_user():
+    data = request.json
+    usuario = data.get("usuario")
+    contrasena = data.get("contrasena")
+    nombre = data.get("nombre")
+    
+    # Asegúrate de que se proporcionan todos los campos
+    if not usuario or not contrasena or not nombre:
+        return jsonify({"error": "Todos los campos son requeridos"}), 400
+
+    # Conectar a la base de datos y crear el usuario
     conexion = Conexion(baseDeDatos)
     conexion.createUsuario(usuario, contrasena, nombre)
     conexion.cerrarConexion()
+
+    return jsonify({"message": "Usuario creado exitosamente"}), 201
 
 
 if __name__ == '__main__':
