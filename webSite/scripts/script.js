@@ -80,10 +80,10 @@ function iniciarSesion(){
 }
 
 function crearUsuario(){
-    const usuario = getElementById("usuarioCreacion")
-    const contrasena = getElementById("contrasenaCreacion")
-    const nombre = getElementById("nombreCreacion")
-    const url = 'http://127.0.0.1:5000/new_user/'+usuario+'/'+contrasena+'/'+nombre
+    let usuario = getElementById("usuarioCreacion")
+    let contrasena = getElementById("contrasenaCreacion")
+    let nombre = getElementById("nombreCreacion")
+    let url = 'http://127.0.0.1:5000/new_user/'+usuario+'/'+contrasena+'/'+nombre
 
     axios.get(url)
         .then(response => {
