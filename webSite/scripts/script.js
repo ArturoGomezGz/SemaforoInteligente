@@ -70,7 +70,7 @@ function iniciarSesion(){
         let sesion = JSON.parse(response.data)[0];
         if (sesion){
             if (sesion["contrasena"]==contrasena){
-              window.location.href = "./estadisticas.html";
+                window.location.href = "./estadisticas.html";
             }
         }
     }).catch(error => {
@@ -102,9 +102,11 @@ function crearUsuario() {
         })
         .then(response => {
             alert("Usuario creado exitosamente");
+            window.location.href = "./index.html";
         })
         .catch(error => {
             console.error("Error creating user:", error);
+            window.location.href = "./ajustes.html";
         });
     }
 }
