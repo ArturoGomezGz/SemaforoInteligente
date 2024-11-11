@@ -95,7 +95,7 @@ function crearUsuario() {
     } 
     // Proceed with the API call if all checks are met
     else {
-        axios.get(url)
+        axios.post(url)
             .then(response => {
                 alert("Usuario creado exitosamente");
             })
