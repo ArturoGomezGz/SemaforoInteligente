@@ -1,18 +1,21 @@
+import sys
+sys.path.append(r"../")
 from conexion.conexion import Conexion
 import json
 import time
 import os
+import pymysql
 
 baseDeDatos = {
-    "server" : "localhost",  # Cambia esto a tu servidor SQL
+    "server" : "10.43.125.45",  # Cambia esto a tu servidor SQL
     "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
     "usuario" : "arturo",
     "contrasena" : "Pword1",
+    "port": 3306
 }
 
 conection = Conexion(baseDeDatos)
 
-conection.ajustarTiempoSemaforo(1,30,20)
 data = conection.getSemaforo(1)
 print(data)
 

@@ -6,10 +6,11 @@ app = Flask(__name__)
 CORS(app)
 
 baseDeDatos = {
-    "server" : "localhost",  # Cambia esto a tu servidor SQL
+    "server" : "10.43.125.45",  # Cambia esto a tu servidor SQL
     "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
     "usuario" : "arturo",
     "contrasena" : "Pword1",
+    "port": 3306
 }
 
 @app.route('/semaforos', methods=['GET'])
@@ -82,12 +83,23 @@ def get_ultimo_registro(semaforo_id):
     conexion.cerrarConexion()
     return jsonify(result)
 
-@app.route('/updateTCiclo/<int:interseccion_id>/<int:tCiclo>', methods=['GET','PUT'])
-def updateTCiclo(interseccion_id,tCiclo):
+@app.route('/updateTCiclo', methods=['PUT'])
+def updateTCiclo():
+    # Obtener los datos JSON del cuerpo de la solicitud
+    data = request.json
+    interseccion_id = data.get("interseccion")
+    tCiclo = data.get("tiempoCiclo")
+
+    # Asegúrate de que se proporcionan todos los campos
+    if interseccion_id is None or tCiclo is None:
+        return jsonify({"error": "Todos los campos son requeridos"}), 400
+
+    # Conectar a la base de datos y actualizar el tiempo de ciclo
     conexion = Conexion(baseDeDatos)
-    result = conexion.updateInterseccionTime(interseccion_id,tCiclo)
+    result = conexion.updateInterseccionTime(interseccion_id, tCiclo)
     conexion.cerrarConexion()
-    return jsonify({'mensaje': 'Tiempo de ciclo actualizado correctamente'}), 200
+
+    return jsonify({"mensaje": "Tiempo de ciclo actualizado correctamente"}), 200
 
 @app.route('/getUsuario/<string:usuario>', methods=['GET'])
 def getUsuario(usuario):

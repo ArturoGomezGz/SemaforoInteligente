@@ -1,14 +1,20 @@
+import sys
+sys.path.append(r"../")
+from conexion.conexion import Conexion
 from clases.interseccion import Interseccion
 from clases.semaforo import Semaforo
-from conexion.conexion import Conexion
 import json
+import os
+
 
 baseDeDatos = {
-    "server" : "localhost",  # Cambia esto a tu servidor SQL
+    "server" : "10.43.125.45",  # Cambia esto a tu servidor SQL
     "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
     "usuario" : "arturo",
     "contrasena" : "Pword1",
+    "port": 3306
 }
+
 
 conection = Conexion(baseDeDatos)
 
