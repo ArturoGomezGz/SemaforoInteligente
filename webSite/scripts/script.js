@@ -68,7 +68,6 @@ function iniciarSesion(){
     axios.get(url).then(response => {
         // Imprimir los datos de la respuesta
         let sesion = JSON.parse(response.data)[0];
-        console.log(sesion)
         if (sesion){
             if (sesion["contrasena"]==contrasena){
                 window.location.href = "./estadisticas.html";
@@ -79,6 +78,8 @@ function iniciarSesion(){
         console.error("Error fetching data:", error);
     })
 }
+
+// Ajustes
 
 function crearUsuario() {
     let usuario = document.getElementById("usuarioCreacion").value;
@@ -111,6 +112,32 @@ function crearUsuario() {
         });
     }
 }
+
+function setTiepoCiclo() {
+    let interseccion = document.getElementById("interseccion").value;
+    let tiepo = document.getElementById("tiempoCiclo").value;
+    let url = 'http://127.0.0.1:5000/updateTCiclo';
+
+    // Check if any field is empty
+    if (interseccion === "" || tiepo === "") {
+        alert("Llenar todos los campos");
+    } else {
+        // Send data as JSON in the request body
+        axios.put(url, {
+            interseccion: interseccion,
+            tiempoCiclo: tiepo
+        })
+        .then(response => {
+            alert("Tiempo de ciclo actualizado correctamente");
+            window.location.href = "./ajustes.html";
+        })
+        .catch(error => {
+            console.error("Error updating cycle time:", error);
+            window.location.href = "./ajustes.html";
+        });
+    }
+}
+
 
 //-------------------------------
 
