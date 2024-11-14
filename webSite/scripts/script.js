@@ -79,6 +79,8 @@ function iniciarSesion(){
     })
 }
 
+// Ajustes
+
 function crearUsuario() {
     let usuario = document.getElementById("usuarioCreacion").value;
     let contrasena = document.getElementById("contrasenaCreacion").value;
@@ -110,6 +112,32 @@ function crearUsuario() {
         });
     }
 }
+
+function setTiepoCiclo() {
+    let interseccion = document.getElementById("interseccion").value;
+    let tiepo = document.getElementById("tiempoCiclo").value;
+    let url = 'http://127.0.0.1:5000/updateTCiclo';
+
+    // Check if any field is empty
+    if (interseccion === "" || tiepo === "") {
+        alert("Llenar todos los campos");
+    } else {
+        // Send data as JSON in the request body
+        axios.put(url, {
+            interseccion: interseccion,
+            tiempoCiclo: tiepo
+        })
+        .then(response => {
+            alert("Tiempo de ciclo actualizado correctamente");
+            window.location.href = "./ajustes.html";
+        })
+        .catch(error => {
+            console.error("Error updating cycle time:", error);
+            window.location.href = "./ajustes.html";
+        });
+    }
+}
+
 
 //-------------------------------
 
