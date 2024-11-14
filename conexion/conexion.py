@@ -1,4 +1,4 @@
-import mysql.connector
+import pymysql
 import json
 from flask import Flask, request, jsonify
 
@@ -9,18 +9,19 @@ class Conexion:
         self.dbDatabase = jsonBaseDeDatos["database"]
         self.dbUsuario = jsonBaseDeDatos["usuario"]
         self.dbContrasena = jsonBaseDeDatos["contrasena"]
-        self.conexion = mysql.connector.connect(
+        self.dbPort = jsonBaseDeDatos["port"]
+        self.conexion = pymysql.connect(
             host=self.dbServer,
             user=self.dbUsuario,
-            passwd=self.dbContrasena,
-            database=self.dbDatabase
+            password=self.dbContrasena,
+            database=self.dbDatabase,
+            port=self.dbPort
         )
 
     def cerrarConexion(self):
         """Cierra la conexión y el cursor."""
         if self.conexion:
             self.conexion.close()
-            self.cursor = None
             print("Conexión cerrada exitosamente.")
 
     def query_results_to_json(self, resultados, columnas):
@@ -33,22 +34,22 @@ class Conexion:
         return json_result
 
     def sQuery(self, query):
-        cursor = self.conexion.cursor()
-        cursor.execute(query)
-        self.conexion.commit()
+        with self.conexion.cursor() as cursor:
+            cursor.execute(query)
+            self.conexion.commit()
 
     def sQueryGET(self, query):
-        cursor = self.conexion.cursor()
-        cursor.execute(query)
-        
-        # Obtener resultados y nombres de columnas
-        resultados = cursor.fetchall()
-        columnas = [column[0] for column in cursor.description]
-        
-        # Llama a la función de transformación a JSON
-        json_result = self.query_results_to_json(resultados, columnas)
-        
-        return json_result
+        with self.conexion.cursor() as cursor:
+            cursor.execute(query)
+            
+            # Obtener resultados y nombres de columnas
+            resultados = cursor.fetchall()
+            columnas = [column[0] for column in cursor.description]
+            
+            # Llama a la función de transformación a JSON
+            json_result = self.query_results_to_json(resultados, columnas)
+            
+            return json_result
 
     # GET
     def getSemaforos(self):
@@ -94,11 +95,11 @@ class Conexion:
             GROUP BY idSemaforo
             """)
 
-    #UPDATE
+    # UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
         self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo = {tRojo} WHERE id = {idSemaforo}")
     
-    #POST
+    # POST
     def agregarMCiclo(self, idInterseccion, dia, hora):
         self.sQuery(f"INSERT INTO mCiclo (idInterseccion, dia, hora) VALUES ({idInterseccion},'{dia}','{hora}')")    
 
@@ -111,9 +112,9 @@ class Conexion:
         self.sQuery("DELETE FROM mCiclo")
         self.sQuery("ALTER TABLE mCiclo AUTO_INCREMENT = 1")
     
-    #PUT
-    def updateInterseccionTime(self,idInterseccion, tCiclo):
+    # PUT
+    def updateInterseccionTime(self, idInterseccion, tCiclo):
         self.sQuery(f"UPDATE Interseccion SET tCiclo = {tCiclo} WHERE id = {idInterseccion}")
 
-    def createUsuario(self,usuario, contrasena, nombre):
+    def createUsuario(self, usuario, contrasena, nombre):
         self.sQuery(f"INSERT INTO usuario (usuario, contrasena, nombre) VALUES ('{usuario}', '{contrasena}', '{nombre}')")
