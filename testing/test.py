@@ -6,13 +6,8 @@ import time
 import os
 import pymysql
 
-baseDeDatos = {
-    "server" : "10.43.125.45",  # Cambia esto a tu servidor SQL
-    "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
-    "usuario" : "arturo",
-    "contrasena" : "Pword1",
-    "port": 3306
-}
+with open('../dbData.json', 'r') as archivo:
+    baseDeDatos = json.load(archivo)
 
 conection = Conexion(baseDeDatos)
 

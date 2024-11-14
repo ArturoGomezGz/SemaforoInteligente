@@ -1,17 +1,13 @@
 from conexion.conexion import Conexion
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 CORS(app)
 
-baseDeDatos = {
-    "server" : "10.43.125.45",  # Cambia esto a tu servidor SQL
-    "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
-    "usuario" : "arturo",
-    "contrasena" : "Pword1",
-    "port": 3306
-}
+with open('./dbData.json', 'r') as archivo:
+    baseDeDatos = json.load(archivo)
 
 @app.route('/semaforos', methods=['GET'])
 def get_all_semaforos():

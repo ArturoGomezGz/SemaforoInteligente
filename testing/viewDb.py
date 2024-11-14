@@ -3,12 +3,8 @@ import json
 import time
 import os
 
-baseDeDatos = {
-    "server" : "localhost",  # Cambia esto a tu servidor SQL
-    "database" : "SemaforoInteligente",  # Cambia esto a tu base de datos
-    "usuario" : "arturo",
-    "contrasena" : "Pword1",
-}
+with open('../dbData.json', 'r') as archivo:
+    baseDeDatos = json.load(archivo)
 
 conection = Conexion(baseDeDatos)
 os.system("clear")

@@ -1,13 +1,8 @@
 import pymysql
 
 # Establishing the connection
-conexion = pymysql.connect(
-    user="arturo",
-    password="Pword1",
-    host="10.43.125.45",
-    database="SemaforoInteligente",
-    port=3306
-)
+with open('../dbData.json', 'r') as archivo:
+    baseDeDatos = json.load(archivo)
 
 # Creating a cursor object
 cursor = conexion.cursor()
