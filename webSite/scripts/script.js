@@ -140,15 +140,66 @@ function setTiepoCiclo() {
 
 
 //-------------------------------
+function limpiarGraficos() {
+    // Obtén los elementos canvas
+    const grafico1 = document.getElementById('grafico1');
+    const grafico2 = document.getElementById('grafico2');
+    
+    // Limpia el contenido del canvas 1
+    if (grafico1) {
+        const contexto1 = grafico1.getContext('2d');
+        contexto1.clearRect(0, 0, grafico1.width, grafico1.height);
+    }
 
+    // Limpia el contenido del canvas 2
+    if (grafico2) {
+        const contexto2 = grafico2.getContext('2d');
+        contexto2.clearRect(0, 0, grafico2.width, grafico2.height);
+    }
+}
 
-function verEstadisticas() {
-    let interseccion = document.getElementById("interseccion").value
-    let dia = document.getElementById("fecha").value.toString()
-    let timeIni = document.getElementById("horaInicio").value.toString()
-    let timeFin =document.getElementById("horaFin").value.toString()
+function verEstadisticas(hoy) {
+    let interseccion
+    let fecha
+    let timeIni
+    let timeFin
+    if (hoy) {
+        interseccion = document.getElementById("interseccion").value
+        fecha = new Date()
+        const dia = fecha.getDate();
+        const mes = fecha.getMonth() + 1; // Se suma 1 porque los meses comienzan desde 0
+        const ano = fecha.getFullYear();
+        fecha = ano+"-"+mes+"-"+dia;
+        timeIni = '00:00'
+        timeFin = '23:59'
+    } else {
+        interseccion = document.getElementById("interseccion").value
+        fecha = document.getElementById("fecha").value.toString()
+        timeIni = document.getElementById("horaInicio").value.toString()
+        timeFin =document.getElementById("horaFin").value.toString()
+    }
+    console.log(fecha)
+    
 
-    const url2 = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+dia;
+    const url = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+fecha;
+    axios.get(url)
+        .then(response => {
+            
+            let suma = JSON.parse(response.data)
+            
+            let labels = []
+            let values = []
+            for (let index = 0; index < suma.length; index++) {
+                labels.push("Semaforo " + (index+1)); 
+                values.push(suma[index].noCarros)
+            }
+            mostrarGrafico(labels, values,1, 'bar', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)')
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+
+    const url2 = 'http://127.0.0.1:5000/carSumRangeByCiclos/'+1+'/'+timeIni+'/'+timeFin+'/'+fecha;
     axios.get(url2)
         .then(response => {
             
@@ -157,20 +208,40 @@ function verEstadisticas() {
             let labels = []
             let values = []
             for (let index = 0; index < suma.length; index++) {
-                labels.push("Semaforo " + index+1); 
+                labels.push(suma[index].hora); 
                 values.push(suma[index].noCarros)
             }
-            mostrarGrafico(labels, values,1, 'bar')
-            mostrarGrafico(["palabras","palabras"],[4,2],2, 'line')
-
+            
+            mostrarGrafico(labels,values,2, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)')
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
         });
+
+    const url3 = 'http://127.0.0.1:5000/carSumRangeByCiclos/'+2+'/'+timeIni+'/'+timeFin+'/'+fecha;
+    axios.get(url3)
+        .then(response => {
+            
+            let suma = JSON.parse(response.data)
+            
+            let labels = []
+            let values = []
+            for (let index = 0; index < suma.length; index++) {
+                labels.push(suma[index].hora); 
+                values.push(suma[index].noCarros)
+            }
+            
+            mostrarGrafico(labels,values,3, 'line','rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1')
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+     
 }
 
 // Función para mostrar gráficos
-function mostrarGrafico(labels, data, idGrafico, tipo) {
+
+function mostrarGrafico(labels, data, idGrafico, tipo, color, borde) {
     const ctx1 = document.getElementById('grafico'+idGrafico).getContext('2d');
     const grafico1 = new Chart(ctx1, {
         type: tipo,
@@ -179,8 +250,8 @@ function mostrarGrafico(labels, data, idGrafico, tipo) {
             datasets: [{
                 label: 'Cantidad de Autos',
                 data: data,
-                backgroundColor: 'rgba(74, 192, 192, 0.2)', // Añade el canal alfa para transparencia
-                borderColor: 'rgba(74, 192, 192, 1)', // Color completo de borde
+                backgroundColor: color , // Añade el canal alfa para transparencia
+                borderColor: borde, // Color completo de borde
                 borderWidth: 1
             }]
             

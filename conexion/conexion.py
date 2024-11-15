@@ -95,6 +95,20 @@ class Conexion:
             GROUP BY idSemaforo
             """)
 
+    def getCiclosRangeSemaforo(self, idSemaforo, timeIni, timeFin, date):
+        return self.sQueryGET(f"""
+            SELECT 
+                noCarros,
+                hora
+            FROM mCiclo
+            JOIN dCiclo ON mCiclo.id = dCiclo.idCiclo
+            WHERE dCiclo.idSemaforo = {idSemaforo}
+            AND dia = '{date}' 
+            AND hora > '{timeIni}' 
+            AND hora < '{timeFin}';
+            """)
+
+
     # UPDATE
     def ajustarTiempoSemaforo(self, idSemaforo, tVerde, tRojo):
         self.sQuery(f"UPDATE Semaforo SET tVerde = {tVerde}, tRojo = {tRojo} WHERE id = {idSemaforo}")

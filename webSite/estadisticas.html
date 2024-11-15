@@ -64,7 +64,8 @@
                                 <label for="fecha">Seleccionar Día</label>
                                 <input type="date" class="form-control" id="fecha" required>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="verEstadisticas()">Ver Estadísticas</button>
+                            <button type="button" class="btn btn-primary" onclick="verEstadisticas(false)">Ver Estadísticas</button>
+                            <button type="button" class="btn btn-primary" onclick="verEstadisticas(true)">Hoy</button>
                         </form>
                     </div>
                 </div>
@@ -74,11 +75,19 @@
                     <div class="col-md-6">
                         <canvas id="grafico1"></canvas>
                     </div>
+                </div>
+                <div class="row mt-4">
                     <div class="col-md-6">
                         <canvas id="grafico2"></canvas>
                     </div>
+                    <div class="col-md-6">
+                        <canvas id="grafico3"></canvas>
+                    </div>
                 </div>
             </main>
+            <footer style="height: 50px; width: 100%;">
+
+            </footer>
         </div>
     </div>
 

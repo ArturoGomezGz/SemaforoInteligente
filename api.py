@@ -72,6 +72,13 @@ def get_car_sum(idInterseccion,timeIni, timeFin, date):
     conexion.cerrarConexion()
     return jsonify(result)
 
+@app.route('/carSumRangeByCiclos/<int:idSemaforo>/<string:timeIni>/<string:timeFin>/<string:date>', methods=['GET'])
+def get_car_sum_ciclos(idSemaforo,timeIni, timeFin, date):
+    conexion = Conexion(baseDeDatos)
+    result = conexion.getCiclosRangeSemaforo(idSemaforo, timeIni, timeFin, date)
+    conexion.cerrarConexion()
+    return jsonify(result)
+
 @app.route('/ultimo_registro/<int:semaforo_id>', methods=['GET'])
 def get_ultimo_registro(semaforo_id):
     conexion = Conexion(baseDeDatos)
