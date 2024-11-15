@@ -193,7 +193,7 @@ function verEstadisticas(hoy) {
                 labels.push("Semaforo " + (index+1)); 
                 values.push(suma[index].noCarros)
             }
-            mostrarGrafico(labels, values,1, 'bar', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)')
+            mostrarGrafico("Semaforos ",labels, values,1, 'bar', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)')
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
@@ -212,7 +212,7 @@ function verEstadisticas(hoy) {
                 values.push(suma[index].noCarros)
             }
             
-            mostrarGrafico(labels,values,2, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)')
+            mostrarGrafico("Semaforo 1",labels,values,2, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)')
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
@@ -231,7 +231,7 @@ function verEstadisticas(hoy) {
                 values.push(suma[index].noCarros)
             }
             
-            mostrarGrafico(labels,values,3, 'line','rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1')
+            mostrarGrafico("Semaforo 2",labels,values,3, 'line','rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1')
         })
         .catch(error => {
             console.error("Error fetching mciclos data:", error);
@@ -241,7 +241,7 @@ function verEstadisticas(hoy) {
 
 // Función para mostrar gráficos
 
-function mostrarGrafico(labels, data, idGrafico, tipo, color, borde) {
+function mostrarGrafico(titulo, labels, data, idGrafico, tipo, color, borde) {
     const ctx1 = document.getElementById('grafico'+idGrafico).getContext('2d');
     const grafico1 = new Chart(ctx1, {
         type: tipo,
@@ -257,6 +257,19 @@ function mostrarGrafico(labels, data, idGrafico, tipo, color, borde) {
             
         },
         options: {
+            plugins: {
+                title: {
+                    display: true, // Habilita la visualización del título
+                    text: titulo, // Especifica el texto del título
+                    font: {
+                        size: 18 // Cambia el tamaño de la fuente del título
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                }
+            },
             scales: {
                 y: {
                     beginAtZero: true
