@@ -33,9 +33,9 @@ print("Interseccion 1 creada")
 
 conection.cerrarConexion()
 
-for i in range(0,2):
-    interseccion1.procesar()
-    interseccion1.ajustarTiempo()
+
+interseccion1.procesar()
+interseccion1.ajustarTiempo()
 
 
 
