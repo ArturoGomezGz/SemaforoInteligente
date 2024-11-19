@@ -28,9 +28,6 @@ semaforo2 = Semaforo(
     json.loads(conection.getSemaforo(2))[0]["rutaVideo"]
     )
 
-semaforo1.randInput()
-semaforo2.randInput()
-
 semaforo1.print()
 semaforo2.print()
 
