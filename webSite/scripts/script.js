@@ -373,50 +373,93 @@ async function loadDataBase(){
         }
 
         const tBodyMCiclo = document.getElementById("dt-mciclo");
-        for (let i = 0; i < mCiclos.length; i++) {
-            if (i > 5){break}
-            const element = mCiclos[i]; // Obtenemos el objeto de la element actual
+        for (let i = 0; i < 4 && i < mCiclos.length; i++) {
+            const element = mCiclos[i]; // Obtenemos el objeto del elemento actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
-    
+        
             const celdaId = document.createElement("td");
-            celdaId.textContent = element.id; // Añadimos el nombre
+            celdaId.textContent = element.id; // Añadimos el ID
+            fila.appendChild(celdaId);
+        
+            const celdaIdInterseccion = document.createElement("td");
+            celdaIdInterseccion.textContent = element.idInterseccion; // Añadimos el ID de la intersección
+            fila.appendChild(celdaIdInterseccion);
+        
+            const celdaDia = document.createElement("td");
+            celdaDia.textContent = element.dia; // Añadimos el día
+            fila.appendChild(celdaDia);
+        
+            const celdaHora = document.createElement("td");
+            celdaHora.textContent = element.hora; // Añadimos la hora
+            fila.appendChild(celdaHora);
+        
+            tBodyMCiclo.appendChild(fila);
+        }
+        for (let i = mCiclos.length - 1; i >= mCiclos.length - 6 && i >= 0; i--) {
+            const element = mCiclos[i]; // Obtenemos el objeto del elemento actual
+            const fila = document.createElement("tr"); // Creamos una nueva fila
+
+            const celdaId = document.createElement("td");
+            celdaId.textContent = element.id; // Añadimos el ID
             fila.appendChild(celdaId);
 
             const celdaIdInterseccion = document.createElement("td");
-            celdaIdInterseccion.textContent = element.idInterseccion; // Añadimos el nombre
+            celdaIdInterseccion.textContent = element.idInterseccion; // Añadimos el ID de la intersección
             fila.appendChild(celdaIdInterseccion);
 
             const celdaDia = document.createElement("td");
-            celdaDia.textContent = element.dia; // Añadimos el nombre
+            celdaDia.textContent = element.dia; // Añadimos el día
             fila.appendChild(celdaDia);
 
             const celdaHora = document.createElement("td");
-            celdaHora.textContent = element.hora; // Añadimos el nombre
+            celdaHora.textContent = element.hora; // Añadimos la hora
             fila.appendChild(celdaHora);
 
             tBodyMCiclo.appendChild(fila);
         }
 
+
         const tBodyDCiclo = document.getElementById("dt-dciclo");
-        for (let i = 0; i < dCiclos.length; i++) {
-            if (i > 4){break}
-            const element = dCiclos[i]; // Obtenemos el objeto de la element actual
+        for (let i = 0; i < 4 && i < dCiclos.length; i++) {
+            const element = dCiclos[i]; // Obtenemos el objeto del elemento actual
             const fila = document.createElement("tr"); // Creamos una nueva fila
-    
+
             const celdaId = document.createElement("td");
-            celdaId.textContent = element.id; // Añadimos el nombre
+            celdaId.textContent = element.id; // Añadimos el ID
             fila.appendChild(celdaId);
 
             const celdaIdCiclo = document.createElement("td");
-            celdaIdCiclo.textContent = element.idCiclo; // Añadimos el nombre
+            celdaIdCiclo.textContent = element.idCiclo; // Añadimos el ID del ciclo
             fila.appendChild(celdaIdCiclo);
 
             const celdaIdSemaforo = document.createElement("td");
-            celdaIdSemaforo.textContent = element.idSemaforo; // Añadimos el nombre
+            celdaIdSemaforo.textContent = element.idSemaforo; // Añadimos el ID del semáforo
             fila.appendChild(celdaIdSemaforo);
 
             const celdaNoCarros = document.createElement("td");
-            celdaNoCarros.textContent = element.noCarros; // Añadimos el nombre
+            celdaNoCarros.textContent = element.noCarros; // Añadimos el número de carros
+            fila.appendChild(celdaNoCarros);
+
+            tBodyDCiclo.appendChild(fila);
+        }
+        for (let i = dCiclos.length - 1; i >= dCiclos.length - 6 && i >= 0; i--) {
+            const element = dCiclos[i]; // Obtenemos el objeto del elemento actual
+            const fila = document.createElement("tr"); // Creamos una nueva fila
+
+            const celdaId = document.createElement("td");
+            celdaId.textContent = element.id; // Añadimos el ID
+            fila.appendChild(celdaId);
+
+            const celdaIdCiclo = document.createElement("td");
+            celdaIdCiclo.textContent = element.idCiclo; // Añadimos el ID del ciclo
+            fila.appendChild(celdaIdCiclo);
+
+            const celdaIdSemaforo = document.createElement("td");
+            celdaIdSemaforo.textContent = element.idSemaforo; // Añadimos el ID del semáforo
+            fila.appendChild(celdaIdSemaforo);
+
+            const celdaNoCarros = document.createElement("td");
+            celdaNoCarros.textContent = element.noCarros; // Añadimos el número de carros
             fila.appendChild(celdaNoCarros);
 
             tBodyDCiclo.appendChild(fila);
