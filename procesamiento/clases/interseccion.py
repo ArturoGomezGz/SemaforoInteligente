@@ -38,20 +38,32 @@ class Interseccion:
         conection.cerrarConexion()
         total_carros = carros_acum_s1 + carros_acum_s2
         
-        # Verificar si hay carros acumulados
         if total_carros == 0:
             print("carros = 0")
-            tiempo_verde = self.tCiclo/self.no_semaforos
-            tiempo_rojo = self.tCiclo/self.no_semaforos
+            tiempo_verde = self.tCiclo / self.no_semaforos
+            tiempo_rojo = self.tCiclo / self.no_semaforos
         else:
+            proporcion = carros_acum_s1 / total_carros
+            tiempo_deseado_verde = round(proporcion * self.tCiclo)
             
-            proporcion =  carros_acum_s1 / total_carros
-
-            tiempo_verde = round(proporcion * self.tCiclo)
-            tiempo_rojo = self.tCiclo - tiempo_verde
-
+            # Ajuste gradual
+            MAX_CAMBIO_TIEMPO = 5
+            cambio_verde = tiempo_deseado_verde - self.semaforos[0].tiempo_verde_actual
+            cambio_verde = max(-MAX_CAMBIO_TIEMPO, min(MAX_CAMBIO_TIEMPO, cambio_verde))
+            
+            # Aplicar ajuste gradual
+            nuevo_tiempo_verde = self.semaforos[0].tiempo_verde_actual + cambio_verde
+            
+            # Límites de tiempo
+            TIEMPO_MIN_VERDE = 10
+            TIEMPO_MAX_VERDE = self.tCiclo - TIEMPO_MIN_VERDE
+            nuevo_tiempo_verde = max(TIEMPO_MIN_VERDE, min(TIEMPO_MAX_VERDE, nuevo_tiempo_verde))
+            
+            nuevo_tiempo_rojo = self.tCiclo - nuevo_tiempo_verde
         
-        self.semaforos[0].ajustarTimpo(tiempo_verde, tiempo_rojo)
-        self.semaforos[1].ajustarTimpo(tiempo_rojo, tiempo_verde)
+        # Ajustar los semáforos
+        self.semaforos[0].ajustarTimpo(nuevo_tiempo_verde, nuevo_tiempo_rojo)
+        self.semaforos[1].ajustarTimpo(nuevo_tiempo_rojo, nuevo_tiempo_verde)
+        
+        print("Tiempo de semaforo ajustado correctamnete en DB")
 
-        print("Datos guardados en la base de datos")
