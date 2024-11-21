@@ -158,111 +158,36 @@ function limpiarGraficos() {
     }
 }
 
-function verEstadisticas(hoy) {
-    let interseccion
-    let fecha
-    let timeIni
-    let timeFin
-    if (hoy) {
-        interseccion = document.getElementById("interseccion").value
-        fecha = new Date()
-        const dia = fecha.getDate();
-        const mes = fecha.getMonth() + 1; // Se suma 1 porque los meses comienzan desde 0
-        const ano = fecha.getFullYear();
-        fecha = ano+"-"+mes+"-"+dia;
-        timeIni = '00:00'
-        timeFin = '23:59'
-    } else {
-        interseccion = document.getElementById("interseccion").value
-        fecha = document.getElementById("fecha").value.toString()
-        timeIni = document.getElementById("horaInicio").value.toString()
-        timeFin =document.getElementById("horaFin").value.toString()
+// Variables globales para almacenar los gráficos
+
+let grafico1, grafico2, grafico3;
+
+function mostrarGrafico(titulo, labels, data, canvas, tipo, color, borde, graficoReferencia) {
+    // Si ya existe un gráfico en el canvas, destrúyelo
+    if (graficoReferencia) {
+        graficoReferencia.destroy();
     }
-    console.log(fecha)
-    
 
-    const url = 'http://127.0.0.1:5000/carSumRange/'+interseccion+'/'+timeIni+'/'+timeFin+'/'+fecha;
-    axios.get(url)
-        .then(response => {
-            
-            let suma = JSON.parse(response.data)
-            
-            let labels = []
-            let values = []
-            for (let index = 0; index < suma.length; index++) {
-                labels.push("Semaforo " + (index+1)); 
-                values.push(suma[index].noCarros)
-            }
-            mostrarGrafico("Semaforos ",labels, values,1, 'bar', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)')
-        })
-        .catch(error => {
-            console.error("Error fetching mciclos data:", error);
-        });
-
-    const url2 = 'http://127.0.0.1:5000/carSumRangeByCiclos/'+1+'/'+timeIni+'/'+timeFin+'/'+fecha;
-    axios.get(url2)
-        .then(response => {
-            
-            let suma = JSON.parse(response.data)
-            
-            let labels = []
-            let values = []
-            for (let index = 0; index < suma.length; index++) {
-                labels.push(suma[index].hora); 
-                values.push(suma[index].noCarros)
-            }
-            
-            mostrarGrafico("Semaforo 1",labels,values,2, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)')
-        })
-        .catch(error => {
-            console.error("Error fetching mciclos data:", error);
-        });
-
-    const url3 = 'http://127.0.0.1:5000/carSumRangeByCiclos/'+2+'/'+timeIni+'/'+timeFin+'/'+fecha;
-    axios.get(url3)
-        .then(response => {
-            
-            let suma = JSON.parse(response.data)
-            
-            let labels = []
-            let values = []
-            for (let index = 0; index < suma.length; index++) {
-                labels.push(suma[index].hora); 
-                values.push(suma[index].noCarros)
-            }
-            
-            mostrarGrafico("Semaforo 2",labels,values,3, 'line','rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1')
-        })
-        .catch(error => {
-            console.error("Error fetching mciclos data:", error);
-        });
-     
-}
-
-// Función para mostrar gráficos
-
-function mostrarGrafico(titulo, labels, data, idGrafico, tipo, color, borde) {
-    const ctx1 = document.getElementById('grafico'+idGrafico).getContext('2d');
-    const grafico1 = new Chart(ctx1, {
+    // Crear un nuevo gráfico y actualizar la referencia
+    return new Chart(canvas, {
         type: tipo,
         data: {
             labels: labels,
             datasets: [{
                 label: 'Cantidad de Autos',
                 data: data,
-                backgroundColor: color , // Añade el canal alfa para transparencia
-                borderColor: borde, // Color completo de borde
+                backgroundColor: color,
+                borderColor: borde,
                 borderWidth: 1
             }]
-            
         },
         options: {
             plugins: {
                 title: {
-                    display: true, // Habilita la visualización del título
-                    text: titulo, // Especifica el texto del título
+                    display: true,
+                    text: titulo,
                     font: {
-                        size: 18 // Cambia el tamaño de la fuente del título
+                        size: 18
                     },
                     padding: {
                         top: 10,
@@ -278,6 +203,86 @@ function mostrarGrafico(titulo, labels, data, idGrafico, tipo, color, borde) {
         }
     });
 }
+
+function verEstadisticas(hoy) {
+    let interseccion;
+    let fecha;
+    let timeIni;
+    let timeFin;
+
+    if (hoy) {
+        interseccion = document.getElementById("interseccion").value;
+        fecha = new Date();
+        const dia = fecha.getDate();
+        const mes = fecha.getMonth() + 1; // Se suma 1 porque los meses comienzan desde 0
+        const ano = fecha.getFullYear();
+        fecha = ano + "-" + mes + "-" + dia;
+        timeIni = '00:00';
+        timeFin = '23:59';
+    } else {
+        interseccion = document.getElementById("interseccion").value;
+        fecha = document.getElementById("fecha").value.toString();
+        timeIni = document.getElementById("horaInicio").value.toString();
+        timeFin = document.getElementById("horaFin").value.toString();
+    }
+
+    console.log(fecha);
+
+    const url = 'http://127.0.0.1:5000/carSumRange/' + interseccion + '/' + timeIni + '/' + timeFin + '/' + fecha;
+    axios.get(url)
+        .then(response => {
+            let suma = JSON.parse(response.data);
+
+            let labels = [];
+            let values = [];
+            for (let index = 0; index < suma.length; index++) {
+                labels.push("Semaforo " + (index + 1));
+                values.push(suma[index].noCarros);
+            }
+            const ctx = document.getElementById('grafico1').getContext('2d');
+            grafico1 = mostrarGrafico("Semaforos ", labels, values, ctx, 'bar', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)', grafico1);
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+
+    const url2 = 'http://127.0.0.1:5000/carSumRangeByCiclos/' + 1 + '/' + timeIni + '/' + timeFin + '/' + fecha;
+    axios.get(url2)
+        .then(response => {
+            let suma = JSON.parse(response.data);
+
+            let labels = [];
+            let values = [];
+            for (let index = 0; index < suma.length; index++) {
+                labels.push(suma[index].hora);
+                values.push(suma[index].noCarros);
+            }
+            const ctx = document.getElementById('grafico2').getContext('2d');
+            grafico2 = mostrarGrafico("Semaforo 1", labels, values, ctx, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)', grafico2);
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+
+    const url3 = 'http://127.0.0.1:5000/carSumRangeByCiclos/' + 2 + '/' + timeIni + '/' + timeFin + '/' + fecha;
+    axios.get(url3)
+        .then(response => {
+            let suma = JSON.parse(response.data);
+
+            let labels = [];
+            let values = [];
+            for (let index = 0; index < suma.length; index++) {
+                labels.push(suma[index].hora);
+                values.push(suma[index].noCarros);
+            }
+            const ctx = document.getElementById('grafico3').getContext('2d');
+            grafico3 = mostrarGrafico("Semaforo 2", labels, values, ctx, 'line', 'rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1)', grafico3);
+        })
+        .catch(error => {
+            console.error("Error fetching mciclos data:", error);
+        });
+}
+
 
 function verIntersecciones(){
     let select = document.getElementById("interseccion");
