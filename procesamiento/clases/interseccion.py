@@ -47,12 +47,12 @@ class Interseccion:
             tiempo_deseado_verde = round(proporcion * self.tCiclo)
             
             # Ajuste gradual
-            MAX_CAMBIO_TIEMPO = 5
-            cambio_verde = tiempo_deseado_verde - self.semaforos[0].tiempo_verde_actual
+            MAX_CAMBIO_TIEMPO = 3
+            cambio_verde = tiempo_deseado_verde - int(self.semaforos[0].tVerde)
             cambio_verde = max(-MAX_CAMBIO_TIEMPO, min(MAX_CAMBIO_TIEMPO, cambio_verde))
             
             # Aplicar ajuste gradual
-            nuevo_tiempo_verde = self.semaforos[0].tiempo_verde_actual + cambio_verde
+            nuevo_tiempo_verde = int(self.semaforos[0].tVerde) + cambio_verde
             
             # Límites de tiempo
             TIEMPO_MIN_VERDE = 10
