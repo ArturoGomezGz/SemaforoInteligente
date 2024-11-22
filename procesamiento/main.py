@@ -1,38 +1,28 @@
 import sys
-sys.path.append(r"../")
-from conexion.conexion import Conexion
+""" sys.path.append(r"../")
+from conexion.conexion import Conexion """
 from clases.interseccion import Interseccion
 from clases.semaforo import Semaforo
 import json
 import os
+import requests
 
-
-with open('../dbData.json', 'r') as archivo:
-    baseDeDatos = json.load(archivo)
-
-conection = Conexion(baseDeDatos)
 
 semaforo1 = Semaforo(
-    json.loads(conection.getSemaforo(1))[0],
-    baseDeDatos
+    json.loads(requests.get("http://127.0.0.1:5000/semaforo/1").json())[0],
     )
 print("Semaforo 1 creado")
 
 semaforo2 = Semaforo(
-    json.loads(conection.getSemaforo(2))[0],
-    baseDeDatos
+    json.loads(requests.get("http://127.0.0.1:5000/semaforo/2").json())[0],
     )
 print("Semaforo 2 creado")
 
 interseccion1 = Interseccion(
-    json.loads(conection.getInterseccion(1))[0],
+    json.loads(requests.get("http://127.0.0.1:5000/interseccion/1").json())[0],
     [semaforo1, semaforo2], 
-    baseDeDatos
     )
 print("Interseccion 1 creada")
-
-conection.cerrarConexion()
-
 
 interseccion1.procesar()
 interseccion1.ajustarTiempo()

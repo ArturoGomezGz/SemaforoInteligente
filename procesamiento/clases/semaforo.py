@@ -1,17 +1,11 @@
 import cv2
 import json
 import os
-from conexion.conexion import Conexion
+import requests
+#from conexion.conexion import Conexion
 
 class Semaforo:
-    def __init__(self, jsonSemaforo, jsonBaseDeDatos ):
-        # Datos necesarios para la conexion a la db
-        self.baseDeDatos = jsonBaseDeDatos
-        self.dbServer = jsonBaseDeDatos["server"]
-        self.dbDatabase = jsonBaseDeDatos["database"]
-        self.dbUsuario = jsonBaseDeDatos["usuario"]
-        self.dbContrasena = jsonBaseDeDatos["contrasena"]
-
+    def __init__(self, jsonSemaforo):
         self.idSemaforo = jsonSemaforo["id"]
         self.tVerde = jsonSemaforo["tVerde"] # Tiempo (en segundos) en verde (ulitmos 5 segundo son amarillo)
         self.tRojo = jsonSemaforo["tRojo"] # Tiempo en rojo (en segundos)
@@ -31,14 +25,14 @@ class Semaforo:
         print(f"Tiempo en alto: {self.tRojo}")
 
     def detecta_carros(self, idCiclo):
-        print("Deteccion comenzada")
+        print("Detección comenzada")
         noCarros = 0
         car_cascade = cv2.CascadeClassifier(self.ruta_cascade)
         cap = cv2.VideoCapture(self.ruta_video)
 
         detected_cars = {}  # Diccionario para almacenar las posiciones de autos rastreados (id: posición)
 
-        #Bucle while que itera frame por frame 
+        # Bucle while que itera frame por frame 
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
@@ -48,47 +42,41 @@ class Semaforo:
 
             # Detección de autos en el frame actual
             cars = car_cascade.detectMultiScale(
-                gray, 
-                scaleFactor=float(self.scaleFactor), 
-                minNeighbors=int(self.minNeighbors),   
-                minSize=(int(self.minSize), int(self.minSize)),  
+                gray,
+                scaleFactor=float(self.scaleFactor),
+                minNeighbors=int(self.minNeighbors),
+                minSize=(int(self.minSize), int(self.minSize)),
                 maxSize=(int(self.maxSize), int(self.maxSize))
             )
-
 
             current_frame_positions = []  # Lista para almacenar posiciones en el frame actual
 
             # Detectar autos y generar posiciones únicas
             for (x, y, w, h) in cars:
-
                 # Posición central de cada auto
                 position = (x + w // 2, y + h // 2)
 
-                # Añade posicion de carro detectado a current_frame_positions
+                # Añade posición de carro detectado a current_frame_positions
                 current_frame_positions.append(position)
 
                 # Dibujar un rectángulo alrededor del auto detectado
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-
             # Actualizar el diccionario de autos detectados en frames anteriores
             new_detected_cars = {}
 
             for car_id, prev_position in detected_cars.items():
-
                 # Verificar si el auto anterior se encuentra cerca de las posiciones actuales
                 for position in current_frame_positions:
-                    
                     if abs(prev_position[0] - position[0]) < 50 and abs(prev_position[1] - position[1]) < 50:
                         new_detected_cars[car_id] = position
                         current_frame_positions.remove(position)  # Remover la posición ya asignada
                         break
                 else:
-
                     # Si el auto ha cruzado la línea de salida
                     if prev_position[1] > int(self.salida_y):
                         # Incrementar el contador de autos salientes
-                        noCarros += 1  
+                        noCarros += 1
 
             # Agregar los autos nuevos a la lista de rastreados
             for position in current_frame_positions:
@@ -104,27 +92,56 @@ class Semaforo:
 
             cv2.imshow('Car Detection', frame)
 
-            # Cierra la fincion si se selecciona las teclas (1, q)
+            # Cierra la función si se seleccionan las teclas (1, q)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-
         cap.release()
         cv2.destroyAllWindows()
-        print("Deteccion terminada")
+        print("Detección terminada")
 
-        conection = Conexion(self.baseDeDatos)
-        conection.agregarDCiclo(idCiclo, self.idSemaforo, noCarros)
-        print("dCiclo registrado")
-        conection.cerrarConexion()
+        # Usar la API para registrar el dCiclo
+        url = "http://127.0.0.1:5000/addDCiclo"  # Cambia el host/puerto si es necesario
+        data = {
+            "idMCiclo": idCiclo,
+            "idSemaforo": self.idSemaforo,
+            "noCarros": noCarros
+        }
+
+        try:
+            response = requests.post(url, json=data)
+            if response.status_code == 201:
+                print("dCiclo registrado correctamente en la API")
+            else:
+                print(f"Error al registrar dCiclo: {response.status_code} - {response.json()}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error al conectar con la API: {e}")
+
         return 0
 
     def ajustarTimpo(self, tVerde, tRojo):
         self.tVerde = tVerde
         self.tRojo = tRojo
 
-        conexion = Conexion(self.baseDeDatos)
-        conexion.ajustarTiempoSemaforo(self.idSemaforo, self.tVerde, self.tRojo)
-        conexion.cerrarConexion()
+        # URL de la API (ajusta según el host y el puerto en el que esté corriendo tu API)
+        url = f"http://127.0.0.1:5000/adjustTime/{self.idSemaforo}"
 
-        return tVerde+tRojo
+        # Datos para enviar en la solicitud PUT
+        data = {
+            "tVerde": self.tVerde,
+            "tRojo": self.tRojo
+        }
+
+        try:
+            # Realizar la solicitud PUT
+            response = requests.put(url, json=data)
+
+            # Comprobar el código de estado de la respuesta
+            if response.status_code == 200:
+                print("Tiempos de semáforo actualizados correctamente.")
+            else:
+                print(f"Error al actualizar tiempos: {response.status_code} - {response.json()}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error de conexión al realizar la solicitud: {e}")
+
+        return tVerde + tRojo
