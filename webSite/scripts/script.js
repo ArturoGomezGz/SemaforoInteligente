@@ -162,6 +162,24 @@ function limpiarGraficos() {
 
 let grafico1, grafico2, grafico3;
 
+const limite = 24;
+
+// Función para muestrear datos
+function muestrearDatos(datos, limite) {
+    const totalDatos = datos.length;
+
+    // Si los datos ya son menores o iguales al límite, no es necesario muestrear
+    if (totalDatos <= limite) {
+        return datos;
+    }
+
+    // Calcular el intervalo de muestreo
+    const intervalo = Math.ceil(totalDatos / limite);
+
+    // Tomar un elemento cada "intervalo" posiciones
+    return datos.filter((_, index) => index % intervalo === 0);
+}
+
 function mostrarGrafico(titulo, labels, data, canvas, tipo, color, borde, graficoReferencia) {
     // Si ya existe un gráfico en el canvas, destrúyelo
     if (graficoReferencia) {
@@ -251,12 +269,13 @@ function verEstadisticas(hoy) {
         .then(response => {
             let suma = JSON.parse(response.data);
 
-            let labels = [];
-            let values = [];
-            for (let index = 0; index < suma.length; index++) {
-                labels.push(suma[index].hora);
-                values.push(suma[index].noCarros);
-            }
+            // Aplicar muestreo a los datos
+            let datosMuestreados = muestrearDatos(suma, limite);
+
+            // Crear labels y values a partir del muestreo
+            let labels = datosMuestreados.map(item => item.hora);
+            let values = datosMuestreados.map(item => item.noCarros);
+
             const ctx = document.getElementById('grafico2').getContext('2d');
             grafico2 = mostrarGrafico("Semaforo 1", labels, values, ctx, 'line', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)', grafico2);
         })
@@ -269,12 +288,13 @@ function verEstadisticas(hoy) {
         .then(response => {
             let suma = JSON.parse(response.data);
 
-            let labels = [];
-            let values = [];
-            for (let index = 0; index < suma.length; index++) {
-                labels.push(suma[index].hora);
-                values.push(suma[index].noCarros);
-            }
+            // Aplicar muestreo a los datos
+            let datosMuestreados = muestrearDatos(suma, limite);
+
+            // Crear labels y values a partir del muestreo
+            let labels = datosMuestreados.map(item => item.hora);
+            let values = datosMuestreados.map(item => item.noCarros);
+
             const ctx = document.getElementById('grafico3').getContext('2d');
             grafico3 = mostrarGrafico("Semaforo 2", labels, values, ctx, 'line', 'rgba(74, 192, 192, 0.2)', 'rgba(74, 192, 192, 1)', grafico3);
         })
