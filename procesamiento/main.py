@@ -1,6 +1,5 @@
 import sys
-""" sys.path.append(r"../")
-from conexion.conexion import Conexion """
+sys.path.append(r"../")
 from clases.interseccion import Interseccion
 from clases.semaforo import Semaforo
 import json
