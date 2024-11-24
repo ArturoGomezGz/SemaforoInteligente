@@ -1,32 +1,72 @@
-import RPi.GPIO as GPIO
-import time
+import sys
+sys.path.append(r"../")
+from clases.semaforoConPines import SemaforoConPines
+from clases.interseccion import Interseccion
 
-# Configuración de pines GPIO
-LED_PINS = [17, 18, 27, 22, 23, 24]
+jsonSemaforo1 = {
+    "id": 1,
+    "tVerde": 30,
+    "tRojo": 30,
+    "rutaVideo": "/ruta/del/video",
+    "rutaCascade": "/ruta/del/cascade",
+    "salidaY": 200,
+    "scaleFactor": 1.1,
+    "minNeighbors": 5,
+    "minSize": (30, 30),
+    "maxSize": (300, 300)
+}
+jsonSemaforo2 = {
+    "id": 2,
+    "tVerde": 30,
+    "tRojo": 30,
+    "rutaVideo": "/ruta/del/video",
+    "rutaCascade": "/ruta/del/cascade",
+    "salidaY": 200,
+    "scaleFactor": 1.1,
+    "minNeighbors": 5,
+    "minSize": (30, 30),
+    "maxSize": (300, 300)
+}
 
-def setup():
-    GPIO.setmode(GPIO.BCM)  # Usa numeración BCM
-    for pin in LED_PINS:
-        GPIO.setup(pin, GPIO.OUT)  # Configura cada pin como salida
-        GPIO.output(pin, GPIO.LOW)  # Asegúrate de que los LEDs estén apagados
+jsonInterseccion1 = {
+  "id": 1,
+  "noSemaforos": 3,
+  "tCiclo": 60,
+}
 
-def toggle_leds():
-    try:
-        while True:
-            print("Encendiendo LEDs...")
-            for pin in LED_PINS:
-                GPIO.output(pin, GPIO.HIGH)  # Enciende el LED
-                time.sleep(0.5)  # Pausa de 0.5 segundos
 
-            print("Apagando LEDs...")
-            for pin in LED_PINS:
-                GPIO.output(pin, GPIO.LOW)  # Apaga el LED
-                time.sleep(0.5)  # Pausa de 0.5 segundos
-    except KeyboardInterrupt:
-        print("Saliendo del programa...")
-    finally:
-        GPIO.cleanup()  # Limpia la configuración GPIO
+pinesS1 = {
+    "redPin": 1,
+    "greenPin": 2,
+    "yellowPin": 3
+}
+pinesS2 = {
+    "redPin": 4,
+    "greenPin": 5,
+    "yellowPin": 6
+}
 
-if __name__ == "__main__":
-    setup()
-    toggle_leds()
+semaforo1 = SemaforoConPines(jsonSemaforo1, pinesS1)
+
+semaforo1 = SemaforoConPines(
+    jsonSemaforo1,
+    #json.loads(requests.get("http://127.0.0.1:5000/semaforo/1").json())[0],
+    pinesS1
+    )
+print("Semaforo 1 creado")
+
+semaforo2 = SemaforoConPines(
+    jsonSemaforo2,
+    #json.loads(requests.get("http://127.0.0.1:5000/semaforo/2").json())[0],
+    pinesS2
+    )
+print("Semaforo 2 creado")
+
+interseccion1 = Interseccion(
+    jsonInterseccion1,
+    #json.loads(requests.get("http://127.0.0.1:5000/interseccion/1").json())[0],
+    [semaforo1, semaforo2], 
+    )
+print("Interseccion 1 creada")
+
+
