@@ -36,7 +36,7 @@ interseccion1 = Interseccion(
 print("Interseccion 1 creada")
 
 
-for i in range(2):
+for i in range(5):
     semaforo1.encender_verde()
     semaforo2.encender_rojo()
     time.sleep(int(semaforo1.tVerde)-5)
