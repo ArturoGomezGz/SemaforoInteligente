@@ -2,6 +2,7 @@ import sys
 sys.path.append(r"../")
 from clases.semaforoConPines import SemaforoConPines
 from clases.interseccion import Interseccion
+import json 
 
 """ jsonSemaforo1 = {
     "id": 1,
