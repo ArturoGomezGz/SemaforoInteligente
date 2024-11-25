@@ -6,47 +6,15 @@ import json
 import requests
 import time
 
-""" jsonSemaforo1 = {
-    "id": 1,
-    "tVerde": 30,
-    "tRojo": 30,
-    "rutaVideo": "/ruta/del/video",
-    "rutaCascade": "/ruta/del/cascade",
-    "salidaY": 200,
-    "scaleFactor": 1.1,
-    "minNeighbors": 5,
-    "minSize": (30, 30),
-    "maxSize": (300, 300)
-}
-jsonSemaforo2 = {
-    "id": 2,
-    "tVerde": 30,
-    "tRojo": 30,
-    "rutaVideo": "/ruta/del/video",
-    "rutaCascade": "/ruta/del/cascade",
-    "salidaY": 200,
-    "scaleFactor": 1.1,
-    "minNeighbors": 5,
-    "minSize": (30, 30),
-    "maxSize": (300, 300)
-} """
-
-jsonInterseccion1 = {
-  "id": 1,
-  "noSemaforos": 3,
-  "tCiclo": 60,
-}
-
-
 pinesS1 = {
     "redPin": 2,
     "greenPin": 3,
     "yellowPin": 4
 }
 pinesS2 = {
-    "redPin": 4,
-    "greenPin": 5,
-    "yellowPin": 6
+    "redPin": 18,
+    "greenPin": 23,
+    "yellowPin": 24
 }
 
 semaforo1 = SemaforoConPines(
@@ -69,11 +37,13 @@ print("Interseccion 1 creada")
 
 
 for i in range(2):
-    print(semaforo1.tVerde)
-    print(semaforo1.tRojo)
     semaforo1.encender_verde()
+    semaforo2.encender_rojo()
     time.sleep(int(semaforo1.tVerde)-5)
     semaforo1.encender_amarillo()
     time.sleep(5)
     semaforo1.encender_rojo()
+    semaforo2.encender_verde()
     time.sleep(int(semaforo1.tRojo))
+    semaforo2.encender_amarillo()
+    time.sleep(5)
