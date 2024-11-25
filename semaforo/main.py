@@ -49,22 +49,19 @@ pinesS2 = {
 semaforo1 = SemaforoConPines(jsonSemaforo1, pinesS1)
 
 semaforo1 = SemaforoConPines(
-    jsonSemaforo1,
-    #json.loads(requests.get("http://127.0.0.1:5000/semaforo/1").json())[0],
+    json.loads(requests.get("http://127.0.0.1:5000/semaforo/1").json())[0],
     pinesS1
     )
 print("Semaforo 1 creado")
 
 semaforo2 = SemaforoConPines(
-    jsonSemaforo2,
-    #json.loads(requests.get("http://127.0.0.1:5000/semaforo/2").json())[0],
+    json.loads(requests.get("http://127.0.0.1:5000/semaforo/2").json())[0],
     pinesS2
     )
 print("Semaforo 2 creado")
 
 interseccion1 = Interseccion(
-    jsonInterseccion1,
-    #json.loads(requests.get("http://127.0.0.1:5000/interseccion/1").json())[0],
+    json.loads(requests.get("http://127.0.0.1:5000/interseccion/1").json())[0],
     [semaforo1, semaforo2], 
     )
 print("Interseccion 1 creada")
