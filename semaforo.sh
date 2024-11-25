@@ -4,7 +4,7 @@
 script="main.py"
 
 # Número de veces que deseas ejecutar los archivos
-iterations=5  # Cambia este número según tus necesidades
+iterations=10  # Cambia este número según tus necesidades
 
 # Bucle para ejecutar los scripts n veces
 for ((i=1; i<=iterations; i++))
