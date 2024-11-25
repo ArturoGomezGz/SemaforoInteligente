@@ -3,7 +3,7 @@ sys.path.append(r"../")
 from clases.semaforoConPines import SemaforoConPines
 from clases.interseccion import Interseccion
 
-jsonSemaforo1 = {
+""" jsonSemaforo1 = {
     "id": 1,
     "tVerde": 30,
     "tRojo": 30,
@@ -26,7 +26,7 @@ jsonSemaforo2 = {
     "minNeighbors": 5,
     "minSize": (30, 30),
     "maxSize": (300, 300)
-}
+} """
 
 jsonInterseccion1 = {
   "id": 1,
@@ -36,9 +36,9 @@ jsonInterseccion1 = {
 
 
 pinesS1 = {
-    "redPin": 1,
-    "greenPin": 2,
-    "yellowPin": 3
+    "redPin": 2,
+    "greenPin": 3,
+    "yellowPin": 4
 }
 pinesS2 = {
     "redPin": 4,
@@ -67,3 +67,4 @@ interseccion1 = Interseccion(
 print("Interseccion 1 creada")
 
 
+semaforo1.encender_verde()
