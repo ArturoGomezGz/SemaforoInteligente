@@ -46,8 +46,6 @@ pinesS2 = {
     "yellowPin": 6
 }
 
-semaforo1 = SemaforoConPines(jsonSemaforo1, pinesS1)
-
 semaforo1 = SemaforoConPines(
     json.loads(requests.get("http://127.0.0.1:5000/semaforo/1").json())[0],
     pinesS1
