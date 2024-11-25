@@ -68,8 +68,10 @@ interseccion1 = Interseccion(
 print("Interseccion 1 creada")
 
 
-semaforo1.encender_verde()
-
-time.sleep(2)
-
-semaforo1.encender_rojo()
+for i in range(10):
+    semaforo1.encender_verde()
+    time.sleep(5)
+    semaforo1.encender_amarillo()
+    time.sleep(2)
+    semaforo1.encender_rojo()
+    time.sleep(5)
