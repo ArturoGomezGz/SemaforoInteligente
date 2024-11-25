@@ -4,6 +4,7 @@ from clases.semaforoConPines import SemaforoConPines
 from clases.interseccion import Interseccion
 import json 
 import requests
+import time
 
 """ jsonSemaforo1 = {
     "id": 1,
@@ -68,3 +69,7 @@ print("Interseccion 1 creada")
 
 
 semaforo1.encender_verde()
+
+time.sleep(2)
+
+semaforo1.encender_rojo()
