@@ -36,5 +36,5 @@ interseccion1 = Interseccion(
 print("Interseccion 1 creada")
 
 
-semaforo1.encender_verde()
-semaforo2.encender_verde()
+semaforo1.encender_rojo()
+semaforo2.encender_rojo()
