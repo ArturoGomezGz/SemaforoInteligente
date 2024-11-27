@@ -1,5 +1,5 @@
 {
-    "server" : "192.168.3.125",  
+    "server" : "10.43.125.200",  
     "database" : "SemaforoInteligente",
     "usuario" : "arturo",
     "contrasena" : "Pword1",
