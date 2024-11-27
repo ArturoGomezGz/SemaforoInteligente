@@ -17,6 +17,9 @@ class SemaforoConPines(Semaforo):
         GPIO.setup(self.greenPin, GPIO.OUT) # Configura el pin de la luz verde como salida
         GPIO.setup(self.yellowPin, GPIO.OUT) # Configura el pin de la luz amarilla como salida
 
+    def clear_pins(self):
+        GPIO.cleanup()
+    
     def encender_rojo(self):
         GPIO.output(self.redPin, GPIO.HIGH)   # Enciende la luz roja
         GPIO.output(self.greenPin, GPIO.LOW)  # Apaga la luz verde
