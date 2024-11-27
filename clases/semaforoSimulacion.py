@@ -2,12 +2,11 @@ from clases.semaforo import Semaforo
 from moviepy.editor import VideoFileClip
 
 class SemaforoSimulacion(Semaforo):
-    def __init__(self, jsonSemaforo, inputSrc, outputSrc):
+    def __init__(self, jsonSemaforo, inputSrc):
         # Llamamos al constructor de la clase base (Semaforo)
         super().__init__(jsonSemaforo)
         
         self.inputSrc = inputSrc
-        self.outputSrc = outputSrc
 
     def randNum(self, min, max):
         return str(random.randint(min, max))
@@ -22,5 +21,5 @@ class SemaforoSimulacion(Semaforo):
             video_recortado = video.subclip(0, self.tRojo)
             
             # Guardar el video recortado
-            video_recortado.write_videofile(self.outputSrc, codec="libx264")
-            print(f"Video guardado en: {self.outputSrc}")
+            video_recortado.write_videofile(self.ruta_video, codec="libx264")
+            print(f"Video guardado en: {self.ruta_video}")
