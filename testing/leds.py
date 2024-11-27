@@ -7,9 +7,9 @@ import requests
 import time
 
 pinesS1 = {
-    "redPin": 2,
-    "greenPin": 3,
-    "yellowPin": 4
+    "redPin": 3,
+    "greenPin": 5,
+    "yellowPin": 7
 }
 """ pinesS2 = {
     "redPin": 18,
