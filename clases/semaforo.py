@@ -2,7 +2,6 @@ import cv2
 import json
 import os
 import requests
-from moviepy.editor import VideoFileClip
 #from conexion.conexion import Conexion
 
 class Semaforo:
