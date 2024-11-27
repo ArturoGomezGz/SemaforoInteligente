@@ -48,3 +48,7 @@ time.sleep(3)
 
 semaforo1.encender_verde()
 """ semaforo2.encender_verde() """
+
+time.sleep(3)
+
+semaforo1.apagar_todas()
