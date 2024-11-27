@@ -37,3 +37,4 @@ print("Interseccion 1 creada")
 
 
 semaforo1.encender_verde()
+semaforo2.encender_verde()
