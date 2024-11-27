@@ -1,6 +1,8 @@
 from clases.semaforo import Semaforo
 import RPi.GPIO as GPIO
 
+GPIO.setwarnings(False)
+
 class SemaforoConPines(Semaforo):
     def __init__(self, jsonSemaforo, pines):
         # Llamamos al constructor de la clase base (Semaforo)
