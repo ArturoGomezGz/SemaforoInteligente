@@ -6,6 +6,8 @@ import json
 import requests
 import time
 
+GPIO.cleanup()
+
 pinesS1 = {
     "redPin": 2,
     "greenPin": 3,
