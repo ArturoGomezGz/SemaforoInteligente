@@ -12,9 +12,9 @@ pinesS1 = {
     "yellowPin": 4
 }
 pinesS2 = {
-    "redPin": 18,
-    "greenPin": 23,
-    "yellowPin": 24
+    "redPin": 17,
+    "greenPin": 27,
+    "yellowPin": 22
 }
 
 semaforo1 = SemaforoConPines(
