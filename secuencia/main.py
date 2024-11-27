@@ -46,6 +46,3 @@ semaforo2.encender_verde()
 time.sleep(int(semaforo1.tRojo))
 semaforo2.encender_amarillo()
 time.sleep(5)
-
-semaforo1.clear_pins()
-semaforo2.clear_pins()
