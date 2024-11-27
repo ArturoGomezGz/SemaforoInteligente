@@ -43,12 +43,12 @@ time.sleep(3)
 
 print("Encendiendo luz amarilla")
 semaforo1.encender_amarillo()
-semaforo2.encender_rojo()
+semaforo2.encender_amarillo()
 time.sleep(3)
 
 print("Encendiendo luz verde")
 semaforo1.encender_verde()
-semaforo2.encender_rojo()
+semaforo2.encender_verde()
 time.sleep(3)
 
 print("Apagando todas las luces")
