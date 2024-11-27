@@ -13,7 +13,7 @@ for ((i=1; i<=iterations; i++))
 do
     echo "Ejecución $i de $iterations"
     
-    cd "semaforo"
+    cd "secuencia"
     python3 $script
     cd ".."
 
