@@ -5,9 +5,6 @@ from clases.interseccion import Interseccion
 import json 
 import requests
 import time
-import RPi.GPIO as GPIO
-
-GPIO.cleanup()
 
 pinesS1 = {
     "redPin": 2,
@@ -39,19 +36,17 @@ print("Semaforo 2 creado") """
 print("Interseccion 1 creada") """
 
 
+print("Encendiendo luz roja")
 semaforo1.encender_rojo()
-""" semaforo2.encender_rojo() """
-
 time.sleep(3)
 
+print("Encendiendo luz amarilla")
 semaforo1.encender_amarillo()
-""" semaforo2.encender_amarillo() """
-
 time.sleep(3)
 
+print("Encendiendo luz verde")
 semaforo1.encender_verde()
-""" semaforo2.encender_verde() """
-
 time.sleep(3)
 
+print("Apagando todas las luces")
 semaforo1.apagar_todas()
